@@ -1,6 +1,5 @@
 package com.example.barkodershopapp
 
-import android.os.Build.VERSION_CODES.R
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.barkodershopapp.databinding.ActivityMainBinding

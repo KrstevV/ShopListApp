@@ -16,7 +16,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
         handler.postDelayed(object : Runnable {
             override fun run() {
-                var intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
+                var intent = Intent(this@SplashScreenActivity, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
             }
