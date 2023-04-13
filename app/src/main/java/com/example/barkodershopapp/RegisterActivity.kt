@@ -24,7 +24,10 @@ class RegisterActivity : AppCompatActivity() {
         auth = Firebase.auth
 
         binding.btnRegisterRegister.setOnClickListener {
-            performSingup()
+            if(performPassword()) {
+                performSingup()
+            }
+
         }
     }
 
@@ -70,6 +73,23 @@ class RegisterActivity : AppCompatActivity() {
 
 
         }
+
+    private fun performPassword(): Boolean {
+        var password = binding.editTextRegisterPassword.text
+        if (password?.length!! < 8) {
+            Toast.makeText(this, "Password need to be more than 8 characters", Toast.LENGTH_SHORT)
+                .show()
+            return false
+        }
+        if (password.contains("[0-9]".toRegex())) {
+            return true
+        } else {
+            Toast.makeText(this, "Password must contain number!", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+
+    }
 
 
     }
