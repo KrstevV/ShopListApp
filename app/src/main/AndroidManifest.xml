@@ -14,16 +14,20 @@
         android:theme="@style/Theme.BarkoderShopApp"
         tools:targetApi="31">
         <activity
-            android:name=".RegisterActivity"
+            android:name=".presentation.SaveProductActivity"
             android:exported="false"
             android:parentActivityName=".presentation.MainActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".LoginActivity"
+            android:name=".presentation.RegisterActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".SplashScreenActivity"
+            android:name=".presentation.LoginActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".presentation.SplashScreenActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
