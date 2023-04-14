@@ -73,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
             auth.signInWithEmailAndPassword(userName, password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Login was sucessful", Toast.LENGTH_SHORT).show()
-                    var intent = Intent(this, MainActivity::class.java)
+                    var intent = Intent(this, HistoryListActivity::class.java)
                     startActivity(intent)
                     finish()
                 }
@@ -117,7 +117,7 @@ class LoginActivity : AppCompatActivity() {
                             if(it.isSuccessful)
                                 Toast.makeText(this, "Account is sucessful created", Toast.LENGTH_SHORT)
                                     .show()
-                            var intentS = Intent(this, MainActivity::class.java)
+                            var intentS = Intent(this, HistoryListActivity::class.java)
                             startActivity(intentS)
                             finish()
                         }

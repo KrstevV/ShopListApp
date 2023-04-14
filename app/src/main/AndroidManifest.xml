@@ -14,10 +14,19 @@
         android:theme="@style/Theme.BarkoderShopApp"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.ScanProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.HistoryListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ListProductActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.SaveProductActivity"
             android:exported="false"
             android:parentActivityName=".presentation.MainActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.RegisterActivity"
             android:exported="false"

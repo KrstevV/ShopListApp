@@ -10,15 +10,7 @@
     android:gravity="center"
     >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save Product"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:textStyle="bold"/>
+
 
 
 </androidx.appcompat.widget.Toolbar>
