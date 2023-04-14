@@ -1,5 +1,6 @@
 package com.example.barkodershopapp.presentation
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,6 +19,12 @@ class SaveProductActivity : AppCompatActivity() {
         toolBarBind = ToolBarBinding.inflate(layoutInflater)
         var toolBar = toolBarBind.toolBarr
         setSupportActionBar(toolBar)
+
+        binding.btnSave.setOnClickListener {
+            var intent = Intent(this@SaveProductActivity, ListProductActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
 
 
