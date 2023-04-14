@@ -22,7 +22,7 @@ class ScanProductActivity : AppCompatActivity() {
         viewModelProduct = ViewModelProvider(this).get(ProductViewModel::class.java)
 
         binding.button2.setOnClickListener {
-
+                var result = "asd"
             currentProduct.nameProduct = binding.name.text.toString()
             currentProduct.priceProduct = binding.price.text.toString()
             currentProduct.barcodeProduct = binding.barcode.text.toString()
