@@ -1,18 +1,10 @@
 package com.example.barkodershopapp.presentation.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.barkodershopapp.data.listhistorydata.HistoryDataRepository
+import androidx.lifecycle.*
 import com.example.barkodershopapp.data.listproductdata.ProductDataRepository
-import com.example.barkodershopapp.data.room.HistoryDataEntity
 import com.example.barkodershopapp.data.room.ProductDataEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,6 +12,16 @@ import javax.inject.Inject
 class ProductViewModel@Inject constructor(private val repository : ProductDataRepository) : ViewModel() {
 
     val allNotes: LiveData<MutableList<ProductDataEntity>> = repository.allNotes
+
+    val currentProduct = MutableLiveData<MutableList<ProductDataEntity>>()
+
+    fun savedProducts(lista: ProductDataEntity) {
+        viewModelScope.launch {
+            val list = arrayListOf<ProductDataEntity>()
+            list.add(lista)
+            currentProduct.value = list
+        }
+    }
 
     fun insert(list: ProductDataEntity) = viewModelScope.launch {
         repository.insert(list)

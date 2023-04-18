@@ -2,14 +2,13 @@ package com.example.barkodershopapp.data.room
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.barkodershopapp.data.listhistorydata.HistoryListData
 
 
 @Dao
 interface ProductDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert (list : ProductDataEntity)
+    fun insert (list: ProductDataEntity)
 
     @Query("SELECT * FROM product_table")
     fun getAll() :  LiveData<MutableList<ProductDataEntity>>

@@ -12,7 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ScanProductActivity : AppCompatActivity() {
     lateinit var binding : ActivityScanProductBinding
-    val viewModelProduct : ProductViewModel by viewModels()
+    val productViewModel : ProductViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityScanProductBinding.inflate(layoutInflater)
@@ -21,15 +21,13 @@ class ScanProductActivity : AppCompatActivity() {
 
 
         binding.button2.setOnClickListener {
-            var name = binding.name.text.toString()
-            var product = ProductDataEntity(name, "" , "", "" , true, "", "",)
-            viewModelProduct.insert(product)
-            var listProduct = arrayListOf(product)
-            listProduct.add(product)
+            var nameTa = binding.name.text.toString()
+
             var intentT = Intent(this@ScanProductActivity, ListProductActivity::class.java)
+
             startActivity(intentT)
             finish()
-            intentT.putExtra("productList", listProduct)
+           intentT.putExtra(nameTa, "nameTa")
 
         }
 

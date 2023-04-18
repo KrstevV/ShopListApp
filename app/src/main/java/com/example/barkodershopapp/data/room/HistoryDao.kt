@@ -21,7 +21,7 @@ interface HistoryDao {
     fun deleteItem(list: HistoryDataEntity)
 
     @Query("SELECT * FROM history_table WHERE id = :itemId")
-    fun getItem(itemId: Long): HistoryDataEntity
+    fun getItem(itemId: Long): List<HistoryDataEntity>
 
     @Update
     fun updateItem(note: HistoryDataEntity)

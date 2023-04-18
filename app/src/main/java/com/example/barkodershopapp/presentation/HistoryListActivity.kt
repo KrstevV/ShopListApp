@@ -72,7 +72,6 @@ class HistoryListActivity : AppCompatActivity() {
             var intentT = Intent(this@HistoryListActivity, ListProductActivity::class.java)
             startActivity(intentT)
 
-
         }
 
     }

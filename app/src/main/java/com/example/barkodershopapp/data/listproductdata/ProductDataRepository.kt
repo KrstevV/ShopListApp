@@ -1,8 +1,6 @@
 package com.example.barkodershopapp.data.listproductdata
 
 import androidx.lifecycle.LiveData
-import com.example.barkodershopapp.data.room.HistoryDao
-import com.example.barkodershopapp.data.room.HistoryDataEntity
 import com.example.barkodershopapp.data.room.ProductDao
 import com.example.barkodershopapp.data.room.ProductDataEntity
 import kotlinx.coroutines.Dispatchers

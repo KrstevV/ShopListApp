@@ -26,9 +26,6 @@ class ListProductActivity : AppCompatActivity() {
     lateinit var binding : ActivityListProductBinding
     val productViewModel : ProductViewModel by viewModels()
     val historyViewModel : HistoryViewModel by viewModels()
-    var listproducts = mutableListOf(
-        ProductDataEntity("","","","", true, "", "")
-    )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityListProductBinding.inflate(layoutInflater)
@@ -36,17 +33,20 @@ class ListProductActivity : AppCompatActivity() {
         var productL = listOf<ProductDataEntity>()
         productAdatper = ProductAdapter(productL)
 
-
         toolBarBind = ToolBarBinding.inflate(layoutInflater)
         var toolBar = toolBarBind.toolBarr
         setSupportActionBar(toolBar)
+           var nameTa =  intent.getStringExtra("nameTa")
+
+
+
 
         binding.recViewProductList.apply {
             layoutManager = LinearLayoutManager(this@ListProductActivity)
             adapter = productAdatper
         }
 
-        productViewModel.allNotes.observe(this, {
+        productViewModel.currentProduct.observe(this, {
             productAdatper.setNotesList(it)
         })
 
