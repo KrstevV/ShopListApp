@@ -2,11 +2,35 @@ package com.example.barkodershopapp.presentation.Adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.barkodershopapp.data.room.HistoryDataEntity
 import com.example.barkodershopapp.data.room.ProductDataEntity
 import com.example.barkodershopapp.databinding.ProductListItemBinding
 
 class ProductAdapter (private var list : List<ProductDataEntity>): RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
+
+
+    private val differCallBack = object : DiffUtil.ItemCallback<ProductDataEntity>() {
+        override fun areItemsTheSame(
+            oldItem: ProductDataEntity,
+            newItem: ProductDataEntity
+        ): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(
+            oldItem: ProductDataEntity,
+            newItem: ProductDataEntity
+        ): Boolean {
+            return oldItem == newItem
+        }
+
+    }
+
+    val differ = AsyncListDiffer(this, differCallBack)
+
 
     class ViewHolder(private val binding : ProductListItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(list : ProductDataEntity) {
@@ -33,6 +57,10 @@ class ProductAdapter (private var list : List<ProductDataEntity>): RecyclerView.
     fun setNotesList(lista : List<ProductDataEntity>) {
         this.list = lista
         notifyDataSetChanged()
+    }
+
+    fun getProductInt(position : Int): ProductDataEntity {
+        return list[position]
     }
 
 }

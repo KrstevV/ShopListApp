@@ -5,14 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.barkodershopapp.data.listhistorydata.HistoryListData
+import com.example.barkodershopapp.OnClickListener
 import com.example.barkodershopapp.data.listhistorydata.swipecallback.SwipeToDelete
-import com.example.barkodershopapp.data.listhistorydata.swipecallback.onSwipeListener
 import com.example.barkodershopapp.data.room.HistoryDataEntity
+import com.example.barkodershopapp.data.room.ProductDataEntity
 import com.example.barkodershopapp.databinding.ActivityHistoryListBinding
 import com.example.barkodershopapp.databinding.ToolBarBinding
 import com.example.barkodershopapp.presentation.Adapters.HistoryAdapter
@@ -26,6 +25,7 @@ class HistoryListActivity : AppCompatActivity() {
     val historyViewModel: HistoryViewModel by viewModels()
     lateinit var historyAdapter: HistoryAdapter
     var listH = arrayListOf<HistoryDataEntity>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHistoryListBinding.inflate(layoutInflater)
@@ -35,7 +35,7 @@ class HistoryListActivity : AppCompatActivity() {
         setSupportActionBar(toolBar)
 
 
-        historyAdapter = HistoryAdapter(listH)
+        historyAdapter = HistoryAdapter(listH, onClick)
 
         binding.recViewHistoryList.apply {
             layoutManager = LinearLayoutManager(this@HistoryListActivity)
@@ -58,7 +58,7 @@ class HistoryListActivity : AppCompatActivity() {
         }
     }
 
-        val swipteToDelete = object : SwipeToDelete() {
+        private val swipteToDelete = object : SwipeToDelete() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.absoluteAdapterPosition
                 historyAdapter.notifyItemRemoved(position)
@@ -66,13 +66,17 @@ class HistoryListActivity : AppCompatActivity() {
 
             }
     }
-    var swipteListener = object : onSwipeListener {
 
-        override fun swipteLeftToDelete(list: HistoryDataEntity) {
-            historyViewModel.deleteItem(list)
-            swipteToDelete
+    private val onClick = object  : OnClickListener {
+        override fun onClick(list: HistoryDataEntity) {
+            var intentT = Intent(this@HistoryListActivity, ListProductActivity::class.java)
+            startActivity(intentT)
+
+
         }
+
     }
+
 
 
 

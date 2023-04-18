@@ -1,5 +1,6 @@
 package com.example.barkodershopapp.data.room
 
+import androidx.lifecycle.LiveData
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -13,6 +14,7 @@ data class HistoryDataEntity (
     @ColumnInfo(name = "Created date")
      var listCreated : String,
     @PrimaryKey(autoGenerate = true)
-var id : Long = 0L,
+      var id : Long = 0L,
 
-        )
+
+    )

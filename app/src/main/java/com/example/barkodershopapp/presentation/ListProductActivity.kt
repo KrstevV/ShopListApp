@@ -4,10 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.barkodershopapp.data.listhistorydata.swipecallback.SwipeToDelete
-import com.example.barkodershopapp.data.listhistorydata.swipecallback.onSwipeListener
 import com.example.barkodershopapp.data.room.HistoryDataEntity
 import com.example.barkodershopapp.data.room.ProductDataEntity
 import com.example.barkodershopapp.databinding.ActivityListProductBinding
@@ -26,13 +26,16 @@ class ListProductActivity : AppCompatActivity() {
     lateinit var binding : ActivityListProductBinding
     val productViewModel : ProductViewModel by viewModels()
     val historyViewModel : HistoryViewModel by viewModels()
+    var listproducts = mutableListOf(
+        ProductDataEntity("","","","", true, "", "")
+    )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityListProductBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         var productL = listOf<ProductDataEntity>()
         productAdatper = ProductAdapter(productL)
+
 
         toolBarBind = ToolBarBinding.inflate(layoutInflater)
         var toolBar = toolBarBind.toolBarr
@@ -53,6 +56,10 @@ class ListProductActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val itemTouchHelper = ItemTouchHelper(swipteToDelete)
+
+        itemTouchHelper.attachToRecyclerView(binding.recViewProductList)
+
 
         binding.btnAddList.setOnClickListener {
                 if(binding.editTextListName.text.toString() != "") {
@@ -70,20 +77,14 @@ class ListProductActivity : AppCompatActivity() {
 
     }
 
-    val swipteToDelete = object : SwipeToDelete() {
+   private val swipteToDelete = object : SwipeToDelete() {
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            val position = viewHolder.adapterPosition
-            swipteListener
+            val position = viewHolder.absoluteAdapterPosition
+            productAdatper.notifyItemRemoved(position)
+            productViewModel.deleteItem(productAdatper.getProductInt(position))
 
         }
     }
-    var swipteListener = object : onSwipeListener {
-
-        override fun swipteLeftToDelete(list: HistoryDataEntity) {
-            historyViewModel.deleteItem(list)
-        }
-    }
-
     private fun getCurrentDate(): String {
         val currentDate = Calendar.getInstance().time
         val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm")
@@ -91,4 +92,9 @@ class ListProductActivity : AppCompatActivity() {
 
 
     }
+
+    private fun updateHistory() {
+
+    }
+
 }

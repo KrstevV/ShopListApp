@@ -23,13 +23,13 @@ class ScanProductActivity : AppCompatActivity() {
         binding.button2.setOnClickListener {
             var name = binding.name.text.toString()
             var product = ProductDataEntity(name, "" , "", "" , true, "", "",)
-
             viewModelProduct.insert(product)
-
-            var intent = Intent(this@ScanProductActivity, ListProductActivity::class.java)
-            startActivity(intent)
+            var listProduct = arrayListOf(product)
+            listProduct.add(product)
+            var intentT = Intent(this@ScanProductActivity, ListProductActivity::class.java)
+            startActivity(intentT)
             finish()
-
+            intentT.putExtra("productList", listProduct)
 
         }
 
