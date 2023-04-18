@@ -12,7 +12,7 @@ interface HistoryDao {
     fun insert (list : HistoryDataEntity)
 
     @Query("SELECT * FROM history_table")
-    fun getAll() : List<HistoryDataEntity>
+    fun getAll() : LiveData<MutableList<HistoryDataEntity>>
 
     @Query("DELETE FROM history_table")
     fun delete()

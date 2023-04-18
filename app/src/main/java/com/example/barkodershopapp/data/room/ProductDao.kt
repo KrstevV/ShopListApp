@@ -12,7 +12,7 @@ interface ProductDao {
     fun insert (list : ProductDataEntity)
 
     @Query("SELECT * FROM product_table")
-    fun getAll() :  List<ProductDataEntity>
+    fun getAll() :  LiveData<MutableList<ProductDataEntity>>
 
     @Query("DELETE FROM product_table")
     fun delete ()

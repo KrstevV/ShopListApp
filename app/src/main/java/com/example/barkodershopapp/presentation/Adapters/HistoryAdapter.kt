@@ -1,17 +1,27 @@
 package com.example.barkodershopapp.presentation.Adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.barkodershopapp.data.listhistorydata.HistoryListData
+import com.example.barkodershopapp.data.listhistorydata.swipecallback.onSwipeListener
+import com.example.barkodershopapp.data.room.HistoryDataEntity
 import com.example.barkodershopapp.databinding.HistorylistItemBinding
+import com.example.barkodershopapp.presentation.viewmodel.HistoryViewModel
+import kotlinx.coroutines.runBlocking
 
-class HistoryAdapter (private var list : List<HistoryListData>): RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
+class HistoryAdapter (private var list : ArrayList<HistoryDataEntity>): RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
+
 
         class ViewHolder(private val binding : HistorylistItemBinding) : RecyclerView.ViewHolder(binding.root) {
-                fun bind(list : HistoryListData) {
-                     binding.textListName.text = list.nameList
-                     binding.textCreatedDateList.text = list.createdListDate
+
+                @SuppressLint("SuspiciousIndentation")
+                fun bind(list : HistoryDataEntity) {
+                     binding.textListName.text = list.listName
+                     binding.textCreatedDateList.text = list.listCreated
+
                 }
         }
 
@@ -26,9 +36,15 @@ class HistoryAdapter (private var list : List<HistoryListData>): RecyclerView.Ad
                 holder.bind(list[position])
         }
 
-        fun setNotesList(lista : List<HistoryListData>) {
+        fun setNotesList(lista : ArrayList<HistoryDataEntity>) {
                 this.list = lista
                 notifyDataSetChanged()
+
         }
+        fun getHistoryInt(position : Int): HistoryDataEntity {
+                return list[position]
+        }
+
+
 
 }

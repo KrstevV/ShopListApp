@@ -15,12 +15,4 @@ data class HistoryDataEntity (
     @PrimaryKey(autoGenerate = true)
 var id : Long = 0L,
 
-        ) {
-            companion object{
-                fun fromHistory(list : HistoryListData) = HistoryDataEntity(list.nameList, list.createdListDate)
-
-            }
-
-            fun toHistory() = HistoryListData(listName, listCreated)
-
-}
+        )

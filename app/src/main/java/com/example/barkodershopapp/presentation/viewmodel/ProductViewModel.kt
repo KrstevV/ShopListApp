@@ -2,41 +2,42 @@ package com.example.barkodershopapp.presentation.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import com.example.barkodershopapp.data.listhistorydata.usecaseProduct.*
-import com.example.barkodershopapp.data.listproductdata.ProductData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.barkodershopapp.data.listhistorydata.HistoryDataRepository
 import com.example.barkodershopapp.data.listproductdata.ProductDataRepository
-import com.example.barkodershopapp.data.room.ProductRoomSource
+import com.example.barkodershopapp.data.room.HistoryDataEntity
+import com.example.barkodershopapp.data.room.ProductDataEntity
+import dagger.hilt.android.lifecycle.HiltViewModel
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ProductViewModel(application: Application) : AndroidViewModel(application) {
-            private val corutineScope = CoroutineScope(Dispatchers.IO)
+@HiltViewModel
+class ProductViewModel@Inject constructor(private val repository : ProductDataRepository) : ViewModel() {
 
-             val repository = ProductDataRepository(ProductRoomSource(application))
+    val allNotes: LiveData<MutableList<ProductDataEntity>> = repository.allNotes
 
-    val useCasesProducts = ProductUseCases(
-        AddProduct(repository),
-        GetAllProducts(repository),
-        DeleteProduct(repository),
-        GetProduct(repository)
-    )
-
-    var savedProduct = MutableLiveData<Boolean>()
-    var listsProducts = MutableLiveData<List<ProductData>>()
-
-    fun savedProducts(list : ProductData) {
-        corutineScope.launch {
-            useCasesProducts.addProduct(list)
-            savedProduct.postValue(true)
-        }
+    fun insert(list: ProductDataEntity) = viewModelScope.launch {
+        repository.insert(list)
     }
 
-    fun getProductsLists() {
-        corutineScope.launch {
-            val lists : List<ProductData> = useCasesProducts.getAllProducts()
-            listsProducts.postValue(lists)
-        }
+    fun delete() = viewModelScope.launch {
+        repository.delete()
+    }
+
+    fun deleteItem(list: ProductDataEntity) = viewModelScope.launch {
+        repository.deleteItem(list)
+    }
+
+    fun getItem(id: Long) = viewModelScope.launch {
+        repository.getItem(id)
+    }
+
+    fun updateItem(list: ProductDataEntity) = viewModelScope.launch {
+        repository.updateItem(list)
     }
 }

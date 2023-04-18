@@ -3,15 +3,13 @@ package com.example.barkodershopapp.presentation.Adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.barkodershopapp.data.listhistorydata.HistoryListData
-import com.example.barkodershopapp.data.listproductdata.ProductData
-import com.example.barkodershopapp.databinding.HistorylistItemBinding
+import com.example.barkodershopapp.data.room.ProductDataEntity
 import com.example.barkodershopapp.databinding.ProductListItemBinding
 
-class ProductAdapter (private var list : List<ProductData>): RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
+class ProductAdapter (private var list : List<ProductDataEntity>): RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
 
     class ViewHolder(private val binding : ProductListItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(list : ProductData) {
+        fun bind(list : ProductDataEntity) {
             binding.textProductNamee.text = list.nameProduct
             binding.textBarcodeProduct.text = list.barcodeProduct.toString()
             binding.textCountProduct.text = list.count.toString()
@@ -32,7 +30,7 @@ class ProductAdapter (private var list : List<ProductData>): RecyclerView.Adapte
         holder.bind(list[position])
     }
 
-    fun setNotesList(lista : List<ProductData>) {
+    fun setNotesList(lista : List<ProductDataEntity>) {
         this.list = lista
         notifyDataSetChanged()
     }

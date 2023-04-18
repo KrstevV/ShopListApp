@@ -1,12 +1,41 @@
 package com.example.barkodershopapp.data.listhistorydata
 
-class HistoryDataRepository (private val source: HistoryDataSource) {
+import androidx.lifecycle.LiveData
+import com.example.barkodershopapp.data.room.HistoryDao
+import com.example.barkodershopapp.data.room.HistoryDataEntity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-    suspend fun addHistoryList(list : HistoryListData) = source.addHistoryList(list)
+@Singleton
+class HistoryDataRepository @Inject constructor(private val dao: HistoryDao) {
 
-    suspend fun getHistoryList(id : Long) = source.getHistoryList(id)
 
-    suspend fun getAllHistoryList() = source.getAllHistoryList()
-
-    suspend fun deleteHistoryList(list : HistoryListData) = source.deleteHistoryList(list)
+    var allNotes : LiveData<MutableList<HistoryDataEntity>> = dao.getAll()
+    suspend fun insert(list : HistoryDataEntity) {
+        withContext(Dispatchers.IO) {
+            dao.insert(list)
+        }
+    }
+    suspend fun delete() {
+        withContext(Dispatchers.IO) {
+            dao.delete()
+        }
+    }
+    suspend fun deleteItem(lsit : HistoryDataEntity) {
+        withContext(Dispatchers.IO) {
+            dao.deleteItem(lsit)
+        }
+    }
+    suspend fun getItem(id: Long) {
+        withContext(Dispatchers.IO) {
+            dao.getItem(id)
+        }
+    }
+    suspend fun updateItem(list: HistoryDataEntity) {
+        withContext(Dispatchers.IO) {
+            dao.updateItem(list)
+        }
+    }
 }

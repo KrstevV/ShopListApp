@@ -1,14 +1,47 @@
 package com.example.barkodershopapp.data.listproductdata
 
-import com.example.barkodershopapp.data.listhistorydata.HistoryListData
+import androidx.lifecycle.LiveData
+import com.example.barkodershopapp.data.room.HistoryDao
+import com.example.barkodershopapp.data.room.HistoryDataEntity
+import com.example.barkodershopapp.data.room.ProductDao
+import com.example.barkodershopapp.data.room.ProductDataEntity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ProductDataRepository (private val source : ProductDataSource){
+@Singleton
+class ProductDataRepository @Inject constructor(private val dao: ProductDao) {
 
-    suspend fun addProductList(list : ProductData) = source.addProductList(list)
 
-    suspend fun getProductList(id : Long) = source.getProductList(id)
+    var allNotes: LiveData<MutableList<ProductDataEntity>> = dao.getAll()
+    suspend fun insert(list: ProductDataEntity) {
+        withContext(Dispatchers.IO) {
+            dao.insert(list)
+        }
+    }
 
-    suspend fun getAllProductList() = source.getAllProductList()
+    suspend fun delete() {
+        withContext(Dispatchers.IO) {
+            dao.delete()
+        }
+    }
 
-    suspend fun deleteProductList(list : ProductData) = source.deleteProductList(list)
+    suspend fun deleteItem(lsit: ProductDataEntity) {
+        withContext(Dispatchers.IO) {
+            dao.deleteItem(lsit)
+        }
+    }
+
+    suspend fun getItem(id: Long) {
+        withContext(Dispatchers.IO) {
+            dao.getItem(id)
+        }
+    }
+
+    suspend fun updateItem(list: ProductDataEntity) {
+        withContext(Dispatchers.IO) {
+            dao.updateItem(list)
+        }
+    }
 }
