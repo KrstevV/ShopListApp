@@ -36,23 +36,19 @@ class ListProductActivity : AppCompatActivity() {
         toolBarBind = ToolBarBinding.inflate(layoutInflater)
         var toolBar = toolBarBind.toolBarr
         setSupportActionBar(toolBar)
-           var nameTa =  intent.getStringExtra("nameTa")
-
-
-
 
         binding.recViewProductList.apply {
             layoutManager = LinearLayoutManager(this@ListProductActivity)
             adapter = productAdatper
         }
 
-        productViewModel.currentProduct.observe(this, {
+        productViewModel.allNotes.observe(this, {
             productAdatper.setNotesList(it)
         })
 
 
         binding.btnScan.setOnClickListener {
-            var intent = Intent(this@ListProductActivity, ScanProductActivity::class.java)
+            var intent = Intent(this@ListProductActivity, SaveProductActivity::class.java)
             startActivity(intent)
         }
 
@@ -90,10 +86,6 @@ class ListProductActivity : AppCompatActivity() {
         val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm")
         return formatter.format(currentDate)
 
-
-    }
-
-    private fun updateHistory() {
 
     }
 

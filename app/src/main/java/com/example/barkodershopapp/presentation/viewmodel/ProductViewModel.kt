@@ -9,19 +9,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProductViewModel@Inject constructor(private val repository : ProductDataRepository) : ViewModel() {
+class ProductViewModel @Inject constructor(private val repository : ProductDataRepository) : ViewModel() {
 
     val allNotes: LiveData<MutableList<ProductDataEntity>> = repository.allNotes
-
-    val currentProduct = MutableLiveData<MutableList<ProductDataEntity>>()
-
-    fun savedProducts(lista: ProductDataEntity) {
-        viewModelScope.launch {
-            val list = arrayListOf<ProductDataEntity>()
-            list.add(lista)
-            currentProduct.value = list
-        }
-    }
 
     fun insert(list: ProductDataEntity) = viewModelScope.launch {
         repository.insert(list)

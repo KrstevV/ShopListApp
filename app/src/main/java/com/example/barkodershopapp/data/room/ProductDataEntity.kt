@@ -8,19 +8,19 @@ import androidx.room.PrimaryKey
 data class ProductDataEntity (
 
     @ColumnInfo(name = "Name Product")
-    var nameProduct : String,
+    var nameProduct : String?,
     @ColumnInfo(name = "Barcode")
-    var barcodeProduct : String,
+    var barcodeProduct : String?,
     @ColumnInfo(name ="Notes")
-    var noteProduct : String,
+    var noteProduct : String?,
     @ColumnInfo(name = "Price")
-    var priceProduct : String,
+    var priceProduct : String?,
     @ColumnInfo(name = "Active")
     var activeProduct : Boolean,
     @ColumnInfo(name = "image")
-    var imageProduct : String,
+    var imageProduct : String?,
     @ColumnInfo(name = "count")
-    var count : String,
+    var count : String?,
     @PrimaryKey(autoGenerate = true)
     var id : Long = 0L
 

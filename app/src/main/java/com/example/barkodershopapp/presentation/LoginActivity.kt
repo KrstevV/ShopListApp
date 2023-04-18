@@ -117,7 +117,7 @@ class LoginActivity : AppCompatActivity() {
                             if(it.isSuccessful)
                                 Toast.makeText(this, "Account is sucessful created", Toast.LENGTH_SHORT)
                                     .show()
-                            var intentS = Intent(this, HistoryListActivity::class.java)
+                            var intentS = Intent(this, SaveProductActivity::class.java)
                             startActivity(intentS)
                             finish()
                         }
