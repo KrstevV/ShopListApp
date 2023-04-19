@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="120dp"
     android:layout_margin="15dp"
-    android:background="@color/designColor">
+    android:background="@drawable/rounded_background">
 
     <TextView
         android:id="@+id/textBarcodeProduct"
@@ -24,10 +24,10 @@
 
     <TextView
         android:id="@+id/textProductNamee"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
         android:layout_marginStart="2dp"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="14dp"
         android:text="Coca Cola"
         android:textColor="#F4EFEF"
@@ -40,11 +40,14 @@
     <ImageView
         android:id="@+id/productImageList"
         android:layout_width="64dp"
-        android:layout_height="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.4"
         app:srcCompat="@drawable/coca_cola" />
 
     <TextView
@@ -60,31 +63,30 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
+    <ImageView
         android:id="@+id/btnMinusSize"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginStart="41dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="33dp"
+        android:layout_marginEnd="20dp"
         android:backgroundTint="#040303"
+        android:src="@drawable/ic_minus"
         android:text="-"
         android:textColor="#FBF8F8"
         app:layout_constraintEnd_toStartOf="@+id/btnAddSize"
-        app:layout_constraintStart_toEndOf="@+id/textProductNamee"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <ImageView
         android:id="@+id/btnAddSize"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="15dp"
         android:backgroundTint="#090909"
+        android:src="@drawable/ic_plus"
         android:text="+"
         android:textColor="#FAF7F7"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnMinusSize"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -102,7 +104,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="15dp"
         android:text="Name: "

@@ -73,9 +73,6 @@ class ListProductActivity : AppCompatActivity(){
                     finish()
                 }
         }
-
-
-
     }
 
     private fun onLoop(products : MutableList<ProductDataEntity>) : Int {

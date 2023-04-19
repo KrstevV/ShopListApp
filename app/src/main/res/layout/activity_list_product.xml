@@ -97,7 +97,7 @@
         android:id="@+id/textTotalCost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="15dp"
         android:text="1230"
         android:textColor="#0E0E0E"
         android:textSize="30sp"

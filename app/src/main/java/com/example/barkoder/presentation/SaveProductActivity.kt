@@ -42,7 +42,7 @@ class SaveProductActivity : AppCompatActivity() {
 
 
         Picasso.get().load(currentProduct.imageProduct).into(binding.imageProduct)
-
+        binding.textPrice.text = currentProduct.priceProduct.toString()
         binding.textProductName.text = currentProduct.nameProduct
         binding.textBarcodeNumber.text = currentProduct.barcodeProduct
             if(currentProduct.barcodeProduct == listProducts[0].barcodeProduct) {
@@ -51,6 +51,7 @@ class SaveProductActivity : AppCompatActivity() {
                 if(listProducts[0].activeProduct) {
                     binding.textProductActive.text = "Active"
                 }
+                binding.textPrice.text = listProducts[0].priceProduct.toString()
                 binding.textProductNote.text = listProducts[0].noteProduct
                 currentProduct.nameProduct = listProducts[0].nameProduct
                 currentProduct.imageProduct = listProducts[0].imageProduct
@@ -65,7 +66,8 @@ class SaveProductActivity : AppCompatActivity() {
             if(listProducts[1].activeProduct) {
                 binding.textProductActive.text = "Active"
             }
-            currentProduct.nameProduct = listProducts[0].nameProduct
+            binding.textPrice.text = listProducts[1].priceProduct.toString()
+            currentProduct.nameProduct = listProducts[1].nameProduct
             currentProduct.imageProduct = listProducts[1].imageProduct
             binding.textProductNote.text = listProducts[1].noteProduct
             currentProduct.priceProduct = listProducts[1].priceProduct
