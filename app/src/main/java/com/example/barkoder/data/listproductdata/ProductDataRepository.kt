@@ -13,6 +13,11 @@ class ProductDataRepository @Inject constructor(private val dao: ProductDao) {
 
 
     var allNotes: LiveData<MutableList<ProductDataEntity>> = dao.getAll()
+
+    fun getAllProducts(): List<ProductDataEntity> {
+        return dao.getItems()
+    }
+
     suspend fun insert(list: ProductDataEntity) {
         withContext(Dispatchers.IO) {
             dao.insert(list)

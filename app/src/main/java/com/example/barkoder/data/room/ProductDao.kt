@@ -9,6 +9,8 @@ interface ProductDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert (list: ProductDataEntity)
+    @Query("SELECT * FROM product_table")
+    fun getItems() : List<ProductDataEntity>
 
     @Query("SELECT * FROM product_table")
     fun getAll() :  LiveData<MutableList<ProductDataEntity>>

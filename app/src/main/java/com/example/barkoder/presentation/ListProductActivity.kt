@@ -13,6 +13,7 @@ import com.example.barkoder.OnClickListenerButtons
 import com.example.barkoder.data.listhistorydata.swipecallback.SwipeToDelete
 import com.example.barkoder.data.room.HistoryDataEntity
 import com.example.barkoder.data.room.ProductDataEntity
+import com.example.barkoder.data.room.ProductDatabase
 import com.example.barkoder.presentation.Adapters.ProductAdapter
 import com.example.barkoder.presentation.viewmodel.HistoryViewModel
 import com.example.barkoder.presentation.viewmodel.ProductViewModel
@@ -31,7 +32,7 @@ class ListProductActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding = ActivityListProductBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        var productL = listOf<ProductDataEntity>()
+        var productL = arrayListOf<ProductDataEntity>()
         productAdatper = ProductAdapter(productL, clickListenerButtons)
 
         toolBarBind = ToolBarBinding.inflate(layoutInflater)
@@ -43,9 +44,12 @@ class ListProductActivity : AppCompatActivity(){
             adapter = productAdatper
         }
 
-        productViewModel.allNotes.observe(this, {
-            productAdatper.setNotesList(it)
+        productViewModel.allNotes.observe(this, {products ->
+            productAdatper.setNotesList(products)
+            var top = onLoop(products).toString()
+            binding.textTotalCost.text = top
         })
+
 
 
         binding.btnScan.setOnClickListener {
@@ -72,6 +76,14 @@ class ListProductActivity : AppCompatActivity(){
 
 
 
+    }
+
+    private fun onLoop(products : MutableList<ProductDataEntity>) : Int {
+                var sum = 0
+            for(product in products) {
+                sum += product.totalPrice
+            }
+            return sum
     }
 
    private val swipteToDelete = object : SwipeToDelete() {

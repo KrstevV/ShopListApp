@@ -13,6 +13,12 @@ class ProductViewModel @Inject constructor(private val repository : ProductDataR
 
     val allNotes: LiveData<MutableList<ProductDataEntity>> = repository.allNotes
 
+    fun getAllProducts(): LiveData<List<ProductDataEntity>> {
+        return MutableLiveData<List<ProductDataEntity>>().apply {
+            value = repository.getAllProducts()
+        }
+    }
+
     fun insert(list: ProductDataEntity) = viewModelScope.launch {
         repository.insert(list)
     }

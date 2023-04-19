@@ -6,12 +6,41 @@
     android:layout_height="match_parent"
     tools:context="com.example.barkoder.presentation.ListProductActivity">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnScan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:src="@drawable/baseline_qr_code_scanner_25"
+        app:backgroundTint="@android:color/holo_orange_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="#F3EEEE" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnAddList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:src="@drawable/baseline_add_24"
+        app:backgroundTint="@android:color/holo_orange_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <include
         android:id="@+id/include"
         layout="@layout/tool_bar"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textActivityName"
         android:layout_width="wrap_content"
@@ -26,29 +55,31 @@
         app:layout_constraintTop_toTopOf="@+id/include" />
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="620dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include">
+
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="30dp"
             app:startIconDrawable="@drawable/baseline_format_list_bulleted_24">
+
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextListName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editTextListName"
                 android:layout_gravity="center"
                 android:hint="List Name"
                 android:maxLength="40"
-                android:singleLine="true"/>
-
+                android:singleLine="true" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -62,28 +93,32 @@
             tools:listitem="@layout/product_list_item" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnScan"
+    <TextView
+        android:id="@+id/textTotalCost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginBottom="56dp"
-        android:backgroundTint="#070707"
-        android:text="SCAN"
-        android:textColor="#F4EFEF"
+        android:layout_marginBottom="30dp"
+        android:text="1230"
+        android:textColor="#0E0E0E"
+        android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/btnAddList"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnScan" />
 
-    <Button
-        android:id="@+id/btnAddList"
+    <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="44dp"
-        android:layout_marginBottom="56dp"
-        android:backgroundTint="#070707"
-        android:text="Add List"
-        android:textColor="#F6F1F1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_marginStart="142dp"
+        android:layout_marginEnd="143dp"
+        android:layout_marginBottom="6dp"
+        android:text="Total Cost : "
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textTotalCost"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
