@@ -14,13 +14,15 @@ data class ProductDataEntity (
     @ColumnInfo(name ="Notes")
     var noteProduct : String?,
     @ColumnInfo(name = "Price")
-    var priceProduct : String?,
+    var priceProduct : Int,
     @ColumnInfo(name = "Active")
     var activeProduct : Boolean,
     @ColumnInfo(name = "image")
     var imageProduct : String?,
     @ColumnInfo(name = "count")
-    var count : String?,
+    var count : Int,
+    @ColumnInfo(name= "total price")
+    var totalPrice : Int,
     @PrimaryKey(autoGenerate = true)
     var id : Long = 0L
 

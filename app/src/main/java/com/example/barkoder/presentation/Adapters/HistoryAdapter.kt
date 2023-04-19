@@ -5,8 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.barkoder.shoppingApp.net.databinding.HistorylistItemBinding
-import com.example.barkoder.OnClickListener
+import com.example.barkoder.OnClickListenerButtons
 import com.example.barkoder.data.room.HistoryDataEntity
+import com.example.barkoder.presentation.OnClickListener
 
 class HistoryAdapter (private var list : ArrayList<HistoryDataEntity>, var listener : OnClickListener): RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
 

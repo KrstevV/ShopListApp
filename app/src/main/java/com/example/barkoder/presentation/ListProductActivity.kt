@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.barkoder.shoppingApp.net.databinding.ActivityListProductBinding
 import com.barkoder.shoppingApp.net.databinding.ToolBarBinding
+import com.example.barkoder.OnClickListenerButtons
 import com.example.barkoder.data.listhistorydata.swipecallback.SwipeToDelete
 import com.example.barkoder.data.room.HistoryDataEntity
 import com.example.barkoder.data.room.ProductDataEntity
@@ -20,7 +21,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @AndroidEntryPoint
-class ListProductActivity : AppCompatActivity() {
+class ListProductActivity : AppCompatActivity(){
     private lateinit var toolBarBind : ToolBarBinding
     lateinit var productAdatper : ProductAdapter
     lateinit var binding : ActivityListProductBinding
@@ -31,7 +32,7 @@ class ListProductActivity : AppCompatActivity() {
         binding = ActivityListProductBinding.inflate(layoutInflater)
         setContentView(binding.root)
         var productL = listOf<ProductDataEntity>()
-        productAdatper = ProductAdapter(productL)
+        productAdatper = ProductAdapter(productL, clickListenerButtons)
 
         toolBarBind = ToolBarBinding.inflate(layoutInflater)
         var toolBar = toolBarBind.toolBarr
@@ -85,7 +86,22 @@ class ListProductActivity : AppCompatActivity() {
         val currentDate = Calendar.getInstance().time
         val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm")
         return formatter.format(currentDate)
+    }
 
+    private val clickListenerButtons = object : OnClickListenerButtons {
+        override fun onClickPlus(list: ProductDataEntity) {
+            list.count++
+            list.totalPrice = list.totalPrice + list.priceProduct
+            productViewModel.updateItem(list)
+        }
+
+        override fun onClickMinus(list: ProductDataEntity) {
+            if(list.count >= 2) {
+                list.count--
+                list.totalPrice = list.totalPrice - list.priceProduct
+            }
+            productViewModel.updateItem(list)
+        }
 
     }
 

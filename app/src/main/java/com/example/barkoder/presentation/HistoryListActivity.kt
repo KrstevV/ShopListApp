@@ -10,7 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.barkoder.shoppingApp.net.databinding.ActivityHistoryListBinding
 import com.barkoder.shoppingApp.net.databinding.ToolBarBinding
-import com.example.barkoder.OnClickListener
+import com.example.barkoder.OnClickListenerButtons
+import com.example.barkoder.data.listhistorydata.HistoryListData
 import com.example.barkoder.data.listhistorydata.swipecallback.SwipeToDelete
 import com.example.barkoder.data.room.HistoryDataEntity
 import com.example.barkoder.presentation.Adapters.HistoryAdapter
@@ -67,10 +68,10 @@ class HistoryListActivity : AppCompatActivity() {
     }
 
     private val onClick = object  : OnClickListener {
+
         override fun onClick(list: HistoryDataEntity) {
             var intentT = Intent(this@HistoryListActivity, ListProductActivity::class.java)
             startActivity(intentT)
-
         }
 
     }
