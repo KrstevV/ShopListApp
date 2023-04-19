@@ -1,18 +1,22 @@
 package com.example.barkoder.presentation
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import com.barkoder.Barkoder
 import com.barkoder.BarkoderConfig
 import com.barkoder.BarkoderHelper
 import com.barkoder.enums.BarkoderConfigTemplate
 import com.barkoder.interfaces.BarkoderResultCallback
+import com.barkoder.shoppingApp.net.R
 import com.barkoder.shoppingApp.net.databinding.ActivityScanProductBinding
 import com.example.barkoder.presentation.viewmodel.ProductViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,12 +41,50 @@ class ScanProductActivity : AppCompatActivity(), BarkoderResultCallback {
 
         binding.bkdView.startScanning(this)
 
+        setActiveBarcodeTypes()
+        setBarkoderSettings()
 
 
 
     }
 
-    override fun scanningFinished(p0: Array<out Barkoder.Result>?, p1: Bitmap?) {
-        p0?.get(0)?.let { Log.i("Scanned result", it.textualData) }
+    private fun setActiveBarcodeTypes() {
+        // There is option to set multiple active barcodes at once as array
+        binding.bkdView.config.decoderConfig.SetEnabledDecoders(
+            arrayOf(
+                Barkoder.DecoderType.QR,
+                Barkoder.DecoderType.Ean13
+            )
+        )
+        // or configure them one by one
+        binding.bkdView.config.decoderConfig.UpcA.enabled = true
     }
+
+    private fun setBarkoderSettings() {
+        // These are optional settings, otherwise default values will be used
+        binding.bkdView.config.let { config ->
+            config.isImageResultEnabled = true
+            config.isLocationInImageResultEnabled = true
+            config.isRegionOfInterestVisible = true
+            config.isPinchToZoomEnabled = true
+            config.setRegionOfInterest(5f, 5f, 90f, 90f)
+        }
+    }
+    private fun updateUI(result: Barkoder.Result? = null, resultImage: Bitmap? = null) {
+        binding.textBarcodeResult.text = result?.textualData
+        var intentY = Intent(this@ScanProductActivity, SaveProductActivity::class.java)
+        var barcodeNum = result?.textualData
+        intentY.putExtra("barcodeNumber", barcodeNum)
+        startActivity(intentY)
+
+    }
+    override fun scanningFinished(results: Array<Barkoder.Result>, resultImage: Bitmap?) {
+
+        if (results.isNotEmpty())
+            updateUI(results[0], resultImage)
+        else
+            updateUI()
+    }
+
+
 }

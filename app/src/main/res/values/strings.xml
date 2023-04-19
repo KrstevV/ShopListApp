@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BarkoderShopApp</string>
+    <string name="result_title">Barkoder!</string>
 </resources>

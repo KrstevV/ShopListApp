@@ -15,8 +15,7 @@ class SaveProductActivity : AppCompatActivity() {
     lateinit var binding  : ActivitySaveProductBinding
     private lateinit var toolBarBind : ToolBarBinding
     val productViewModel : ProductViewModel by viewModels()
-    val currentProduct = ProductDataEntity("",
-        "", "", "", true,"", "")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySaveProductBinding.inflate(layoutInflater)
@@ -24,10 +23,45 @@ class SaveProductActivity : AppCompatActivity() {
         toolBarBind = ToolBarBinding.inflate(layoutInflater)
         var toolBar = toolBarBind.toolBarr
         setSupportActionBar(toolBar)
+        var barcode = intent.getStringExtra("barcodeNumber")
+        val currentProduct = ProductDataEntity("",
+            barcode, "", "", true,"", "")
+
+        val listProducts = arrayListOf(ProductDataEntity("Marlboro Touch",
+            "5319990797575", "Cigari", "140den", true,"", "1")
+            ,ProductDataEntity("Kruger",
+
+            "4052700860770", "Sumlivi tableti", "90den", true,"", "1")
+            ,ProductDataEntity("Violeta Sredstvo",
+
+            "3870128012806", "Sredstvo za staklo", "115den", true,"", "1"))
+
+
+            if(currentProduct.barcodeProduct == listProducts[0].barcodeProduct) {
+                binding.textProductName.text = listProducts[0].nameProduct
+                binding.textBarcodeNumber.text = listProducts[0].barcodeProduct
+                binding.textProductActive.text = listProducts[0].activeProduct.toString()
+                binding.textProductNote.text = listProducts[0].noteProduct
+            }
+        if(currentProduct.barcodeProduct == listProducts[1].barcodeProduct) {
+            binding.textProductName.text = listProducts[1].nameProduct
+            binding.textBarcodeNumber.text = listProducts[1].barcodeProduct
+            binding.textProductActive.text = listProducts[1].activeProduct.toString()
+            binding.textProductNote.text = listProducts[1].noteProduct
+        }
+        if(currentProduct.barcodeProduct == listProducts[2].barcodeProduct) {
+            binding.textProductName.text = listProducts[2].nameProduct
+            binding.textBarcodeNumber.text = listProducts[2].barcodeProduct
+            binding.textProductActive.text = listProducts[2].activeProduct.toString()
+            binding.textProductNote.text = listProducts[2].noteProduct
+        }
+
+
+        if(binding.textBarcodeNumber.text == currentProduct.barcodeProduct) {
+        }
 
         binding.btnSave.setOnClickListener {
             currentProduct.nameProduct = binding.textProductName.text.toString()
-            currentProduct.barcodeProduct = binding.textBarcodeNumber.text.toString()
             productViewModel.insert(currentProduct)
             var intent = Intent(this@SaveProductActivity, ListProductActivity::class.java)
             startActivity(intent)
