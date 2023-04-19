@@ -3,9 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
-        android:name=".data.listhistorydata.aplication.MyApp"
+        android:name="com.example.barkoder.data.listhistorydata.aplication.MyApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -15,29 +16,29 @@
         android:theme="@style/Theme.BarkoderShopApp"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.ScanProductActivity"
+            android:name="com.example.barkoder.presentation.ScanProductActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.HistoryListActivity"
+            android:name="com.example.barkoder.presentation.HistoryListActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.ListProductActivity"
+            android:name="com.example.barkoder.presentation.ListProductActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.SaveProductActivity"
+            android:name="com.example.barkoder.presentation.SaveProductActivity"
             android:exported="false"
-            android:parentActivityName=".presentation.MainActivity"
+            android:parentActivityName="com.example.barkoder.presentation.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".presentation.RegisterActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".presentation.LoginActivity"
+            android:name="com.example.barkoder.presentation.RegisterActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".presentation.SplashScreenActivity"
+            android:name="com.example.barkoder.presentation.LoginActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.example.barkoder.presentation.SplashScreenActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -47,7 +48,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.MainActivity"
+            android:name="com.example.barkoder.presentation.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
