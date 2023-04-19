@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.barkoder.shoppingApp.net.databinding.ProductListItemBinding
 import com.example.barkoder.data.room.ProductDataEntity
+import com.squareup.picasso.Picasso
 
 class ProductAdapter (private var list : List<ProductDataEntity>): RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
 
@@ -16,6 +17,7 @@ class ProductAdapter (private var list : List<ProductDataEntity>): RecyclerView.
             binding.textCountProduct.text = list.count.toString()
             binding.textPriceProduct.text = list.priceProduct
             binding.textProductTotalPrice.text = list.priceProduct
+            Picasso.get().load("https://www.geoprom.com.mk/images/KRUGER/multivitamin.jpg").into(binding.productImage)
 
         }
     }

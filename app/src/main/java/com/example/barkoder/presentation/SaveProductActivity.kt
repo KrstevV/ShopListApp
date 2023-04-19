@@ -8,6 +8,7 @@ import com.barkoder.shoppingApp.net.databinding.ActivitySaveProductBinding
 import com.barkoder.shoppingApp.net.databinding.ToolBarBinding
 import com.example.barkoder.data.room.ProductDataEntity
 import com.example.barkoder.presentation.viewmodel.ProductViewModel
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,23 +37,31 @@ class SaveProductActivity : AppCompatActivity() {
 
             "3870128012806", "Sredstvo za staklo", "115den", true,"", "1"))
 
-                var products = "asdasd"
             if(currentProduct.barcodeProduct == listProducts[0].barcodeProduct) {
                 binding.textProductName.text = listProducts[0].nameProduct
                 binding.textBarcodeNumber.text = listProducts[0].barcodeProduct
-                binding.textProductActive.text = listProducts[0].activeProduct.toString()
+                if(listProducts[0].activeProduct) {
+                    binding.textProductActive.text = "Active"
+                }
                 binding.textProductNote.text = listProducts[0].noteProduct
+
             }
         if(currentProduct.barcodeProduct == listProducts[1].barcodeProduct) {
             binding.textProductName.text = listProducts[1].nameProduct
             binding.textBarcodeNumber.text = listProducts[1].barcodeProduct
-            binding.textProductActive.text = listProducts[1].activeProduct.toString()
+            if(listProducts[1].activeProduct) {
+                binding.textProductActive.text = "Active"
+            }
             binding.textProductNote.text = listProducts[1].noteProduct
+            currentProduct.imageProduct = "https://www.geoprom.com.mk/images/KRUGER/multivitamin.jpg"
+            Picasso.get().load(currentProduct.imageProduct).into(binding.imageProduct)
         }
         if(currentProduct.barcodeProduct == listProducts[2].barcodeProduct) {
             binding.textProductName.text = listProducts[2].nameProduct
             binding.textBarcodeNumber.text = listProducts[2].barcodeProduct
-            binding.textProductActive.text = listProducts[2].activeProduct.toString()
+            if(listProducts[2].activeProduct) {
+                binding.textProductActive.text = "Active"
+            }
             binding.textProductNote.text = listProducts[2].noteProduct
         }
 
