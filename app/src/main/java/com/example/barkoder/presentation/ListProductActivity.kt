@@ -3,6 +3,8 @@ package com.example.barkoder.presentation
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,6 +37,7 @@ class ListProductActivity : AppCompatActivity(){
         var productL = arrayListOf<ProductDataEntity>()
         productAdatper = ProductAdapter(productL, clickListenerButtons)
 
+
         toolBarBind = ToolBarBinding.inflate(layoutInflater)
         var toolBar = toolBarBind.toolBarr
         setSupportActionBar(toolBar)
@@ -48,9 +51,8 @@ class ListProductActivity : AppCompatActivity(){
             productAdatper.setNotesList(products)
             var top = onLoop(products).toString()
             binding.textTotalCost.text = top
+
         })
-
-
 
         binding.btnScan.setOnClickListener {
             var intent = Intent(this@ListProductActivity, ScanProductActivity::class.java)
@@ -62,6 +64,7 @@ class ListProductActivity : AppCompatActivity(){
         itemTouchHelper.attachToRecyclerView(binding.recViewProductList)
 
 
+
         binding.btnAddList.setOnClickListener {
                 if(binding.editTextListName.text.toString() != "") {
                     var name  = binding.editTextListName.text.toString()
@@ -71,10 +74,11 @@ class ListProductActivity : AppCompatActivity(){
                     var intent = Intent(this@ListProductActivity, HistoryListActivity::class.java)
                     startActivity(intent)
                     finish()
+                } else {
+                    Toast.makeText(this, "Add a name on List", Toast.LENGTH_SHORT).show()
                 }
         }
     }
-
     private fun onLoop(products : MutableList<ProductDataEntity>) : Int {
                 var sum = 0
             for(product in products) {
@@ -113,5 +117,6 @@ class ListProductActivity : AppCompatActivity(){
         }
 
     }
+
 
 }
