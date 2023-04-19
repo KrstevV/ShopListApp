@@ -36,7 +36,7 @@ class SaveProductActivity : AppCompatActivity() {
 
             "3870128012806", "Sredstvo za staklo", "115den", true,"", "1"))
 
-
+                var products = "asdasd"
             if(currentProduct.barcodeProduct == listProducts[0].barcodeProduct) {
                 binding.textProductName.text = listProducts[0].nameProduct
                 binding.textBarcodeNumber.text = listProducts[0].barcodeProduct
