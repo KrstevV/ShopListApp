@@ -47,12 +47,14 @@ class ListProductActivity : AppCompatActivity(){
             adapter = productAdatper
         }
 
+
         productViewModel.allNotes.observe(this, {products ->
             productAdatper.setNotesList(products)
             var top = onLoop(products).toString()
             binding.textTotalCost.text = top
 
         })
+
 
         binding.btnScan.setOnClickListener {
             var intent = Intent(this@ListProductActivity, ScanProductActivity::class.java)
@@ -66,18 +68,22 @@ class ListProductActivity : AppCompatActivity(){
 
 
         binding.btnAddList.setOnClickListener {
-                if(binding.editTextListName.text.toString() != "") {
-                    var name  = binding.editTextListName.text.toString()
-                    var date = "Created at ${getCurrentDate()}"
-                    val currentHistory = HistoryDataEntity(name, date)
-                    historyViewModel.insert(currentHistory)
-                    var intent = Intent(this@ListProductActivity, HistoryListActivity::class.java)
+//                if(binding.editTextListName.text.toString() != "") {
+//                    var name  = binding.editTextListName.text.toString()
+//                    var date = "Created at ${getCurrentDate()}"
+//                    val currentHistory = HistoryDataEntity(name, date)
+//                    historyViewModel.insert(currentHistory)
+                    var intent = Intent(this@ListProductActivity, AddProduct::class.java)
                     startActivity(intent)
                     finish()
-                } else {
-                    Toast.makeText(this, "Add a name on List", Toast.LENGTH_SHORT).show()
-                }
+//                } else {
+//                    Toast.makeText(this, "Add a name on List", Toast.LENGTH_SHORT).show()
+//                }
         }
+
+
+
+
     }
     private fun onLoop(products : MutableList<ProductDataEntity>) : Int {
                 var sum = 0
