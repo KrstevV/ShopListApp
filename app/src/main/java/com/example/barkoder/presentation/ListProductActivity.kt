@@ -35,20 +35,18 @@ class ListProductActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding = ActivityListProductBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         var productL = arrayListOf<ProductDataEntity>()
         productAdatper = ProductAdapter(productL, clickListenerButtons)
-
 
         toolBarBind = ToolBarBinding.inflate(layoutInflater)
         var toolBar = toolBarBind.toolBarr
         setSupportActionBar(toolBar)
 
-
         binding.recViewProductList.apply {
             layoutManager = LinearLayoutManager(this@ListProductActivity)
             adapter = productAdatper
         }
-
 
         productViewModel.allNotes.observe(this, {products ->
             productAdatper.setNotesList(products)
@@ -56,8 +54,6 @@ class ListProductActivity : AppCompatActivity(){
             binding.textTotalCost.text = top
 
         })
-
-
 
         binding.btnDeleteAll.setOnClickListener {
             builderDeleteAllProducts()
@@ -82,29 +78,20 @@ class ListProductActivity : AppCompatActivity(){
 
         }
 
-
         binding.btnScan.setOnClickListener {
             var intent = Intent(this@ListProductActivity, ScanProductActivity::class.java)
             startActivity(intent)
         }
 
         val itemTouchHelper = ItemTouchHelper(swipteToDelete)
-
         itemTouchHelper.attachToRecyclerView(binding.recViewProductList)
-
-
 
         binding.btnAddList.setOnClickListener {
 
                     var intent = Intent(this@ListProductActivity, AddProduct::class.java)
                     startActivity(intent)
-                    finish()
 
         }
-
-
-
-
     }
     private fun onLoop(products : MutableList<ProductDataEntity>) : Int {
                 var sum = 0
@@ -113,16 +100,13 @@ class ListProductActivity : AppCompatActivity(){
             }
             return sum
     }
-
    private val swipteToDelete = object : SwipeToDelete() {
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             val position = viewHolder.absoluteAdapterPosition
             productAdatper.notifyItemRemoved(position)
             productViewModel.deleteItem(productAdatper.getProductInt(position))
-
         }
     }
-
 
     private val clickListenerButtons = object : OnClickListenerButtons {
         override fun onClickPlus(list: ProductDataEntity) {
@@ -138,7 +122,6 @@ class ListProductActivity : AppCompatActivity(){
             }
             productViewModel.updateItem(list)
         }
-
     }
 
     private fun builderDeleteAllProducts(){
@@ -154,6 +137,4 @@ class ListProductActivity : AppCompatActivity(){
         }
         builder.show()
     }
-
-
 }

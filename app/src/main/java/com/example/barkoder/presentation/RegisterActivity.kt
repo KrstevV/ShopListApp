@@ -20,6 +20,10 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.btnBackActivityR.setOnClickListener {
+            finish()
+        }
+
 
         database = FirebaseDatabase.getInstance()
         auth = Firebase.auth
@@ -27,6 +31,9 @@ class RegisterActivity : AppCompatActivity() {
         binding.btnRegisterRegister.setOnClickListener {
             if(performPassword()) {
                 performSingup()
+                var intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
             }
 
         }

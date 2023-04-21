@@ -50,13 +50,16 @@ class HistoryListActivity : AppCompatActivity() {
         val itemTouchHelper = ItemTouchHelper(swipteToDelete)
 
         itemTouchHelper.attachToRecyclerView(binding.recViewHistoryList)
-
+        binding.btnBackActivityH.setOnClickListener {
+            finish()
+        }
 
         binding.btnNewList.setOnClickListener {
             var intent = Intent(this@HistoryListActivity, ListProductActivity::class.java)
             startActivity(intent)
         }
     }
+
 
         private val swipteToDelete = object : SwipeToDelete() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {

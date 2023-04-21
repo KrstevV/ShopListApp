@@ -16,6 +16,9 @@
         android:theme="@style/Theme.BarkoderShopApp"
         tools:targetApi="31">
         <activity
+            android:name="com.example.barkoder.presentation.HomeScreenActivity"
+            android:exported="false" />
+        <activity
             android:name="com.example.barkoder.presentation.PaymentActivity"
             android:exported="false" />
         <activity

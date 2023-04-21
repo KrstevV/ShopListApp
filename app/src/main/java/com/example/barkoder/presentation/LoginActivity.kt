@@ -31,7 +31,6 @@ class LoginActivity : AppCompatActivity() {
 
         database = FirebaseDatabase.getInstance()
 
-
         val  options = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -42,10 +41,6 @@ class LoginActivity : AppCompatActivity() {
             val intent = googleSignInClient.signInIntent
             startActivityForResult(intent,10001)
         }
-
-
-
-
 
         binding.btnRegister.setOnClickListener {
             var intent = Intent(this, RegisterActivity::class.java)
@@ -60,8 +55,6 @@ class LoginActivity : AppCompatActivity() {
             }
 
         }
-
-
     }
 
     private fun performLogin() {

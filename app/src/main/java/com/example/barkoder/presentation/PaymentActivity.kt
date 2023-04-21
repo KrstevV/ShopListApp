@@ -41,7 +41,7 @@ class PaymentActivity : AppCompatActivity() {
                 var date = "Pursched at ${getCurrentDate()}"
                 val currentHistory = HistoryDataEntity(nameList,date,totalList,listSize)
                 historyViewModel.insert(currentHistory)
-                var intent = Intent(this@PaymentActivity, HistoryListActivity::class.java)
+                var intent = Intent(this@PaymentActivity, HomeScreenActivity::class.java)
                 startActivity(intent)
                 finish()
             } else {

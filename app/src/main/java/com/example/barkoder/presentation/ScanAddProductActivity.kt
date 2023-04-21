@@ -63,7 +63,7 @@ class ScanAddProductActivity : AppCompatActivity(), BarkoderResultCallback {
         }
     }
     private fun updateUI(result: Barkoder.Result? = null, resultImage: Bitmap? = null) {
-        binding.textBarcodeResult2.text = result?.textualData
+//        binding.textBarcodeResult2.text = result?.textualData
         var intentY = Intent(this@ScanAddProductActivity, AddProduct::class.java)
         var barcodeNum2 = result?.textualData
         intentY.putExtra("barcodeNumber2", barcodeNum2)
