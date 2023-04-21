@@ -16,13 +16,16 @@
         android:theme="@style/Theme.BarkoderShopApp"
         tools:targetApi="31">
         <activity
+            android:name="com.example.barkoder.presentation.PaymentActivity"
+            android:exported="false" />
+        <activity
             android:name="com.example.barkoder.presentation.ScanAddProductActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.example.barkoder.presentation.AddProduct"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.example.barkoder.presentation.ScanProductActivity"
             android:exported="false"
@@ -34,9 +37,9 @@
         <activity
             android:name="com.example.barkoder.presentation.ListProductActivity"
             android:exported="false"
+            android:parentActivityName="com.example.barkoder.presentation.HistoryListActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|adjustResize"
-            android:parentActivityName="com.example.barkoder.presentation.HistoryListActivity"/>
+            android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name="com.example.barkoder.presentation.SaveProductActivity"
             android:exported="false"

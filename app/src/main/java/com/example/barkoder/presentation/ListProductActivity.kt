@@ -57,11 +57,29 @@ class ListProductActivity : AppCompatActivity(){
 
         })
 
+
+
         binding.btnDeleteAll.setOnClickListener {
             builderDeleteAllProducts()
         }
         binding.btnBackActivity.setOnClickListener {
             finish()
+        }
+
+        binding.btnShopCart.setOnClickListener {
+            if(binding.editTextListName.text.toString() != "") {
+                var listName  = binding.editTextListName.text.toString()
+                var size = productViewModel.allNotes.value?.size
+                var intent = Intent(this@ListProductActivity, PaymentActivity::class.java)
+                var totalCost = binding.textTotalCost.text
+                intent.putExtra("listName", listName)
+                intent.putExtra("totalCost", totalCost)
+                intent.putExtra("size", size)
+                startActivity(intent)
+            }  else {
+                   Toast.makeText(this, "Add a name on List", Toast.LENGTH_SHORT).show()
+               }
+
         }
 
 
@@ -77,17 +95,11 @@ class ListProductActivity : AppCompatActivity(){
 
 
         binding.btnAddList.setOnClickListener {
-//                if(binding.editTextListName.text.toString() != "") {
-//                    var name  = binding.editTextListName.text.toString()
-//                    var date = "Created at ${getCurrentDate()}"
-//                    val currentHistory = HistoryDataEntity(name, date)
-//                    historyViewModel.insert(currentHistory)
+
                     var intent = Intent(this@ListProductActivity, AddProduct::class.java)
                     startActivity(intent)
                     finish()
-//                } else {
-//                    Toast.makeText(this, "Add a name on List", Toast.LENGTH_SHORT).show()
-//                }
+
         }
 
 
@@ -110,11 +122,7 @@ class ListProductActivity : AppCompatActivity(){
 
         }
     }
-    private fun getCurrentDate(): String {
-        val currentDate = Calendar.getInstance().time
-        val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm")
-        return formatter.format(currentDate)
-    }
+
 
     private val clickListenerButtons = object : OnClickListenerButtons {
         override fun onClickPlus(list: ProductDataEntity) {

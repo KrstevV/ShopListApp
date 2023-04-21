@@ -18,6 +18,8 @@ class HistoryAdapter (private var list : ArrayList<HistoryDataEntity>, var liste
                 fun bind(list : HistoryDataEntity) {
                      binding.textListName.text = list.listName
                      binding.textCreatedDateList.text = list.listCreated
+                        binding.textCost.text = list.totalCost
+                        binding.textProductsSize.text = list.listSize
                         binding.recViewHistoryList.setOnClickListener {
                                 listener.onClick(list)
                         }
