@@ -3,12 +3,11 @@ package com.example.barkoder.presentation
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
-import com.barkoder.shoppingApp.net.R
 import com.barkoder.shoppingApp.net.databinding.ActivityAddProductBinding
 import com.example.barkoder.data.room.ProductDataEntity
+import com.example.barkoder.domain.userdataacc.DataList
 import com.example.barkoder.presentation.viewmodel.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,17 +21,9 @@ class AddProduct : AppCompatActivity() {
         setContentView(binding.root)
         var currentAddProduct = ProductDataEntity("productName","productBarcode","productNotes", 0, true, "https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg", 1, 0)
 
-
-
-
         var barcode2 = intent.getStringExtra("barcodeNumber2")
 
         binding.editTextBarcodeAddProduct.setText(barcode2)
-
-
-
-
-
 
         binding.btnScanAddProduct.setOnClickListener {
             var intent = Intent(this@AddProduct, ScanAddProductActivity::class.java)
@@ -40,8 +31,6 @@ class AddProduct : AppCompatActivity() {
             finish()
 
         }
-
-
         binding.btnAddProductToList.setOnClickListener {
 
             var productName = binding.editTextNameAddProduct.text.toString()
@@ -61,6 +50,8 @@ class AddProduct : AppCompatActivity() {
                 currentAddProduct.noteProduct = productNotes
                 currentAddProduct.totalPrice = productPrice.toInt()
                 productViewModel.insert(currentAddProduct)
+
+
                 var intent = Intent(this@AddProduct, ListProductActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -71,11 +62,6 @@ class AddProduct : AppCompatActivity() {
 
 
         }
-
-
-
-
-
-
     }
+
 }

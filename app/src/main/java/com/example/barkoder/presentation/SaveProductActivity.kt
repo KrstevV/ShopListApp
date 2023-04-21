@@ -41,6 +41,7 @@ class SaveProductActivity : AppCompatActivity() {
 
             "3870128012806", "Sredstvo za staklo", 115, true,"", 1,115))
 
+
         forLoopProduct(listProducts)
         binding.textPrice.text = currentProduct.priceProduct.toString()
         binding.textProductName.text = currentProduct.nameProduct
@@ -60,6 +61,7 @@ class SaveProductActivity : AppCompatActivity() {
                 productViewModel.insert(currentProduct)
                 var intent = Intent(this@SaveProductActivity, ListProductActivity::class.java)
                 startActivity(intent)
+                 finish()
         }
     }
     private fun forLoopProduct(list : ArrayList<ProductDataEntity>) {

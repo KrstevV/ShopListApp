@@ -15,7 +15,7 @@
         android:layout_weight="1"
         android:clickable="true"
         android:src="@drawable/baseline_qr_code_scanner_25"
-        app:backgroundTint="@android:color/holo_orange_dark"
+        app:backgroundTint="@android:color/darker_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:rippleColor="#F3EEEE" />
@@ -29,7 +29,7 @@
         android:layout_weight="1"
         android:clickable="true"
         android:src="@drawable/baseline_add_24"
-        app:backgroundTint="@android:color/holo_orange_dark"
+        app:backgroundTint="@android:color/darker_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -46,7 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="List Product"
+        android:text="Shop Cart"
         android:textColor="#FBFAFA"
         android:textSize="28sp"
         android:textStyle="bold"
@@ -67,9 +67,9 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="75dp"
             android:layout_marginTop="5dp"
-            android:layout_marginRight="30dp"
+            android:layout_marginRight="10dp"
             app:startIconDrawable="@drawable/baseline_format_list_bulleted_24">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -120,5 +120,35 @@
         app:layout_constraintBottom_toTopOf="@+id/textTotalCost"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/btnShopCart"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintEnd_toEndOf="@+id/include"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_shop" />
+
+    <ImageView
+        android:id="@+id/btnDeleteAll"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="93dp"
+        app:layout_constraintStart_toStartOf="@+id/include"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_delete" />
+
+    <ImageView
+        android:id="@+id/btnBackActivity"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_back" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -42,6 +43,7 @@ class ListProductActivity : AppCompatActivity(){
         var toolBar = toolBarBind.toolBarr
         setSupportActionBar(toolBar)
 
+
         binding.recViewProductList.apply {
             layoutManager = LinearLayoutManager(this@ListProductActivity)
             adapter = productAdatper
@@ -54,6 +56,13 @@ class ListProductActivity : AppCompatActivity(){
             binding.textTotalCost.text = top
 
         })
+
+        binding.btnDeleteAll.setOnClickListener {
+            builderDeleteAllProducts()
+        }
+        binding.btnBackActivity.setOnClickListener {
+            finish()
+        }
 
 
         binding.btnScan.setOnClickListener {
@@ -122,6 +131,20 @@ class ListProductActivity : AppCompatActivity(){
             productViewModel.updateItem(list)
         }
 
+    }
+
+    private fun builderDeleteAllProducts(){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Delete all Products")
+        builder.setMessage("Do you want to delete all Products?")
+        builder.setPositiveButton("Yes") { dialog, which ->
+            productViewModel.delete()
+            dialog.dismiss()
+        }
+        builder.setNegativeButton("No") { dialog, which ->
+            dialog.dismiss()
+        }
+        builder.show()
     }
 
 

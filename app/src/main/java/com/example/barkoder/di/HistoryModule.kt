@@ -1,10 +1,7 @@
 package com.example.barkoder.di
 
 import android.app.Application
-import com.example.barkoder.data.room.HistoryDao
-import com.example.barkoder.data.room.HistoryDatabase
-import com.example.barkoder.data.room.ProductDao
-import com.example.barkoder.data.room.ProductDatabase
+import com.example.barkoder.data.room.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,6 +36,5 @@ object HistoryModule {
     fun getProductDao(productDB : ProductDatabase) : ProductDao {
         return productDB.productDao()
     }
-
 
 }
