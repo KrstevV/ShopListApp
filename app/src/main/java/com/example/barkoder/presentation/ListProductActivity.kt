@@ -19,6 +19,7 @@ import com.example.barkoder.data.room.ProductDataEntity
 import com.example.barkoder.data.room.ProductDatabase
 import com.example.barkoder.presentation.Adapters.ProductAdapter
 import com.example.barkoder.presentation.viewmodel.HistoryViewModel
+import com.example.barkoder.presentation.viewmodel.ProductApiViewModel
 import com.example.barkoder.presentation.viewmodel.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -31,6 +32,7 @@ class ListProductActivity : AppCompatActivity(){
     lateinit var binding : ActivityListProductBinding
     val productViewModel : ProductViewModel by viewModels()
     val historyViewModel : HistoryViewModel by viewModels()
+    val productApiViewModel : ProductApiViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityListProductBinding.inflate(layoutInflater)

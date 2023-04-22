@@ -7,7 +7,6 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import com.barkoder.shoppingApp.net.databinding.ActivityAddProductBinding
 import com.example.barkoder.data.room.ProductDataEntity
-import com.example.barkoder.domain.userdataacc.DataList
 import com.example.barkoder.presentation.viewmodel.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,8 +28,9 @@ class AddProduct : AppCompatActivity() {
             var intent = Intent(this@AddProduct, ScanAddProductActivity::class.java)
             startActivity(intent)
             finish()
-
         }
+
+
         binding.btnAddProductToList.setOnClickListener {
 
             var productName = binding.editTextNameAddProduct.text.toString()
@@ -38,7 +38,7 @@ class AddProduct : AppCompatActivity() {
             var productPrice = binding.editPriceAddProduct.text.toString()
             var productNotes = binding.editTextNotesAddProduct.text.toString()
 
-            if(productName.isNotEmpty() && productBarcode.isNotEmpty()) {
+            if(productName.isNotEmpty() && productNotes.isNotEmpty() && productPrice.isNotEmpty()) {
                 if(binding.checkBox.isChecked) {
                     currentAddProduct.activeProduct = true
                 } else {
@@ -49,6 +49,7 @@ class AddProduct : AppCompatActivity() {
                 currentAddProduct.priceProduct = productPrice.toInt()
                 currentAddProduct.noteProduct = productNotes
                 currentAddProduct.totalPrice = productPrice.toInt()
+
                 productViewModel.insert(currentAddProduct)
 
 

@@ -26,6 +26,10 @@ class PaymentActivity : AppCompatActivity() {
        var size = intent.getIntExtra("size", 0)
        var listName = intent.getStringExtra("listName")
 
+        binding.btnBackActivityC.setOnClickListener {
+            finish()
+        }
+
         binding.textTotal.text = total
         binding.textSize.text = size.toString()
         binding.textListNamee.text = listName
@@ -44,6 +48,7 @@ class PaymentActivity : AppCompatActivity() {
                 var intent = Intent(this@PaymentActivity, HomeScreenActivity::class.java)
                 startActivity(intent)
                 finish()
+                Toast.makeText(this, "Chekcout was sucesfful", Toast.LENGTH_LONG).show()
             } else {
                 Toast.makeText(this, "Fields cannot be empty!", Toast.LENGTH_SHORT).show()
             }
