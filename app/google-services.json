@@ -1,7 +1,8 @@
 {
   "project_info": {
     "project_number": "28669994140",
-    "project_id": "com.barkoder.shoppingApp.net",
+    "firebase_url": "https://barkodershopapp-default-rtdb.firebaseio.com",
+    "project_id": "barkodershopapp",
     "storage_bucket": "barkodershopapp.appspot.com"
   },
   "client": [
@@ -17,12 +18,12 @@
           "client_id": "28669994140-rf6b4qked3c6403hl2et6gqqs5ek8tih.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.barkoder.shoppingApp.net",
+            "package_name": "com.example.barkodershopapp",
             "certificate_hash": "44501bb1c1887632f81f0dfecd68224aa483787f"
           }
         },
         {
-          "client_id": "28669994140-bcfvu00232t6j2nqjd0q9fnok5i5qrt4.apps.googleusercontent.com",
+          "client_id": "28669994140-bl9461ev1c63vm5olr50ur7m3mulmcpf.apps.googleusercontent.com",
           "client_type": 3
         }
       ],

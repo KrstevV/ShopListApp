@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.barkoder.presentation.SaveProductActivity">
+    tools:context="com.example.barkodershopapp.presentation.SaveProductActivity">
 
     <include
         android:id="@+id/include"
