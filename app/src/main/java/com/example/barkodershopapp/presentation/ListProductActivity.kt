@@ -40,6 +40,11 @@ class ListProductActivity : AppCompatActivity(){
         var toolBar = toolBarBind.toolBarr
         setSupportActionBar(toolBar)
 
+        binding.imageSelectList.setOnClickListener {
+            var intent = Intent(this@ListProductActivity, SelectProductActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.recViewProductList.apply {
             layoutManager = LinearLayoutManager(this@ListProductActivity)
             adapter = productAdatper
@@ -91,7 +96,7 @@ class ListProductActivity : AppCompatActivity(){
             intent.putExtra("size", size)
             startActivity(intent)
         }  else {
-            Toast.makeText(this, "Add a name on List", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Add a name on Cart", Toast.LENGTH_SHORT).show()
         }
     }
     private fun onLoop(products : MutableList<ProductDataEntity>) : Int {

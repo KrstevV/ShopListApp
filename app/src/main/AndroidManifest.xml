@@ -8,22 +8,26 @@
     <application
         android:name="com.example.barkodershopapp.data.listhistorydata.aplication.MyApp"
         android:allowBackup="true"
-        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.BarkoderShopApp"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name="com.example.barkodershopapp.presentation.SelectProductActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.example.barkodershopapp.presentation.HomeScreenActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.example.barkodershopapp.presentation.PaymentActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.example.barkodershopapp.presentation.ScanAddProductActivity"
             android:exported="false"

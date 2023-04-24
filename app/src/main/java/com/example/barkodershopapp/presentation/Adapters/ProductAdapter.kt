@@ -19,13 +19,12 @@ class ProductAdapter (private var list : List<ProductDataEntity>, private val li
             binding.btnMinusSize.setOnClickListener {
                 listener.onClickMinus(list)
             }
-
-            binding.textProductNamee.text = list.nameProduct
-            binding.textBarcodeProduct.text = list.barcodeProduct.toString()
+            binding.textProductName.text = list.nameProduct
+            binding.textProductBarcode.text = list.barcodeProduct.toString()
             binding.textCountProduct.text = list.count.toString()
-            binding.textPriceProduct.text = list.priceProduct.toString()
+            binding.textProductPrice.text = list.priceProduct.toString()
             binding.textProductTotalPrice.text = list.totalPrice.toString()
-            Picasso.get().load(list.imageProduct).into(binding.productImageList)
+            Picasso.get().load(list.imageProduct).into(binding.imageProduct)
 
 
 

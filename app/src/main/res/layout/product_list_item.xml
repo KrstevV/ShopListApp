@@ -8,7 +8,7 @@
     android:background="@drawable/rounded_background">
 
     <TextView
-        android:id="@+id/textBarcodeProduct"
+        android:id="@+id/textProductBarcode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -20,25 +20,26 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageView5"
-        app:layout_constraintStart_toEndOf="@+id/productImageList" />
+        app:layout_constraintStart_toEndOf="@+id/imageProduct" />
 
     <TextView
-        android:id="@+id/textProductNamee"
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="2dp"
+        android:id="@+id/textProductName"
+        android:layout_width="150dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="14dp"
         android:text="Coca Cola"
         android:textColor="#F4EFEF"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textBarcodeProduct"
-        app:layout_constraintStart_toEndOf="@+id/textView6"
+        app:layout_constraintBottom_toTopOf="@+id/textProductBarcode"
+        app:layout_constraintStart_toEndOf="@+id/imageProduct"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.083" />
 
     <ImageView
-        android:id="@+id/productImageList"
+        android:id="@+id/imageProduct"
         android:layout_width="64dp"
         android:layout_height="80dp"
         android:layout_marginStart="10dp"
@@ -96,24 +97,8 @@
         android:layout_marginStart="3dp"
         android:layout_marginBottom="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textBarcodeProduct"
+        app:layout_constraintStart_toEndOf="@+id/textProductBarcode"
         app:srcCompat="@drawable/baseline_qr_code_scanner_24" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="15dp"
-        android:text="Name: "
-        android:textColor="#F4EFEF"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textBarcodeProduct"
-        app:layout_constraintEnd_toStartOf="@+id/textProductNamee"
-        app:layout_constraintStart_toEndOf="@+id/productImageList"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView7"
@@ -126,12 +111,12 @@
         android:textColor="#F4F1F1"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/productImageList"
-        app:layout_constraintTop_toBottomOf="@+id/textBarcodeProduct"
+        app:layout_constraintStart_toEndOf="@+id/imageProduct"
+        app:layout_constraintTop_toBottomOf="@+id/textProductBarcode"
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/textPriceProduct"
+        android:id="@+id/textProductPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
@@ -142,7 +127,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView7"
-        app:layout_constraintTop_toBottomOf="@+id/textBarcodeProduct" />
+        app:layout_constraintTop_toBottomOf="@+id/textProductBarcode" />
 
     <TextView
         android:id="@+id/textCountProduct"
