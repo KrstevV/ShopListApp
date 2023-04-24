@@ -58,7 +58,7 @@ class RegisterActivity : AppCompatActivity() {
                             val users = UuserDataAcc(name, email, password, auth.currentUser!!.uid)
                             databaseRef.setValue(users).addOnCompleteListener {
                                 if(it.isSuccessful)
-                                    Toast.makeText(this@RegisterActivity, "Account is sucessful created", Toast.LENGTH_SHORT)
+                                    Toast.makeText(applicationContext, "Account is sucessful created", Toast.LENGTH_SHORT)
                                         .show()
                                 var intentS = Intent(this@RegisterActivity, LoginActivity::class.java)
                                 startActivity(intentS)

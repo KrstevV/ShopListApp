@@ -69,8 +69,8 @@ class LoginActivity : AppCompatActivity() {
         if (userName.isNotEmpty() && password.isNotEmpty()) {
             auth.signInWithEmailAndPassword(userName, password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(this, "Login was sucessful", Toast.LENGTH_SHORT).show()
-                    var intent = Intent(this, HistoryListActivity::class.java)
+                    Toast.makeText(applicationContext, "Login was sucessful", Toast.LENGTH_SHORT).show()
+                    var intent = Intent(this, HomeScreenActivity::class.java)
                     startActivity(intent)
                     finish()
                 }
@@ -126,13 +126,13 @@ class LoginActivity : AppCompatActivity() {
                 }
         }
     }
-    override fun onStart() {
-        super.onStart()
-        if(FirebaseAuth.getInstance().currentUser != null){
-            val i  = Intent(this, HomeScreenActivity::class.java)
-            startActivity(i)
-        }
-    }
+//    override fun onStart() {
+//        super.onStart()
+//        if(FirebaseAuth.getInstance().currentUser != null){
+//            val i  = Intent(this, HomeScreenActivity::class.java)
+//            startActivity(i)
+//        }
+//    }
 
 }
 
