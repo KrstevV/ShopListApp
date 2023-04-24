@@ -1,6 +1,7 @@
 package com.example.barkodershopapp.presentation
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -48,6 +49,8 @@ class SaveProductActivity : AppCompatActivity() {
 
             if (currentProduct.imageProduct!!.isEmpty()) {
                 binding.imageProduct.setImageResource(R.drawable.ic_broken_image)
+                binding.btnSave.isClickable = false
+                binding.btnSave.setBackgroundColor(Color.GRAY)
             } else{
                 Picasso.get().load(cupo).into(binding.imageProduct);
             }

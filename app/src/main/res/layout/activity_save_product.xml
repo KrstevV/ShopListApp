@@ -27,7 +27,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include"
-        app:srcCompat="@drawable/coca_cola" />
+        app:srcCompat="@drawable/ic_broken_image" />
 
     <TextView
         android:id="@+id/textBarcodeNumber"
@@ -37,7 +37,7 @@
         android:layout_marginTop="15dp"
         android:background="#F3E8E8"
         android:gravity="center"
-        android:text="9837238432"
+        android:text="xxxxxxxxxx"
         android:textSize="25sp"
         app:layout_constraintEnd_toStartOf="@+id/imageView3"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +51,7 @@
         android:layout_marginTop="44dp"
         android:background="#F3E8E8"
         android:gravity="center"
-        android:text="Coca Cola"
+        android:text="&quot;&quot;"
         android:textSize="25sp"
         app:layout_constraintEnd_toStartOf="@+id/textProductActive"
         app:layout_constraintStart_toStartOf="parent"
@@ -94,6 +94,7 @@
         android:maxLines="10"
         android:minLines="6"
         android:scrollbars="vertical"
+        android:text="'"
         android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -164,7 +165,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="279dp"
         android:layout_marginBottom="8dp"
-        android:text="170"
+        android:text="0"
         android:textColor="#0B0A0A"
         android:textSize="28sp"
         android:textStyle="bold"
