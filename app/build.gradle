@@ -88,6 +88,14 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.9'
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
 
+    implementation "androidx.fragment:fragment-ktx:1.5.7"
+
 
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:2.5.3"
+    implementation "androidx.navigation:navigation-ui-ktx:2.5.3"
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:2.5.3"
+
 }

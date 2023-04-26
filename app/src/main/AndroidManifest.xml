@@ -16,10 +16,7 @@
         android:theme="@style/Theme.BarkoderShopApp"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity
-            android:name="com.example.barkodershopapp.presentation.SelectProductActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"/>
+
         <activity
             android:name="com.example.barkodershopapp.presentation.HomeScreenActivity"
             android:exported="false"
@@ -32,10 +29,7 @@
             android:name="com.example.barkodershopapp.presentation.ScanAddProductActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-        <activity
-            android:name="com.example.barkodershopapp.presentation.AddProduct"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name="com.example.barkodershopapp.presentation.ScanProductActivity"
             android:exported="false"
@@ -44,12 +38,7 @@
             android:name="com.example.barkodershopapp.presentation.HistoryListActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-        <activity
-            android:name="com.example.barkodershopapp.presentation.ListProductActivity"
-            android:exported="false"
-            android:parentActivityName="com.example.barkodershopapp.presentation.HistoryListActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
+
         <activity
             android:name="com.example.barkodershopapp.presentation.SaveProductActivity"
             android:exported="false"

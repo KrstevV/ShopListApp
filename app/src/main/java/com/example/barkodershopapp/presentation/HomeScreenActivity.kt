@@ -29,7 +29,7 @@ class HomeScreenActivity : AppCompatActivity() {
 
 
         binding.btnShopNow.setOnClickListener {
-            var intent = Intent(this@HomeScreenActivity, ListProductActivity::class.java)
+            var intent = Intent(this@HomeScreenActivity, MainActivity::class.java)
             startActivity(intent)
         }
 

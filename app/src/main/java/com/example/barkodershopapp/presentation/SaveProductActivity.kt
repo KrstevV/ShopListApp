@@ -62,15 +62,15 @@ class SaveProductActivity : AppCompatActivity() {
         binding.btnSave.setOnClickListener {
 
                 productViewModel.insert(currentProduct)
-                var intent = Intent(this@SaveProductActivity, ListProductActivity::class.java)
-                startActivity(intent)
-                 finish()
+//                var intent = Intent(this@SaveProductActivity, ListProductActivity::class.java)
+//                startActivity(intent)
+//                 finish()
         }
 
         binding.btnCancel.setOnClickListener {
-                var intent = Intent(this@SaveProductActivity, ListProductActivity::class.java)
-                startActivity(intent)
-            finish()
+//                var intent = Intent(this@SaveProductActivity, ListProductActivity::class.java)
+//                startActivity(intent)
+//            finish()
         }
     }
 

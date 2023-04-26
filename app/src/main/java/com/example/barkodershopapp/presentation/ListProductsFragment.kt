@@ -1,15 +1,21 @@
 package com.example.barkodershopapp.presentation
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.barkoder.shoppingApp.net.databinding.ActivityListProductBinding
+import com.barkoder.shoppingApp.net.R
+import com.barkoder.shoppingApp.net.databinding.FragmentListProductsBinding
 import com.barkoder.shoppingApp.net.databinding.ToolBarBinding
 import com.example.barkodershopapp.OnClickListenerButtons
 import com.example.barkodershopapp.data.listhistorydata.swipecallback.SwipeToDelete
@@ -21,36 +27,37 @@ import com.example.barkodershopapp.presentation.viewmodel.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ListProductActivity : AppCompatActivity(){
+class ListProductsFragment : Fragment() {
+        lateinit var binding : FragmentListProductsBinding
     private lateinit var toolBarBind : ToolBarBinding
     lateinit var productAdatper : ProductAdapter
-    lateinit var binding : ActivityListProductBinding
     val productViewModel : ProductViewModel by viewModels()
     val historyViewModel : HistoryViewModel by viewModels()
     val productApiViewModel : ProductApiViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityListProductBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
 
         var productL = arrayListOf<ProductDataEntity>()
         productAdatper = ProductAdapter(productL, clickListenerButtons)
 
         toolBarBind = ToolBarBinding.inflate(layoutInflater)
         var toolBar = toolBarBind.toolBarr
-        setSupportActionBar(toolBar)
 
-        binding.imageSelectList.setOnClickListener {
-            var intent = Intent(this@ListProductActivity, SelectProductActivity::class.java)
-            startActivity(intent)
-        }
 
         binding.recViewProductList.apply {
-            layoutManager = LinearLayoutManager(this@ListProductActivity)
+            layoutManager = LinearLayoutManager(context)
             adapter = productAdatper
         }
 
-        productViewModel.allNotes.observe(this, {products ->
+        productViewModel.allNotes.observe(viewLifecycleOwner, {products ->
             productAdatper.setNotesList(products)
             var top = onLoop(products).toString()
             binding.textTotalCost.text = top
@@ -61,7 +68,7 @@ class ListProductActivity : AppCompatActivity(){
             builderDeleteAllProducts()
         }
         binding.btnBackActivity.setOnClickListener {
-            finish()
+
         }
 
         binding.btnShopCart.setOnClickListener {
@@ -70,43 +77,36 @@ class ListProductActivity : AppCompatActivity(){
         }
 
         binding.btnScan.setOnClickListener {
-            var intent = Intent(this@ListProductActivity, ScanProductActivity::class.java)
-            startActivity(intent)
+            findNavController().navigate(R.id.action_listProductsFragment_to_scanFragment)
         }
 
         val itemTouchHelper = ItemTouchHelper(swipteToDelete)
         itemTouchHelper.attachToRecyclerView(binding.recViewProductList)
 
-        binding.btnAddList.setOnClickListener {
-
-                    var intent = Intent(this@ListProductActivity, AddProduct::class.java)
-                    startActivity(intent)
-
-        }
     }
 
     private fun goToShopCart() {
-        if(binding.editTextListName.text.toString() != "") {
-            var listName  = binding.editTextListName.text.toString()
-            var size = productViewModel.allNotes.value?.size
-            var intent = Intent(this@ListProductActivity, PaymentActivity::class.java)
-            var totalCost = binding.textTotalCost.text
-            intent.putExtra("listName", listName)
-            intent.putExtra("totalCost", totalCost)
-            intent.putExtra("size", size)
-            startActivity(intent)
-        }  else {
-            Toast.makeText(this, "Add a name on Cart", Toast.LENGTH_SHORT).show()
-        }
+//        if(binding.editTextListName.text.toString() != "") {
+//            var listName  = binding.editTextListName.text.toString()
+//            var size = productViewModel.allNotes.value?.size
+//            var intent = Intent(this@ListProductActivity, PaymentActivity::class.java)
+//            var totalCost = binding.textTotalCost.text
+//            intent.putExtra("listName", listName)
+//            intent.putExtra("totalCost", totalCost)
+//            intent.putExtra("size", size)
+//            startActivity(intent)
+//        }  else {
+//            Toast.makeText(this, "Add a name on Cart", Toast.LENGTH_SHORT).show()
+//        }
     }
     private fun onLoop(products : MutableList<ProductDataEntity>) : Int {
-                var sum = 0
-            for(product in products) {
-                sum += product.totalPrice
-            }
-            return sum
+        var sum = 0
+        for(product in products) {
+            sum += product.totalPrice
+        }
+        return sum
     }
-   private val swipteToDelete = object : SwipeToDelete() {
+    private val swipteToDelete = object : SwipeToDelete() {
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             val position = viewHolder.absoluteAdapterPosition
             productAdatper.notifyItemRemoved(position)
@@ -131,8 +131,8 @@ class ListProductActivity : AppCompatActivity(){
     }
 
     private fun builderDeleteAllProducts(){
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Delete all Products")
+        val builder = context?.let { AlertDialog.Builder(it) }
+        builder!!.setTitle("Delete all Products")
         builder.setMessage("Do you want to delete all Products?")
         builder.setPositiveButton("Yes") { dialog, which ->
             productViewModel.delete()
@@ -142,5 +142,16 @@ class ListProductActivity : AppCompatActivity(){
             dialog.dismiss()
         }
         builder.show()
+    }
+
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        binding =  FragmentListProductsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 }

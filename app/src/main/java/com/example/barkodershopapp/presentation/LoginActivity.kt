@@ -35,21 +35,21 @@ class LoginActivity : AppCompatActivity() {
 
 
 
-        val  options = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-        googleSignInClient = GoogleSignIn.getClient(this,options)
-
-        binding.singInLayout.setOnClickListener {
-            val intent = googleSignInClient.signInIntent
-            startActivityForResult(intent,10001)
-        }
-
-        binding.btnRegister.setOnClickListener {
-            var intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
-        }
+//        val  options = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//            .requestIdToken(getString(R.string.default_web_client_id))
+//            .requestEmail()
+//            .build()
+//        googleSignInClient = GoogleSignIn.getClient(this,options)
+//
+//        binding.singInLayout.setOnClickListener {
+//            val intent = googleSignInClient.signInIntent
+//            startActivityForResult(intent,10001)
+//        }
+//
+//        binding.btnRegister.setOnClickListener {
+//            var intent = Intent(this, RegisterActivity::class.java)
+//            startActivity(intent)
+//        }
 
         auth = Firebase.auth
 

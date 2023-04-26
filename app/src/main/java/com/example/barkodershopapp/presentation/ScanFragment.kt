@@ -2,36 +2,47 @@ package com.example.barkodershopapp.presentation
 
 import android.content.Intent
 import android.graphics.Bitmap
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.viewModels
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.barkoder.Barkoder
 import com.barkoder.BarkoderConfig
 import com.barkoder.BarkoderHelper
 import com.barkoder.enums.BarkoderConfigTemplate
 import com.barkoder.interfaces.BarkoderResultCallback
-import com.barkoder.shoppingApp.net.databinding.ActivityScanProductBinding
-import com.example.barkodershopapp.presentation.viewmodel.ProductViewModel
+import com.barkoder.shoppingApp.net.R
+import com.barkoder.shoppingApp.net.databinding.FragmentScanBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ScanProductActivity : AppCompatActivity(), BarkoderResultCallback {
-    lateinit var binding : ActivityScanProductBinding
-    val productViewModel : ProductViewModel by viewModels()
-
-
+class ScanFragment : Fragment(), BarkoderResultCallback {
+        lateinit var binding : FragmentScanBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityScanProductBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    }
 
-        binding.bkdView.config = BarkoderConfig(this, "PEmBIohr9EZXgCkySoetbwP4gvOfMcGzgxKPL2X6uqPEh7C-NSQGuK_IHt6EYbMPzeLT1AQCKl8pkQkYm47d552Ox0VqVPdVROBDs0NDXebSB7D9bUsI_IJPZsrx-Hmuc-xfH8hokLbr4tmXeorlavEmLZJqBb1s3Z5Uuve8paQldQev5o7JbAEYPJj_Wgce8ftwiyAlUmU9vKt2RJTHIpmshcFNDBo3HLSsmchCI8ciT58nntrTWoYkApGly4w2")
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        binding =  FragmentScanBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.bkdView.config = BarkoderConfig(context, "PEmBIohr9EZXgCkySoetbwP4gvOfMcGzgxKPL2X6uqPEh7C-NSQGuK_IHt6EYbMPzeLT1AQCKl8pkQkYm47d552Ox0VqVPdVROBDs0NDXebSB7D9bUsI_IJPZsrx-Hmuc-xfH8hokLbr4tmXeorlavEmLZJqBb1s3Z5Uuve8paQldQev5o7JbAEYPJj_Wgce8ftwiyAlUmU9vKt2RJTHIpmshcFNDBo3HLSsmchCI8ciT58nntrTWoYkApGly4w2")
         { Log.i("LicenseInfo", it.message)
         }
-        BarkoderHelper.applyConfigSettingsFromTemplate( this,
+        BarkoderHelper.applyConfigSettingsFromTemplate( context,
             binding.bkdView.config, BarkoderConfigTemplate.INDUSTRIAL_1D, null
         )
 
@@ -39,9 +50,6 @@ class ScanProductActivity : AppCompatActivity(), BarkoderResultCallback {
 
         setActiveBarcodeTypes()
         setBarkoderSettings()
-
-
-
     }
 
     private fun setActiveBarcodeTypes() {
@@ -67,11 +75,14 @@ class ScanProductActivity : AppCompatActivity(), BarkoderResultCallback {
         }
     }
     private fun updateUI(result: Barkoder.Result? = null, resultImage: Bitmap? = null) {
-//        binding.textBarcodeResult.text = result?.textualData
-        var intentY = Intent(this@ScanProductActivity, SaveProductActivity::class.java)
-        var barcodeNum = result?.textualData
-        intentY.putExtra("barcodeNumber", barcodeNum)
-        startActivity(intentY)
+        var barcodeNum = result?.textualData.toString()
+        val bundle = Bundle()
+        bundle.putString("barcodeNum", barcodeNum)
+        val fragment = AddProductFragment()
+        fragment.arguments = bundle
+
+        fragmentManager?.beginTransaction()?.replace(R.id.addProductFragment, fragment)?.commit()
+
 
     }
     override fun scanningFinished(results: Array<Barkoder.Result>, resultImage: Bitmap?) {
@@ -81,6 +92,5 @@ class ScanProductActivity : AppCompatActivity(), BarkoderResultCallback {
         else
             updateUI()
     }
-
 
 }

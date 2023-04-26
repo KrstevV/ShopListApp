@@ -53,7 +53,7 @@ class HistoryListActivity : AppCompatActivity() {
         }
 
         binding.btnNewList.setOnClickListener {
-            var intent = Intent(this@HistoryListActivity, ListProductActivity::class.java)
+            var intent = Intent(this@HistoryListActivity, MainActivity::class.java)
             startActivity(intent)
         }
     }
@@ -71,8 +71,7 @@ class HistoryListActivity : AppCompatActivity() {
     private val onClick = object  : OnClickListener {
 
         override fun onClick(list: HistoryDataEntity) {
-            var intentT = Intent(this@HistoryListActivity, ListProductActivity::class.java)
-            startActivity(intentT)
+
         }
 
     }

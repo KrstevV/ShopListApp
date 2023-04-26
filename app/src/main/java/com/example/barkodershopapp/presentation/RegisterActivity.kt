@@ -31,12 +31,9 @@ class RegisterActivity : AppCompatActivity() {
         auth = Firebase.auth
 
         binding.btnRegisterRegister.setOnClickListener {
-            if(performPassword()) {
                 performSingup()
-                var intent = Intent(this@RegisterActivity, LoginActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
+
+
 
         }
     }
@@ -51,25 +48,40 @@ class RegisterActivity : AppCompatActivity() {
             if(name.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && confirmedPassword.isNotEmpty()) {
 
                 if(confirmedPassword == password) {
-                    auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener { task ->
+                    if (performPassword()) {
+                        auth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener { task ->
 
-                        if (task.isSuccessful) {
-                            val databaseRef = database.reference.child("Users").child(auth.currentUser!!.uid)
-                            val users = UuserDataAcc(name, email, password, auth.currentUser!!.uid)
-                            databaseRef.setValue(users).addOnCompleteListener {
-                                if(it.isSuccessful)
-                                    Toast.makeText(applicationContext, "Account is sucessful created", Toast.LENGTH_SHORT)
-                                        .show()
-                                var intentS = Intent(this@RegisterActivity, LoginActivity::class.java)
-                                startActivity(intentS)
-                                finish()
+                                if (task.isSuccessful) {
+                                    val databaseRef = database.reference.child("Users")
+                                        .child(auth.currentUser!!.uid)
+                                    val users =
+                                        UuserDataAcc(name, email, password, auth.currentUser!!.uid)
+                                    databaseRef.setValue(users).addOnCompleteListener {
+                                        if (it.isSuccessful)
+                                            Toast.makeText(
+                                                applicationContext,
+                                                "Account is sucessful created",
+                                                Toast.LENGTH_SHORT
+                                            )
+                                                .show()
+                                        var intentS =
+                                            Intent(this@RegisterActivity, LoginActivity::class.java)
+                                        startActivity(intentS)
+                                        finish()
+                                    }
+
+                                }
+
                             }
-
-                        }
+                            .addOnFailureListener {
+                                Toast.makeText(
+                                    this,
+                                    "Error occured ${it.localizedMessage}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                     }
-                        .addOnFailureListener{
-                            Toast.makeText(this, "Error occured ${it.localizedMessage}", Toast.LENGTH_SHORT).show()
-                        }
                 }
                 else {
                     Toast.makeText(this, "Confirmed password is not correct", Toast.LENGTH_SHORT).show()

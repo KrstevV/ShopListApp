@@ -6,8 +6,6 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
-import com.barkoder.shoppingApp.net.databinding.ActivitySelectProductBinding
-import com.barkoder.shoppingApp.net.databinding.ProductListItemBinding
 import com.barkoder.shoppingApp.net.databinding.SelectproductItemBinding
 import com.example.barkodershopapp.data.room.ProductDataEntity
 import com.example.barkodershopapp.domain.userdataacc.ApiData
