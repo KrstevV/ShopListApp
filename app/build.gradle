@@ -6,6 +6,7 @@ plugins {
     id 'com.google.dagger.hilt.android'
 }
 
+apply plugin: "androidx.navigation.safeargs"
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.dagger.hilt.android'
 
@@ -93,9 +94,13 @@ dependencies {
 
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+
     // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:2.5.3"
     implementation "androidx.navigation:navigation-ui-ktx:2.5.3"
     implementation "androidx.navigation:navigation-dynamic-features-fragment:2.5.3"
+
+    implementation 'com.karumi:dexter:6.2.2'
+    implementation 'io.coil-kt:coil:1.1.1'
 
 }

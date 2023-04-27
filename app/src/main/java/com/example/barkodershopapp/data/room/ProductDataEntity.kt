@@ -1,5 +1,8 @@
 package com.example.barkodershopapp.data.room
 
+import android.graphics.Bitmap
+import android.media.Image
+import android.widget.ImageView
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -18,7 +21,7 @@ data class ProductDataEntity (
     @ColumnInfo(name = "Active")
     var activeProduct : Boolean,
     @ColumnInfo(name = "image")
-    var imageProduct : String?,
+    var imageProduct : ByteArray?,
     @ColumnInfo(name = "count")
     var count : Int,
     @ColumnInfo(name= "total price")

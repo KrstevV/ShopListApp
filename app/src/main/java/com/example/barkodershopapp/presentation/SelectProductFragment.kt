@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -42,34 +44,42 @@ class SelectProductFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        var productS = ArrayList<Product>()
-//
-//        selectAdapter = SelectProductAdapter(productS, selectProductBtn)
-//
-//
-//        selectAdapter.setProductsList2(productS)
-//
-//        binding.recViewSelect.apply {
-//            layoutManager = LinearLayoutManager(context)
-//            adapter = selectAdapter
-//        }
+
+
+        var productS = ArrayList<ProductDataEntity>()
+
+        selectAdapter = SelectProductAdapter(productS, selectProductBtn)
+
+
+        selectAdapter.setProductsList2(productS)
+
+        binding.recViewSelect.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = selectAdapter
+        }
+
 //        productApiViewModel.getAllProductsApi()
 //
 //        productApiViewModel.resp.observe(viewLifecycleOwner, { products ->
 //            selectAdapter.setProductsList2(products.products as ArrayList<Product>)
 //            searchView(products.products)
 //        })
-//
-//        binding.btnBackActivity3.setOnClickListener {
-//
-//        }
 
+        productViewModel.allNotes.observe(viewLifecycleOwner, Observer {products ->
+            selectAdapter.setProductsList2(products as ArrayList<ProductDataEntity>)
+            searchView(products)
+
+        })
+
+        binding.btnBackActivity3.setOnClickListener {
+
+        }
 
 
 
     }
 
-    private fun searchView(list : List<Product>) {
+    private fun searchView(list : List<ProductDataEntity>) {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return false
@@ -77,11 +87,11 @@ class SelectProductFragment : Fragment() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.isNullOrEmpty()) {
-                    selectAdapter.setProductsList(list as ArrayList<Product>)
+                    selectAdapter.setProductsList(list as ArrayList<ProductDataEntity>)
                 } else {
                     val filteredList = list.filter { product ->
-                        product.name.contains(newText, ignoreCase = true)
-                    } as ArrayList<Product>
+                        product.nameProduct!!.contains(newText, ignoreCase = true)
+                    } as ArrayList<ProductDataEntity>
                     selectAdapter.setProductsList(filteredList)
                 }
                 return false
@@ -97,11 +107,15 @@ class SelectProductFragment : Fragment() {
 
 
     private var selectProductBtn = object : OnClickSelectProduct {
-        override fun onClickSelect(list: Product) {
-            var currentProduct2 = ProductDataEntity(list.name, list.barcode,
-                list.notes, list.price,true,list.image, list.count, list.totalprice)
+        override fun onClickSelect(list: ProductDataEntity) {
+            var currentProduct2 = ProductDataEntity(list.nameProduct, list.barcodeProduct,
+                list.noteProduct, list.priceProduct,true,list.imageProduct, list.count, list.totalPrice)
             productViewModel.insert(currentProduct2)
-            findNavController().navigate(R.id.listProductsFragment)
+
+
+
+            var navContr = findNavController()
+            navContr.navigate(R.id.listProductsFragment, null, NavOptions.Builder().setPopUpTo(R.id.selectProductFragment, true).build())
         }
 
     }
@@ -112,29 +126,6 @@ class SelectProductFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding =  FragmentSelectProductBinding.inflate(inflater, container, false)
-
-        var productS = ArrayList<Product>()
-
-        selectAdapter = SelectProductAdapter(productS, selectProductBtn)
-
-
-        selectAdapter.setProductsList2(productS)
-
-        binding.recViewSelect.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = selectAdapter
-        }
-
-        productApiViewModel.getAllProductsApi()
-
-        productApiViewModel.resp.observe(viewLifecycleOwner, { products ->
-            selectAdapter.setProductsList2(products.products as ArrayList<Product>)
-            searchView(products.products)
-        })
-
-        binding.btnBackActivity3.setOnClickListener {
-
-        }
         return  binding.root
 
 

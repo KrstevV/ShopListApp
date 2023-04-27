@@ -8,6 +8,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.barkoder.Barkoder
 import com.barkoder.BarkoderConfig
@@ -33,11 +37,6 @@ class ScanFragment : Fragment(), BarkoderResultCallback {
     ): View? {
         // Inflate the layout for this fragment
         binding =  FragmentScanBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         binding.bkdView.config = BarkoderConfig(context, "PEmBIohr9EZXgCkySoetbwP4gvOfMcGzgxKPL2X6uqPEh7C-NSQGuK_IHt6EYbMPzeLT1AQCKl8pkQkYm47d552Ox0VqVPdVROBDs0NDXebSB7D9bUsI_IJPZsrx-Hmuc-xfH8hokLbr4tmXeorlavEmLZJqBb1s3Z5Uuve8paQldQev5o7JbAEYPJj_Wgce8ftwiyAlUmU9vKt2RJTHIpmshcFNDBo3HLSsmchCI8ciT58nntrTWoYkApGly4w2")
         { Log.i("LicenseInfo", it.message)
@@ -45,11 +44,22 @@ class ScanFragment : Fragment(), BarkoderResultCallback {
         BarkoderHelper.applyConfigSettingsFromTemplate( context,
             binding.bkdView.config, BarkoderConfigTemplate.INDUSTRIAL_1D, null
         )
-
         binding.bkdView.startScanning(this)
 
         setActiveBarcodeTypes()
         setBarkoderSettings()
+
+
+
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+
     }
 
     private fun setActiveBarcodeTypes() {
@@ -75,14 +85,13 @@ class ScanFragment : Fragment(), BarkoderResultCallback {
         }
     }
     private fun updateUI(result: Barkoder.Result? = null, resultImage: Bitmap? = null) {
-        var barcodeNum = result?.textualData.toString()
+        var barcodeNum = result?.textualData
+        binding.textView6.text = barcodeNum
         val bundle = Bundle()
         bundle.putString("barcodeNum", barcodeNum)
-        val fragment = AddProductFragment()
-        fragment.arguments = bundle
 
-        fragmentManager?.beginTransaction()?.replace(R.id.addProductFragment, fragment)?.commit()
 
+        findNavController().navigate(R.id.action_scanFragment_to_addProductFragment, bundle)
 
     }
     override fun scanningFinished(results: Array<Barkoder.Result>, resultImage: Bitmap?) {

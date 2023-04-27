@@ -4,9 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.example.barkodershopapp.typeconverters.TypeConverterss
 
 
-@Database(entities = [ProductDataEntity::class], version = 12)
+@Database(entities = [ProductDataEntity::class], version = 20)
+@TypeConverters(TypeConverterss::class)
 abstract class ProductDatabase : RoomDatabase(){
 
     abstract fun productDao() : ProductDao

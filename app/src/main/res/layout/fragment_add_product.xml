@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="260dp"
             android:layout_marginRight="30dp"
             app:layout_constraintEnd_toStartOf="@+id/include"
             app:layout_constraintStart_toEndOf="@+id/include"
@@ -102,8 +102,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:inputType="number"
                 android:hint="Price"
+                android:inputType="number"
                 android:maxLength="40"
                 android:singleLine="true" />
 
@@ -116,54 +116,51 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="49dp"
             android:layout_marginEnd="18dp"
-            android:layout_marginBottom="70dp"
             android:clickable="true"
             app:backgroundTint="@android:color/holo_orange_dark"
-            app:layout_constraintBottom_toTopOf="@+id/checkBox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
             app:srcCompat="@drawable/baseline_qr_code_scanner_24" />
-
-        <CheckBox
-            android:id="@+id/checkBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="81dp"
-            android:layout_marginTop="55dp"
-            android:layout_marginEnd="48dp"
-            android:text="Active"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textInputLayout3"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
-
-        <EditText
-            android:id="@+id/editTextNotesAddProduct"
-            android:layout_width="300dp"
-            android:layout_height="120dp"
-            android:layout_marginStart="44dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="59dp"
-            android:ems="10"
-            android:gravity="start|top"
-            android:hint="Product Notes"
-            android:inputType="textMultiLine"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
-            app:layout_constraintVertical_bias="0.0" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnAddProductToList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="48dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="59dp"
+            android:layout_marginEnd="64dp"
             android:clickable="true"
             app:backgroundTint="@android:color/holo_orange_dark"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textInputLayout3"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
             app:srcCompat="@drawable/baseline_add_24" />
 
+        <Button
+            android:id="@+id/addImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="46dp"
+            android:backgroundTint="#4C4A4A"
+            android:text="Take a Photo"
+            android:textColor="#F4ECEC"
+            app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cameraImage" />
+
+        <ImageView
+            android:id="@+id/cameraImage"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include"
+            tools:src="@tools:sample/avatars" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

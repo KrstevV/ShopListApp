@@ -24,7 +24,7 @@ class SaveProductActivity : AppCompatActivity() {
 
 
     var currentProduct = ProductDataEntity("",
-        "", "", 0, true,"", 1,0)
+        "", "", 0, true,null, 1,0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,13 +47,13 @@ class SaveProductActivity : AppCompatActivity() {
             binding.textProductNote.text = currentProduct.noteProduct
             var cupo = currentProduct.imageProduct
 
-            if (currentProduct.imageProduct!!.isEmpty()) {
-                binding.imageProduct.setImageResource(R.drawable.ic_broken_image)
-                binding.btnSave.isClickable = false
-                binding.btnSave.setBackgroundColor(Color.GRAY)
-            } else{
-                Picasso.get().load(cupo).into(binding.imageProduct);
-            }
+//            if (currentProduct.imageProduct!!.isEmpty()) {
+//                binding.imageProduct.setImageResource(R.drawable.ic_broken_image)
+//                binding.btnSave.isClickable = false
+//                binding.btnSave.setBackgroundColor(Color.GRAY)
+//            } else{
+//                Picasso.get().load(cupo).into(binding.imageProduct);
+//            }
 
         })
 
@@ -79,7 +79,7 @@ class SaveProductActivity : AppCompatActivity() {
             if(currentProduct.barcodeProduct == i.barcode) {
                 currentProduct.nameProduct = i.name
                 currentProduct.noteProduct = i.notes
-                currentProduct.imageProduct = i.image
+//                currentProduct.imageProduct = i.image
                 currentProduct.priceProduct = i.price
                 currentProduct.totalPrice = i.totalprice
 //                currentProduct.activeProduct = i
