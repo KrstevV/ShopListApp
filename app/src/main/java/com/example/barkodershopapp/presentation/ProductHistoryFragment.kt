@@ -5,29 +5,32 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import coil.load
 import com.barkoder.shoppingApp.net.R
+import com.barkoder.shoppingApp.net.databinding.FragmentProductHistoryBinding
+import com.example.barkodershopapp.data.room.ProductDataEntity
+import com.example.barkodershopapp.presentation.Adapters.PriceHistoryAdapter
+import com.example.barkodershopapp.presentation.Adapters.SelectProductAdapter
+import com.example.barkodershopapp.presentation.viewmodel.ProductViewModel
+import com.example.barkodershopapp.typeconverters.TypeConverterss
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ProductHistoryFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class ProductHistoryFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    lateinit var priceAdapter : PriceHistoryAdapter
+    var productH = arrayListOf<PriceData>()
+    private val args by navArgs<ProductHistoryFragmentArgs>()
+        lateinit var binding : FragmentProductHistoryBinding
+        val productViewModel : ProductViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
@@ -35,26 +38,82 @@ class ProductHistoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_product_history, container, false)
+        binding = FragmentProductHistoryBinding.inflate(inflater, container, false)
+
+
+
+        productH.add(PriceData(args.currentProduct.priceProduct.toString()))
+        productH.add(PriceData("920"))
+
+
+
+        priceAdapter = PriceHistoryAdapter(productH)
+
+//        listHistoryPrice.add(PriceData("123"))
+//        priceAdapter.setPricesList(productH)
+
+        binding.recViewHistoryProduct.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = priceAdapter
+        }
+
+//        priceAdapter.setPricesList(productH)
+
+
+
+        binding.editTextNameEditProduct.setText(args.currentProduct.nameProduct)
+        binding.editTextBarcodeEditProduct.setText(args.currentProduct.barcodeProduct)
+        binding.editPriceEditProduct.setText(args.currentProduct.priceProduct.toString())
+
+        val byteArray = args.currentProduct.imageProduct?.let { TypeConverterss.toBitmap(it) }
+        binding.imageEditProduct.load(byteArray) {
+            crossfade(true)
+        }
+        return  binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProductHistoryFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProductHistoryFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.btnUpdate.setOnClickListener {
+            updateProduct()
+
+        }
+
     }
+
+
+    private fun updateProduct(){
+        var name = binding.editTextNameEditProduct.text.toString()
+        var barcode = binding.editTextBarcodeEditProduct.text.toString()
+        var price = binding.editPriceEditProduct.text.toString()
+        val currentProduct = ProductDataEntity(name,
+            barcode,
+            "asdsadada",
+            price.toInt(),
+            true,
+            args.currentProduct.imageProduct,
+            1,
+            30, args.currentProduct.id)
+
+        productH.add(PriceData(args.currentProduct.priceProduct.toString()))
+
+
+        productViewModel.updateItem(currentProduct)
+
+        val bundle2 = Bundle()
+        bundle2.putString("updatedName", currentProduct.nameProduct)
+        bundle2.putString("updatedBarcode", currentProduct.barcodeProduct)
+        bundle2.putString("updatedPrice", currentProduct.priceProduct.toString())
+        bundle2.putByteArray("updatedImage", currentProduct.imageProduct)
+
+        findNavController().navigate(R.id.selectProductFragment, bundle2)
+
+
+
+
+
+    }
+
 }

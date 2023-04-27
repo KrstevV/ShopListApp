@@ -2,11 +2,14 @@ package com.example.barkodershopapp.data.room
 
 import android.graphics.Bitmap
 import android.media.Image
+import android.os.Parcelable
 import android.widget.ImageView
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 @Entity(tableName = "product_table")
 data class ProductDataEntity (
 
@@ -29,4 +32,4 @@ data class ProductDataEntity (
     @PrimaryKey(autoGenerate = true)
     var id : Long = 0L
 
-        )
+        ) : Parcelable

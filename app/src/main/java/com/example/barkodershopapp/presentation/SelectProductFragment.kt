@@ -46,34 +46,7 @@ class SelectProductFragment : Fragment() {
 
 
 
-        var productS = ArrayList<ProductDataEntity>()
 
-        selectAdapter = SelectProductAdapter(productS, selectProductBtn)
-
-
-        selectAdapter.setProductsList2(productS)
-
-        binding.recViewSelect.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = selectAdapter
-        }
-
-//        productApiViewModel.getAllProductsApi()
-//
-//        productApiViewModel.resp.observe(viewLifecycleOwner, { products ->
-//            selectAdapter.setProductsList2(products.products as ArrayList<Product>)
-//            searchView(products.products)
-//        })
-
-        productViewModel.allNotes.observe(viewLifecycleOwner, Observer {products ->
-            selectAdapter.setProductsList2(products as ArrayList<ProductDataEntity>)
-            searchView(products)
-
-        })
-
-        binding.btnBackActivity3.setOnClickListener {
-
-        }
 
 
 
@@ -106,19 +79,6 @@ class SelectProductFragment : Fragment() {
 
 
 
-    private var selectProductBtn = object : OnClickSelectProduct {
-        override fun onClickSelect(list: ProductDataEntity) {
-            var currentProduct2 = ProductDataEntity(list.nameProduct, list.barcodeProduct,
-                list.noteProduct, list.priceProduct,true,list.imageProduct, list.count, list.totalPrice)
-            productViewModel.insert(currentProduct2)
-
-
-
-            var navContr = findNavController()
-            navContr.navigate(R.id.listProductsFragment, null, NavOptions.Builder().setPopUpTo(R.id.selectProductFragment, true).build())
-        }
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -126,6 +86,31 @@ class SelectProductFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding =  FragmentSelectProductBinding.inflate(inflater, container, false)
+
+
+        var productS = ArrayList<ProductDataEntity>()
+
+        selectAdapter = SelectProductAdapter(productS)
+
+
+        selectAdapter.setProductsList2(productS)
+
+        binding.recViewSelect.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = selectAdapter
+        }
+
+
+        productViewModel.allNotes.observe(viewLifecycleOwner, Observer {products ->
+            selectAdapter.setProductsList2(products as ArrayList<ProductDataEntity>)
+            searchView(products)
+
+        })
+
+        binding.btnBackActivity3.setOnClickListener {
+
+        }
+
         return  binding.root
 
 
