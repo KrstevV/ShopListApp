@@ -8,15 +8,19 @@
     tools:context="com.example.barkodershopapp.presentation.HomeScreenActivity">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/cont"
+        android:id="@+id/historyFragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/historynav" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/botNavBar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-    </androidx.fragment.app.FragmentContainerView>
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

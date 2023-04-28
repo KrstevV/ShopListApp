@@ -49,9 +49,6 @@
         <action
             android:id="@+id/action_listProductsFragment_to_scanFragment"
             app:destination="@id/scanFragment" />
-        <action
-            android:id="@+id/action_listProductsFragment_to_historyListFragment"
-            app:destination="@id/historyListFragment" />
         <argument
             android:name="currentProduct"
             app:argType="com.example.barkodershopapp.data.room.ProductDataEntity" />
@@ -90,21 +87,8 @@
             app:destination="@id/listProductsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/historyListFragment"
-        android:name="com.example.barkodershopapp.presentation.HistoryListFragment"
-        android:label="fragment_history_list"
-        tools:layout="@layout/fragment_history_list" >
-        <action
-            android:id="@+id/action_historyListFragment_to_listProductsFragment"
-            app:destination="@id/listProductsFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/homeScreenFragment"
         android:name="com.example.barkodershopapp.presentation.HomeScreenFragment"
         android:label="fragment_home_screen"
-        tools:layout="@layout/fragment_home_screen" >
-        <action
-            android:id="@+id/action_homeScreenFragment_to_historyListFragment"
-            app:destination="@id/historyListFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_home_screen" />
 </navigation>

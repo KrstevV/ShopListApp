@@ -61,13 +61,6 @@ class HistoryListFragment : Fragment() {
         })
 
 
-        binding.btnAddList2.setOnClickListener {
-            val fragmentManager = activity?.supportFragmentManager
-            val targetFragment = ListProductsFragment()
-            val transaction = fragmentManager?.beginTransaction()
-            transaction!!.replace(R.id.cont, targetFragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
         }
 
 
@@ -91,4 +84,3 @@ class HistoryListFragment : Fragment() {
 
 
     }
-}

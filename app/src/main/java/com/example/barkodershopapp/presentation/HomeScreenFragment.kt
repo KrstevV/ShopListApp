@@ -32,18 +32,14 @@ class HomeScreenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnShopHistory.setOnClickListener {
-            val fragmentManager = activity?.supportFragmentManager
-            val targetFragment = HistoryListFragment()
-            val transaction = fragmentManager?.beginTransaction()
-            transaction!!.replace(R.id.cont, targetFragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
-        }
 
         binding.btnShopNow.setOnClickListener {
             val intent = Intent(activity, MainActivity::class.java)
             startActivity(intent)
+        }
+
+        binding.btnShopHistory.setOnClickListener {
+            findNavController().navigate(R.id.action_homeScreenFragment2_to_historyListFragment)
         }
 
     }

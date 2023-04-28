@@ -72,15 +72,10 @@ class ListProductsFragment : Fragment() {
 
         })
 
-        binding.btnDeleteAll.setOnClickListener {
-//            builderDeleteAllProducts()
-        }
-        binding.btnBackActivity.setOnClickListener {
-
-        }
 
 
-        binding.btnShopCart.setOnClickListener {
+
+        binding.btnScan.setOnClickListener {
             var listName  = binding.editTextListName.text.toString()
             listViewModel.allNotes.observe(viewLifecycleOwner, {products3 ->
 

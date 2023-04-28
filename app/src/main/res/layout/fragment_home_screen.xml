@@ -18,16 +18,16 @@
 
         <TextView
             android:id="@+id/textActivityName"
-            app:layout_constraintEnd_toEndOf="@+id/include"
-            app:layout_constraintStart_toStartOf="@+id/include"
-            app:layout_constraintTop_toTopOf="@+id/include"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="3dp"
             android:text="Barkoder"
             android:textColor="#FBFAFA"
             android:textSize="28sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/include"
+            app:layout_constraintStart_toStartOf="@+id/include"
+            app:layout_constraintTop_toTopOf="@+id/include" />
 
         <ImageView
             android:id="@+id/imageView6"
@@ -145,14 +145,13 @@
 
         <Button
             android:id="@+id/btnSingout"
-            app:layout_constraintStart_toStartOf="@+id/include"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
-            android:layout_marginTop="15dp"
             android:text="Sing out"
-            android:textColor="#F4EFEF" />
+            android:textColor="#F4EFEF"
+            app:layout_constraintStart_toStartOf="@+id/include"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

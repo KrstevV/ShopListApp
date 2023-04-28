@@ -3,9 +3,11 @@ package com.example.barkodershopapp.presentation.Adapters
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.barkoder.shoppingApp.net.databinding.HistorylistItemBinding
 import com.example.barkodershopapp.data.room.HistoryDataEntity
+import com.example.barkodershopapp.presentation.HistoryListFragmentDirections
 import com.example.barkodershopapp.presentation.OnClickListener
 
 class HistoryAdapter (private var list : List<HistoryDataEntity>): RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
@@ -16,8 +18,14 @@ class HistoryAdapter (private var list : List<HistoryDataEntity>): RecyclerView.
                 fun bind(list : HistoryDataEntity) {
                         binding.textListName.text = list.listName
                         binding.textCreatedDateList.text = list.listDate
+                        binding.recViewHistoryList.setOnClickListener {
+                                val actions = HistoryListFragmentDirections.actionHistoryListFragmentToCurrentListFragment(list)
+                                Navigation.findNavController(binding.root).navigate(actions)
+                        }
 
                 }
+
+
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
