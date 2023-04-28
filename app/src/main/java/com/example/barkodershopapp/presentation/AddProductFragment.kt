@@ -85,7 +85,8 @@ class AddProductFragment : Fragment() {
 
 
 
-        var currentAddProduct = ProductDataEntity("productName","productBarcode","productNotes", 0, true, null, 1, 0)
+        var currentAddProduct = ProductDataEntity("productName","productBarcode","productNotes", 0, true, null, 1, 0,
+            arrayListOf())
 
 
         binding.btnScanAddProduct.setOnClickListener {

@@ -69,7 +69,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:paddingBottom="100dp"
-                tools:listitem="@layout/product_list_item" />
+                tools:listitem="@layout/historylist_item" />
         </LinearLayout>
 
         <ImageView

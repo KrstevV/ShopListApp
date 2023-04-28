@@ -8,28 +8,29 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.barkoder.shoppingApp.net.databinding.ProductListItemBinding
 import com.example.barkodershopapp.OnClickListenerButtons
+import com.example.barkodershopapp.data.room.ListDataEntity
 import com.example.barkodershopapp.data.room.ProductDataEntity
 import com.example.barkodershopapp.typeconverters.TypeConverterss
 import com.squareup.picasso.Picasso
 
-class ProductAdapter (private var list : List<ProductDataEntity>, private val listener : OnClickListenerButtons): RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
+class ProductAdapter (private var list : List<ListDataEntity>, private val listener : OnClickListenerButtons): RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
 
 
     class ViewHolder(private var binding : ProductListItemBinding, private val listener: OnClickListenerButtons) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(list : ProductDataEntity) {
+        fun bind(list : ListDataEntity) {
             binding.btnAddSize.setOnClickListener {
-                listener.onClickPlus(list)
+                listener.onClickPlus(list.listProducts)
             }
             binding.btnMinusSize.setOnClickListener {
-                listener.onClickMinus(list)
+                listener.onClickMinus(list.listProducts)
             }
-            binding.textProductName.text = list.nameProduct
-            binding.textProductBarcode.text = list.barcodeProduct.toString()
-            binding.textCountProduct.text = list.count.toString()
-            binding.textProductPrice.text = list.priceProduct.toString()
-            binding.textProductTotalPrice.text = list.totalPrice.toString()
+            binding.textProductName.text = list.listProducts.nameProduct
+            binding.textProductBarcode.text = list.listProducts.barcodeProduct.toString()
+            binding.textCountProduct.text = list.listProducts.count.toString()
+            binding.textProductPrice.text = list.listProducts.priceProduct.toString()
+            binding.textProductTotalPrice.text = list.listProducts.totalPrice.toString()
 
-            val byteArray = list.imageProduct?.let { TypeConverterss.toBitmap(it) }
+            val byteArray = list.listProducts.imageProduct?.let { TypeConverterss.toBitmap(it) }
             binding.imageProduct.load(byteArray) {
                 crossfade(true)
             }
@@ -49,12 +50,12 @@ class ProductAdapter (private var list : List<ProductDataEntity>, private val li
         holder.bind(list[position])
     }
 
-    fun setNotesList(lista : List<ProductDataEntity>) {
+    fun setNotesList(lista : List<ListDataEntity>) {
         this.list = lista
         notifyDataSetChanged()
     }
 
-    fun getProductInt(position : Int): ProductDataEntity {
+    fun getProductInt(position : Int): ListDataEntity {
         return list[position]
     }
 

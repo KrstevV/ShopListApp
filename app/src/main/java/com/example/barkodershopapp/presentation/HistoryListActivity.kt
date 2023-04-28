@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.barkoder.shoppingApp.net.R
 import com.barkoder.shoppingApp.net.databinding.ActivityHistoryListBinding
 import com.barkoder.shoppingApp.net.databinding.ToolBarBinding
 import com.example.barkodershopapp.data.listhistorydata.swipecallback.SwipeToDelete
@@ -20,8 +21,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class HistoryListActivity : AppCompatActivity() {
     private lateinit var toolBarBind: ToolBarBinding
     lateinit var binding: ActivityHistoryListBinding
-    val historyViewModel: HistoryViewModel by viewModels()
-    lateinit var historyAdapter: HistoryAdapter
     var listH = arrayListOf<HistoryDataEntity>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,40 +32,26 @@ class HistoryListActivity : AppCompatActivity() {
         setSupportActionBar(toolBar)
 
 
-        historyAdapter = HistoryAdapter(listH, onClick)
 
-        binding.recViewHistoryList.apply {
-            layoutManager = LinearLayoutManager(this@HistoryListActivity)
-            adapter = historyAdapter
-
-        }
-        historyViewModel.allNotes.observe(this, Observer {
-            historyAdapter.setNotesList(it as ArrayList<HistoryDataEntity>)
-
-        })
-
-        val itemTouchHelper = ItemTouchHelper(swipteToDelete)
-
-        itemTouchHelper.attachToRecyclerView(binding.recViewHistoryList)
-        binding.btnBackActivityH.setOnClickListener {
-            finish()
-        }
-
-        binding.btnNewList.setOnClickListener {
-            var intent = Intent(this@HistoryListActivity, MainActivity::class.java)
-            startActivity(intent)
-        }
+//        binding.btnNewList.setOnClickListener {
+//                        val fragmentManager = supportFragmentManager
+//            val targetFragment = HistoryListFragment()
+//            val transaction = fragmentManager.beginTransaction()
+//            transaction.replace(binding.hLayout, targetFragment)
+//                transaction.addToBackStack(null)
+//            transaction.commit()
+//        }
     }
 
 
-        private val swipteToDelete = object : SwipeToDelete() {
+      /*  private val swipteToDelete = object : SwipeToDelete() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.absoluteAdapterPosition
                 historyAdapter.notifyItemRemoved(position)
                 historyViewModel.deleteItem(historyAdapter.getHistoryInt(position))
 
             }
-    }
+    }*/
 
     private val onClick = object  : OnClickListener {
 

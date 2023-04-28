@@ -37,6 +37,9 @@ class SelectProductAdapter(private var list : ArrayList<ProductDataEntity>) : Re
                         val actions = SelectProductFragmentDirections.actionSelectProductFragmentToProductHistoryFragment(list)
                         Navigation.findNavController(binding.root).navigate(actions)
                     }
+
+
+
                     val byteArray = list.imageProduct?.let { TypeConverterss.toBitmap(it) }
                     binding.imageSelectProduct.load(byteArray) {
                         crossfade(true)

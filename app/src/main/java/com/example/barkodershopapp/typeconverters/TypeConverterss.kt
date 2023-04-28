@@ -3,6 +3,8 @@ package com.example.barkodershopapp.typeconverters
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.room.TypeConverter
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import java.io.ByteArrayOutputStream
 
 
@@ -20,9 +22,17 @@ object TypeConverterss {
       return  BitmapFactory.decodeByteArray(byteArray, 0 , byteArray.size)
     }
 
-//    @TypeConverter
-//    fun fromBitmap(bitmap: Bitmap?): ByteArray? {
-//        return bitmap?.let { ByteArrayOutputStream().apply { it.compress(Bitmap.CompressFormat.PNG, 100, this) }.toByteArray() }
-//    }
+    @TypeConverter
+    @JvmStatic
+    fun fromString(value : String?) : ArrayList<String> {
+        val listType = object : TypeToken<ArrayList<String>>(){}.type
+        return Gson().fromJson(value, listType)
+    }
+
+    @TypeConverter
+    @JvmStatic
+    fun fromArrayList(list : ArrayList<String?>): String {
+        return Gson().toJson(list)
+    }
 
 }

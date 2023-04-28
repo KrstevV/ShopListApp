@@ -29,6 +29,8 @@ data class ProductDataEntity (
     var count : Int,
     @ColumnInfo(name= "total price")
     var totalPrice : Int,
+    @ColumnInfo(name= "price_history")
+    var priceHistory : ArrayList<String>,
     @PrimaryKey(autoGenerate = true)
     var id : Long = 0L
 

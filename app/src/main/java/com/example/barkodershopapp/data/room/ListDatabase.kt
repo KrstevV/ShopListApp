@@ -5,23 +5,22 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.barkodershopapp.typeconverters.TypeConverterss
+import com.example.barkodershopapp.typeconverters.ProductConverter
+import com.example.barkodershopapp.typeconverters.RoomListConverter
 
+@Database(entities = [ListDataEntity::class], version = 1)
+@TypeConverters(ProductConverter::class)
+abstract class ListDatabase : RoomDatabase() {
 
-@Database(entities = [ProductDataEntity::class], version = 21)
-@TypeConverters(TypeConverterss::class)
-abstract class ProductDatabase : RoomDatabase(){
-
-    abstract fun productDao() : ProductDao
-
+    abstract fun listDao() : ListDao
 
     companion object {
 
         @Volatile
-        var INSTANCE: ProductDatabase? = null
+        var INSTANCE: ListDatabase? = null
 
 
-        fun getProductInstance(context: Context): ProductDatabase {
+        fun getListInstance(context: Context): ListDatabase {
             var tempInstance = INSTANCE
             if (tempInstance != null) {
                 return tempInstance
@@ -29,8 +28,8 @@ abstract class ProductDatabase : RoomDatabase(){
             synchronized(this) {
                 var instance = Room.databaseBuilder(
                     context.applicationContext,
-                    ProductDatabase::class.java,
-                    "product_database"
+                    ListDatabase::class.java,
+                    "list_database"
                 ).fallbackToDestructiveMigration().build()
 
                 INSTANCE = instance

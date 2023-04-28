@@ -26,10 +26,7 @@
             android:name="com.example.barkodershopapp.presentation.PaymentActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-        <activity
-            android:name="com.example.barkodershopapp.presentation.AddProductActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+
 
         <activity
             android:name="com.example.barkodershopapp.presentation.HistoryListActivity"

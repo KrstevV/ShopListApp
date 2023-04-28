@@ -14,6 +14,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.barkoder.shoppingApp.net.R
 import com.barkoder.shoppingApp.net.databinding.FragmentSelectProductBinding
@@ -33,8 +34,6 @@ class SelectProductFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
 
     }
 
@@ -87,7 +86,6 @@ class SelectProductFragment : Fragment() {
         // Inflate the layout for this fragment
         binding =  FragmentSelectProductBinding.inflate(inflater, container, false)
 
-
         var productS = ArrayList<ProductDataEntity>()
 
         selectAdapter = SelectProductAdapter(productS)
@@ -107,9 +105,6 @@ class SelectProductFragment : Fragment() {
 
         })
 
-        binding.btnBackActivity3.setOnClickListener {
-
-        }
 
         return  binding.root
 

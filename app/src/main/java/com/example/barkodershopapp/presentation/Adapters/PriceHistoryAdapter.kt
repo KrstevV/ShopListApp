@@ -1,5 +1,6 @@
 package com.example.barkodershopapp.presentation.Adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
@@ -11,19 +12,32 @@ import com.example.barkodershopapp.data.room.ProductDataEntity
 import com.example.barkodershopapp.presentation.PriceData
 import com.example.barkodershopapp.presentation.SelectProductFragmentDirections
 import com.example.barkodershopapp.typeconverters.TypeConverterss
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
-class PriceHistoryAdapter (private var list : ArrayList<PriceData>) : RecyclerView.Adapter<PriceHistoryAdapter.ViewHolder>(){
+class PriceHistoryAdapter (private var list : ArrayList<String>) : RecyclerView.Adapter<PriceHistoryAdapter.ViewHolder>(){
 
 
-    fun setPricesList(pricesList: ArrayList<PriceData>) {
+    fun setPricesList(pricesList: ArrayList<String>) {
+        val updatedList = ArrayList<String>()
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val currentTime = dateFormat.format(Date())
+        for (price in pricesList) {
+            updatedList.add("$price ($currentTime)")
+        }
         this.list = pricesList
         notifyDataSetChanged()
     }
 
 
+
+
     class ViewHolder(private val binding : PricehistoryItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind (list: PriceData) {
-            binding.textPriceHistory.text = list.productPrice
+        fun bind (list: String) {
+            binding.textPriceHistory.setText(list)
+
+
 
         }
     }
@@ -39,4 +53,12 @@ class PriceHistoryAdapter (private var list : ArrayList<PriceData>) : RecyclerVi
     override fun getItemCount(): Int = list.size
 
 
+
+
+}
+
+private fun getCurrentDate(): String {
+    val currentDate = Calendar.getInstance().time
+    val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm")
+    return formatter.format(currentDate)
 }

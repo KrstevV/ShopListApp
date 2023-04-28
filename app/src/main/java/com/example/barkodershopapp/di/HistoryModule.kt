@@ -40,6 +40,18 @@ object HistoryModule {
         return productDB.productDao()
     }
 
+    @Singleton
+    @Provides
+    fun getListDB(context : Application) : ListDatabase {
+        return ListDatabase.getListInstance(context)
+    }
+
+    @Singleton
+    @Provides
+    fun getListDao(listDB : ListDatabase) : ListDao {
+        return listDB.listDao()
+    }
+
     @Provides
     @Singleton
     fun getProductsA() : ApiProducts =

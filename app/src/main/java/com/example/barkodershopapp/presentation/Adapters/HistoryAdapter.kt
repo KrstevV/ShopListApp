@@ -8,27 +8,21 @@ import com.barkoder.shoppingApp.net.databinding.HistorylistItemBinding
 import com.example.barkodershopapp.data.room.HistoryDataEntity
 import com.example.barkodershopapp.presentation.OnClickListener
 
-class HistoryAdapter (private var list : ArrayList<HistoryDataEntity>, var listener : OnClickListener): RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
+class HistoryAdapter (private var list : List<HistoryDataEntity>): RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
 
 
-        class ViewHolder(private val binding : HistorylistItemBinding, var listener: OnClickListener) : RecyclerView.ViewHolder(binding.root) {
+        class ViewHolder(private val binding : HistorylistItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-                @SuppressLint("SuspiciousIndentation")
                 fun bind(list : HistoryDataEntity) {
-                     binding.textListName.text = list.listName
-                     binding.textCreatedDateList.text = list.listCreated
-                        binding.textCost.text = list.totalCost
-                        binding.textProductsSize.text = list.listSize
-//                        binding.recViewHistoryList.setOnClickListener {
-//                                listener.onClick(list)
-//                        }
+                        binding.textListName.text = list.listName
+                        binding.textCreatedDateList.text = list.listDate
 
                 }
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
                 val binding = HistorylistItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                return ViewHolder(binding, listener)
+                return ViewHolder(binding)
         }
 
         override fun getItemCount(): Int = list.size
@@ -37,7 +31,7 @@ class HistoryAdapter (private var list : ArrayList<HistoryDataEntity>, var liste
                 holder.bind(list[position])
         }
 
-        fun setNotesList(lista : ArrayList<HistoryDataEntity>) {
+        fun setNotesList(lista : List<HistoryDataEntity>) {
                 this.list = lista
                 notifyDataSetChanged()
 

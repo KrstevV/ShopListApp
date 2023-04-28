@@ -53,9 +53,9 @@ class PaymentActivity : AppCompatActivity() {
             var totalList = binding.textTotal.text.toString()
             var listSize = binding.textSize.text.toString()
             var date = "Pursched at ${getCurrentDate()}"
-            val currentHistory = HistoryDataEntity(nameList,date,totalList,listSize)
-            historyViewModel.insert(currentHistory)
-            productViewModel.delete()
+//            val currentHistory = HistoryDataEntity(nameList,date,totalList,listSize)
+//            historyViewModel.insert(currentHistory)
+//            productViewModel.delete()
 
             var intent = Intent(this@PaymentActivity, HomeScreenActivity::class.java)
             startActivity(intent)
