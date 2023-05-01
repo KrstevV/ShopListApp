@@ -10,7 +10,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.barkodershopapp.typeconverters.RoomListConverter
 
 
-@Database(entities = [HistoryDataEntity::class], version = 12)
+@Database(entities = [HistoryDataEntity::class], version = 15)
 @TypeConverters(RoomListConverter::class)
 abstract class HistoryDatabase : RoomDatabase() {
 

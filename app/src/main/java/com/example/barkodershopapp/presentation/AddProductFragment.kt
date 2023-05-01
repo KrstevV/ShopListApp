@@ -15,21 +15,26 @@ import android.provider.Settings
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.RoundedCorner
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import coil.Coil
 import coil.ImageLoader
 import coil.load
 import coil.request.ImageRequest
 import coil.request.SuccessResult
+import coil.transform.CircleCropTransformation
+import coil.transform.RoundedCornersTransformation
 import com.barkoder.shoppingApp.net.R
 import com.barkoder.shoppingApp.net.databinding.FragmentAddProductBinding
 import com.example.barkodershopapp.data.room.ProductDataEntity
 import com.example.barkodershopapp.presentation.viewmodel.ProductViewModel
 import com.example.barkodershopapp.typeconverters.TypeConverterss
+import com.google.android.gms.fido.fido2.api.common.RequestOptions
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -38,6 +43,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
+import java.lang.Integer.max
 
 
 @AndroidEntryPoint
@@ -49,10 +55,6 @@ class AddProductFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-
-
 
         }
 
@@ -66,9 +68,14 @@ class AddProductFragment : Fragment() {
 
 
         val barcodeNumber = this@AddProductFragment.arguments?.getString("barcodeNum").toString()
+        binding.cameraImage.setImageResource(R.drawable.photo_camera)
 
+        if(barcodeNumber == "null") {
+            binding.editTextBarcodeAddProduct.setText("")
+        } else {
+            binding.editTextBarcodeAddProduct.setText(barcodeNumber)
+        }
 
-        binding.editTextBarcodeAddProduct.setText(barcodeNumber)
 
         return binding.root
 
@@ -85,8 +92,8 @@ class AddProductFragment : Fragment() {
 
 
 
-        var currentAddProduct = ProductDataEntity("productName","productBarcode","productNotes", 0, true, null, 1, 0,
-            arrayListOf())
+        var currentAddProduct = ProductDataEntity("productName","productBarcode","productNotes", 0, "", 0, false, null,
+            0,0,arrayListOf())
 
 
         binding.btnScanAddProduct.setOnClickListener {
@@ -94,13 +101,17 @@ class AddProductFragment : Fragment() {
         }
 
 
+
         var navContr = findNavController()
         binding.btnAddProductToList.setOnClickListener {
+
 
             var productName = binding.editTextNameAddProduct.text.toString()
             var productBarcode = binding.editTextBarcodeAddProduct.text.toString()
             var productPrice = binding.editPriceAddProduct.text.toString()
             var productImage = binding.cameraImage
+            var productUnit = binding.editUnitAddProduct.text.toString()
+            var productQuantity = binding.editQuantityAddProduct.text.toString()
 
             val bitmap = (binding.cameraImage.drawable as BitmapDrawable).bitmap
             val stream = ByteArrayOutputStream()
@@ -108,59 +119,32 @@ class AddProductFragment : Fragment() {
             val byteArray = stream.toByteArray()
 
 
-            if(productName.isNotEmpty() && productPrice.isNotEmpty()) {
+            if(productName.isNotEmpty() && productPrice.isNotEmpty() && productUnit.isNotEmpty()
+                &&productQuantity.isNotEmpty()) {
 
                 lifecycleScope.launch {
                     currentAddProduct.nameProduct = productName
                     currentAddProduct.barcodeProduct = productBarcode
                     currentAddProduct.priceProduct = productPrice.toInt()
                     currentAddProduct.totalPrice = productPrice.toInt()
+                    currentAddProduct.checkout = false
+                    currentAddProduct.unitProduct = productUnit
+                    currentAddProduct.quantityProduct = productQuantity.toInt()
 
                     val bitmap = (productImage.drawable as BitmapDrawable).bitmap
                     currentAddProduct.imageProduct = TypeConverterss.fromBitmap(bitmap)
 
-
-
                 }
 
+
                 productViewModel.insert(currentAddProduct)
-//                navContr.navigate(R.id.selectProductFragment)
                 navContr.navigate(R.id.selectProductFragment, null, NavOptions.Builder().setPopUpTo(R.id.addProductFragment, true).build())
 
 
             }
-
-
-
-//
-//                findNavController().navigate(R.id.action_addProductFragment_to_selectProductFragment2)
-//                findNavController().clearBackStack(R.id.addProductFragment)
-
-
-
-
-
-
-//            } else {
-//                Toast.makeText(, "Fields cannot be empty", Toast.LENGTH_SHORT).show()
-//            }
-
-
         }
-
-
     }
 
-//    private suspend fun getBitmap() : Bitmap {
-//        val loading = ImageLoader(requireActivity().applicationContext)
-//        val request = ImageRequest.Builder(requireActivity().applicationContext)
-//            .data(binding.cameraImage)
-//            .build()
-//        val result = (loading.execute(request) as SuccessResult).drawable
-//
-//        return  (result as BitmapDrawable).bitmap
-//
-//    }
 
     private suspend fun getBitmap(): Bitmap? {
         val loading = ImageLoader(requireActivity().applicationContext)
@@ -213,8 +197,14 @@ class AddProductFragment : Fragment() {
                 cameraRequest->{
 
                     val bitmap = data?.extras?.get("data") as Bitmap
+                    val bitmapScaled = Bitmap.createScaledBitmap(bitmap,150,180,true)
+
+
+
+
 
                     binding.cameraImage.load(bitmap)
+
                 }
             }
         }

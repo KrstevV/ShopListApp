@@ -31,7 +31,7 @@ class ProductAdapter (private var list : List<ListDataEntity>, private val liste
             binding.textProductTotalPrice.text = list.listProducts.totalPrice.toString()
 
             val byteArray = list.listProducts.imageProduct?.let { TypeConverterss.toBitmap(it) }
-            binding.imageProduct.load(byteArray) {
+            binding.imageProduct2.load(byteArray) {
                 crossfade(true)
             }
             }

@@ -33,14 +33,17 @@
             android:id="@+id/textInputLayout2"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="260dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="30dp"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
             app:layout_constraintEnd_toStartOf="@+id/include"
             app:layout_constraintStart_toEndOf="@+id/include"
-            app:layout_constraintTop_toBottomOf="@+id/include"
-            app:startIconDrawable="@drawable/ic_broken_image">
+            app:layout_constraintTop_toBottomOf="@+id/addImage">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextNameAddProduct"
@@ -49,6 +52,8 @@
                 android:layout_gravity="center"
                 android:hint="Product Name"
                 android:maxLength="40"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:singleLine="true" />
 
 
@@ -58,16 +63,18 @@
             android:id="@+id/textInputLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="90dp"
-            android:layout_marginBottom="59dp"
-            app:layout_constraintBottom_toTopOf="@+id/textInputLayout3"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:endIconDrawable="@drawable/baseline_qr_code_scanner_24"
             app:layout_constraintEnd_toStartOf="@+id/include"
             app:layout_constraintStart_toEndOf="@+id/include"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
-            app:startIconDrawable="@drawable/baseline_qr_code_scanner_24">
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextBarcodeAddProduct"
@@ -77,6 +84,8 @@
                 android:hint="Barcode"
                 android:inputType="number"
                 android:maxLength="40"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:singleLine="true" />
 
 
@@ -84,18 +93,77 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout4"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="135dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/textInputLayout3"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editUnitAddProduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="Unit"
+                android:maxLength="40"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:singleLine="true" />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout3"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginRight="200dp"
-            app:layout_constraintEnd_toStartOf="@+id/include"
-            app:layout_constraintHorizontal_bias="0.52"
-            app:layout_constraintStart_toEndOf="@+id/include"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
-            app:startIconDrawable="@drawable/baseline_attach_money_24">
+            android:layout_width="135dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textInputLayout4"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editQuantityAddProduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="Quantity"
+                android:inputType="number"
+                android:maxLength="40"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:singleLine="true" />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout6"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="135dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editPriceAddProduct"
@@ -105,62 +173,72 @@
                 android:hint="Price"
                 android:inputType="number"
                 android:maxLength="40"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:singleLine="true" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnScanAddProduct"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="49dp"
-            android:layout_marginEnd="18dp"
-            android:clickable="true"
-            app:backgroundTint="@android:color/holo_orange_dark"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
-            app:srcCompat="@drawable/baseline_qr_code_scanner_24" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnAddProductToList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
-            android:layout_marginTop="59dp"
-            android:layout_marginEnd="64dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="70dp"
             android:clickable="true"
-            app:backgroundTint="@android:color/holo_orange_dark"
+            android:src="@drawable/add_circle"
+            app:backgroundTint="@color/designColor"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textInputLayout3"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
-            app:srcCompat="@drawable/baseline_add_24" />
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
 
         <Button
             android:id="@+id/addImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="46dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
             android:backgroundTint="#4C4A4A"
             android:text="Take a Photo"
             android:textColor="#F4ECEC"
             app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cameraImage" />
+            app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="150dp"
+            android:layout_height="120dp"
+            android:layout_marginStart="105dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="106dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include">
+
+            <ImageView
+                android:id="@+id/cameraImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/photo_camera" />
+        </androidx.cardview.widget.CardView>
 
         <ImageView
-            android:id="@+id/cameraImage"
-            android:layout_width="200dp"
-            android:layout_height="150dp"
-            android:layout_marginTop="20dp"
+            android:id="@+id/btnScanAddProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="23dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="28dp"
+            android:src="@drawable/qr_code_scanner_fill0_wght500_grad0_opsz48"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include"
-            tools:src="@tools:sample/avatars" />
+            app:layout_constraintStart_toEndOf="@+id/textInputLayout"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

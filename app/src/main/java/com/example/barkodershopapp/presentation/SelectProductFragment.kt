@@ -21,6 +21,7 @@ import com.barkoder.shoppingApp.net.databinding.FragmentSelectProductBinding
 import com.example.barkodershopapp.data.room.ProductDataEntity
 import com.example.barkodershopapp.domain.userdataacc.Product
 import com.example.barkodershopapp.presentation.Adapters.SelectProductAdapter
+import com.example.barkodershopapp.presentation.viewmodel.ListViewModel
 import com.example.barkodershopapp.presentation.viewmodel.ProductApiViewModel
 import com.example.barkodershopapp.presentation.viewmodel.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,6 +32,7 @@ class SelectProductFragment : Fragment() {
     val productViewModel : ProductViewModel by viewModels()
     lateinit var selectAdapter : SelectProductAdapter
         lateinit var binding : FragmentSelectProductBinding
+        val listViewMOdel : ListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,7 +90,7 @@ class SelectProductFragment : Fragment() {
 
         var productS = ArrayList<ProductDataEntity>()
 
-        selectAdapter = SelectProductAdapter(productS)
+        selectAdapter = SelectProductAdapter(productS,listViewMOdel)
 
 
         selectAdapter.setProductsList2(productS)

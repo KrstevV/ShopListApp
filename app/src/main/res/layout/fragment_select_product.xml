@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context="com.example.barkodershopapp.presentation.SelectProductFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,7 +36,9 @@
             android:layout_marginLeft="25dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="25dp"
+            android:layout_marginBottom="13dp"
             android:background="@drawable/rounded_searchview"
+            app:layout_constraintBottom_toTopOf="@+id/recViewSelect"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/include">
@@ -44,24 +46,18 @@
         </SearchView>
 
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recViewSelect"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
-            android:orientation="vertical"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingBottom="200dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchView">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recViewSelect"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:paddingBottom="150dp"
-                tools:listitem="@layout/selectproduct_item" />
-        </LinearLayout>
-
+            app:layout_constraintTop_toBottomOf="@+id/searchView"
+            tools:listitem="@layout/selectproduct_item"
+            />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

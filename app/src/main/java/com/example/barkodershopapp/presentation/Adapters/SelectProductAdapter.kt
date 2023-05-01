@@ -8,14 +8,15 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.barkoder.shoppingApp.net.databinding.SelectproductItemBinding
+import com.example.barkodershopapp.data.room.ListDataEntity
 import com.example.barkodershopapp.data.room.ProductDataEntity
-import com.example.barkodershopapp.presentation.OnClickSelectProduct
 import com.example.barkodershopapp.presentation.SelectProductFragmentDirections
+import com.example.barkodershopapp.presentation.viewmodel.ListViewModel
 import com.example.barkodershopapp.typeconverters.TypeConverterss
 import java.util.*
 import kotlin.collections.ArrayList
 
-class SelectProductAdapter(private var list : ArrayList<ProductDataEntity>) : RecyclerView.Adapter<SelectProductAdapter.ViewHolder>(), Filterable{
+class SelectProductAdapter(private var list : ArrayList<ProductDataEntity>, private var viewModel  : ListViewModel) : RecyclerView.Adapter<SelectProductAdapter.ViewHolder>(), Filterable{
 
     private var productListFull: List<ProductDataEntity> = ArrayList()
 
@@ -28,20 +29,31 @@ class SelectProductAdapter(private var list : ArrayList<ProductDataEntity>) : Re
         list = productsList
         notifyDataSetChanged()
     }
-            class ViewHolder(private val binding : SelectproductItemBinding) : RecyclerView.ViewHolder(binding.root) {
+            class ViewHolder(private val binding : SelectproductItemBinding,private var viewModel  : ListViewModel) : RecyclerView.ViewHolder(binding.root) {
                 fun bind (list: ProductDataEntity) {
                     binding.textSelectProductName.text = list.nameProduct
                     binding.textSelectProductBarcode.text = list.barcodeProduct
                     binding.textSelectProductPrice.text = list.priceProduct.toString()
                     binding.selectLayout.setOnClickListener {
-                        val actions = SelectProductFragmentDirections.actionSelectProductFragmentToProductHistoryFragment(list)
-                        Navigation.findNavController(binding.root).navigate(actions)
+                        try {
+                            val actions = SelectProductFragmentDirections.actionSelectProductFragmentToProductHistoryFragment(list)
+                            Navigation.findNavController(binding.root).navigate(actions)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                    binding.textProductUnit.text = list.unitProduct
+                    binding.textQuanitityProduct.text = list.quantityProduct.toString()
+
+                    binding.btnAddProduct.setOnClickListener {
+
+                        viewModel.insert(ListDataEntity(list))
+                        val actuibs = SelectProductFragmentDirections.actionSelectProductFragmentToListProductsFragment2()
+                        Navigation.findNavController(binding.root).navigate(actuibs)
                     }
 
-
-
                     val byteArray = list.imageProduct?.let { TypeConverterss.toBitmap(it) }
-                    binding.imageSelectProduct.load(byteArray) {
+                    binding.imageSelectProduct2.load(byteArray) {
                         crossfade(true)
                     }
                 }
@@ -49,7 +61,7 @@ class SelectProductAdapter(private var list : ArrayList<ProductDataEntity>) : Re
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = SelectproductItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+        return ViewHolder(binding, viewModel)
     }
 
     override fun getItemCount(): Int = list.size

@@ -5,15 +5,15 @@
     android:id="@+id/priceHistoryRec"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#5E5A5A"
-    android:backgroundTint="#575454">
+    android:layout_margin="8dp"
+    android:background="@drawable/rounded_background">
 
     <TextView
         android:id="@+id/textView18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Price :"
-        android:textColor="#EAE0E0"
+        android:textColor="#0E0E0E"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:text="124"
-        android:textColor="#EAE0E0"
+        android:textColor="#0E0E0E"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView18"
@@ -39,7 +39,7 @@
         android:layout_marginStart="50dp"
         android:layout_marginEnd="116dp"
         android:text="TextView"
-        android:textColor="#F4EEEE"
+        android:textColor="#0E0E0E"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

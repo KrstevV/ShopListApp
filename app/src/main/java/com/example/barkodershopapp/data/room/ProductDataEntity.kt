@@ -21,8 +21,12 @@ data class ProductDataEntity (
     var noteProduct : String?,
     @ColumnInfo(name = "Price")
     var priceProduct : Int,
-    @ColumnInfo(name = "Active")
-    var activeProduct : Boolean,
+    @ColumnInfo(name = "Unit")
+    var unitProduct : String?,
+    @ColumnInfo(name = "Quantity")
+    var quantityProduct : Int,
+    @ColumnInfo(name = "Checkout")
+    var checkout : Boolean = false,
     @ColumnInfo(name = "image")
     var imageProduct : ByteArray?,
     @ColumnInfo(name = "count")

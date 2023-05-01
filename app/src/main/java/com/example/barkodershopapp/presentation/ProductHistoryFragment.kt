@@ -30,12 +30,12 @@ import java.util.*
 
 @AndroidEntryPoint
 class ProductHistoryFragment : Fragment() {
-    lateinit var priceAdapter : PriceHistoryAdapter
+    lateinit var priceAdapter: PriceHistoryAdapter
     private val args by navArgs<ProductHistoryFragmentArgs>()
-        lateinit var binding : FragmentProductHistoryBinding
-        val productViewModel : ProductViewModel by viewModels()
-        val historyViewModel : HistoryViewModel by viewModels()
-        val listViewModel : ListViewModel by viewModels()
+    lateinit var binding: FragmentProductHistoryBinding
+    val productViewModel: ProductViewModel by viewModels()
+    val historyViewModel: HistoryViewModel by viewModels()
+    val listViewModel: ListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,63 +50,64 @@ class ProductHistoryFragment : Fragment() {
         binding = FragmentProductHistoryBinding.inflate(inflater, container, false)
 
 
-
-
-
         priceAdapter = PriceHistoryAdapter(args.currentProduct.priceHistory)
-
-//        listHistoryPrice.add(PriceData("123"))
-//        priceAdapter.setPricesList(productH)
 
         binding.recViewHistoryProduct.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = priceAdapter
         }
 
-
         priceAdapter.setPricesList(args.currentProduct.priceHistory)
 
 
 
-        binding.editTextNameEditProduct.setText(args.currentProduct.nameProduct)
-        binding.editTextBarcodeEditProduct.setText(args.currentProduct.barcodeProduct)
-        binding.editPriceEditProduct.setText(args.currentProduct.priceProduct.toString())
+        binding.editTextNameUpdateProduct.setText(args.currentProduct.nameProduct)
+        binding.editTextBarcodeUpdateProduct.setText(args.currentProduct.barcodeProduct)
+        binding.editPriceUpdateProduct.setText(args.currentProduct.priceProduct.toString())
+        binding.editQuantityUpdateProduct.setText(args.currentProduct.quantityProduct.toString())
+        binding.editUnitUpdateProduct.setText(args.currentProduct.unitProduct)
 
         val byteArray = args.currentProduct.imageProduct?.let { TypeConverterss.toBitmap(it) }
-        binding.imageEditProduct.load(byteArray) {
+        binding.cameraImageUpdate.load(byteArray) {
             crossfade(true)
         }
         return  binding.root
     }
 
+    override fun onPause() {
+        super.onPause()
+        findNavController().popBackStack()
+    }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnUpdate.setOnClickListener {
+        binding.btnUpdateProductToList.setOnClickListener {
             updateProduct()
 
-        }
-        binding.buttonADD.setOnClickListener {
-            insertProduct()
         }
 
     }
 
     @SuppressLint("SuspiciousIndentation")
     private fun updateProduct(){
-        var name = binding.editTextNameEditProduct.text.toString()
-        var barcode = binding.editTextBarcodeEditProduct.text.toString()
-        var price = binding.editPriceEditProduct.text.toString()
-        val currentProduct = ProductDataEntity(name,
+        var name = binding.editTextNameUpdateProduct.text.toString()
+        var barcode = binding.editTextBarcodeUpdateProduct.text.toString()
+        var price = binding.editPriceUpdateProduct.text.toString()
+        var unit = binding.editUnitUpdateProduct.text.toString()
+        var quantity = binding.editQuantityUpdateProduct.text.toString()
+        var currentProduct = ProductDataEntity(name,
             barcode,
             getCurrentDate(),
             price.toInt(),
-            true,
+            unit,
+            quantity.toInt(),
+            false,
             args.currentProduct.imageProduct,
             1,
             30,args.currentProduct.priceHistory, args.currentProduct.id)
-
             args.currentProduct.priceHistory.add(price)
 
         productViewModel.updateItem(currentProduct)
@@ -115,27 +116,6 @@ class ProductHistoryFragment : Fragment() {
 
     }
 
-    private fun insertProduct() {
-        var name = binding.editTextNameEditProduct.text.toString()
-        var barcode = binding.editTextBarcodeEditProduct.text.toString()
-        var price = binding.editPriceEditProduct.text.toString()
-        val currentProduct = ProductDataEntity(name,
-            barcode,
-            getCurrentDate(),
-            price.toInt(),
-            true,
-            args.currentProduct.imageProduct,
-            1,
-            30,args.currentProduct.priceHistory, args.currentProduct.id)
-        val listDataEntity = ListDataEntity(currentProduct)
-        listViewModel.insert(listDataEntity)
-        val navContr = findNavController()
-        navContr.navigate(R.id.listProductsFragment, null, NavOptions.Builder().setPopUpTo(R.id.selectProductFragment, true).build())
-
-
-
-
-    }
 
     private fun getCurrentDate(): String {
         val currentDate = Calendar.getInstance().time

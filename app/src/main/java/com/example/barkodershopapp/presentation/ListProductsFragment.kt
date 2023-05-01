@@ -75,7 +75,7 @@ class ListProductsFragment : Fragment() {
 
 
 
-        binding.btnScan.setOnClickListener {
+        binding.btnAddNewList.setOnClickListener {
             var listName  = binding.editTextListName.text.toString()
             listViewModel.allNotes.observe(viewLifecycleOwner, {products3 ->
 
@@ -89,10 +89,6 @@ class ListProductsFragment : Fragment() {
 
         }
 
-        binding.btnScan.setOnClickListener {
-            findNavController().navigate(R.id.action_listProductsFragment_to_scanFragment)
-
-        }
 
         val itemTouchHelper = ItemTouchHelper(swipteToDelete)
         itemTouchHelper.attachToRecyclerView(binding.recViewProductList)
