@@ -1,17 +1,16 @@
 package com.example.barkodershopapp.presentation
 
 import android.content.Intent
+import android.graphics.Canvas
+import android.opengl.Visibility
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +29,7 @@ import com.example.barkodershopapp.presentation.viewmodel.ListViewModel
 import com.example.barkodershopapp.presentation.viewmodel.ProductApiViewModel
 import com.example.barkodershopapp.presentation.viewmodel.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -44,56 +44,87 @@ class ListProductsFragment : Fragment() {
     val productViewModel : ProductViewModel by viewModels()
     val listViewModel : ListViewModel by viewModels()
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-        var productL = arrayListOf<ListDataEntity>()
-
-        productAdapter = ProductAdapter(productL, clickListenerButtons)
-
-        toolBarBind = ToolBarBinding.inflate(layoutInflater)
-        var toolBar = toolBarBind.toolBarr
-
-
-        binding.recViewProductList.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = productAdapter
-        }
-
-        listViewModel.allNotes.observe(viewLifecycleOwner, {products ->
-            productAdapter.setNotesList(products)
-
-        })
+        var editMode = requireActivity().intent.getBooleanExtra("editMode", false)
+        var listId = requireActivity().intent.getLongExtra("currentListId", 0)
 
 
 
 
-        binding.btnAddNewList.setOnClickListener {
-            var listName  = binding.editTextListName.text.toString()
-            listViewModel.allNotes.observe(viewLifecycleOwner, {products3 ->
+            var productL = arrayListOf<ListDataEntity>()
 
-                historyViewModel.insert(HistoryDataEntity(listName, getCurrentDate(), products3 as ArrayList<ListDataEntity>))
+            productAdapter = ProductAdapter(productL, clickListenerButtons)
+
+            binding.recViewProductList.apply {
+                layoutManager = LinearLayoutManager(context)
+                adapter = productAdapter
+            }
+
+            listViewModel.allNotes.observe(viewLifecycleOwner, { products ->
+                productAdapter.setNotesList(products)
+
+
             })
-            listViewModel.delete()
 
-            var intent = Intent(activity, HomeScreenActivity::class.java)
+        if(editMode) {
+            binding.textActivityName.text = "Update List"
+            binding.btnAddNewList.visibility = View.INVISIBLE
+            binding.btnUpdateList.visibility = View.VISIBLE
+
+        }
+
+        binding.btnUpdateList.setOnClickListener {
+            val listName = binding.editTextListName.text.toString()
+            listViewModel.allNotes.observe(viewLifecycleOwner, {products4 ->
+                var currentList = HistoryDataEntity(listName, getCurrentDate()
+                    , products4 as ArrayList<ListDataEntity>, listId)
+
+                historyViewModel.updateItem(currentList)
+            })
+            val intent = Intent(activity, HomeScreenActivity::class.java)
             startActivity(intent)
-
+            requireActivity().finish()
 
         }
 
 
-        val itemTouchHelper = ItemTouchHelper(swipteToDelete)
-        itemTouchHelper.attachToRecyclerView(binding.recViewProductList)
+
+
+            binding.btnAddNewList.setOnClickListener {
+                val listName = binding.editTextListName.text.toString()
+                listViewModel.allNotes.observe(viewLifecycleOwner, { products3 ->
+
+                    historyViewModel.insert(
+                        HistoryDataEntity(
+                            listName,
+                            getCurrentDate(),
+                            products3 as ArrayList<ListDataEntity>
+                        )
+                    )
+                })
+
+                val intent = Intent(activity, HomeScreenActivity::class.java)
+                startActivity(intent)
+                requireActivity().finish()
+
+            }
+
+
+            val itemTouchHelper = ItemTouchHelper(swipteToDelete)
+            itemTouchHelper.attachToRecyclerView(binding.recViewProductList)
+
+
 
     }
+
     private fun getCurrentDate(): String {
         val currentDate = Calendar.getInstance().time
         val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm")
@@ -110,8 +141,43 @@ class ListProductsFragment : Fragment() {
     private val swipteToDelete = object : SwipeToDelete() {
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             val position = viewHolder.absoluteAdapterPosition
-            historyAdatper.notifyItemRemoved(position)
-            historyViewModel.deleteItem(historyAdatper.getHistoryInt(position))
+            productAdapter.notifyItemRemoved(position)
+            listViewModel.deleteItem(productAdapter.getProductInt(position))
+
+
+        }
+
+        override fun onChildDraw(
+            c: Canvas,
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            dX: Float,
+            dY: Float,
+            actionState: Int,
+            isCurrentlyActive: Boolean
+        ) {
+
+            RecyclerViewSwipeDecorator.Builder(
+                c,
+                recyclerView,
+                viewHolder,
+                dX,
+                dY,
+                actionState,
+                isCurrentlyActive
+
+            )
+                .addSwipeLeftBackgroundColor(ContextCompat.getColor(requireActivity(),
+                R.color.designColor))
+                .addSwipeLeftActionIcon(R.drawable.delete_item)
+                .create()
+                .decorate()
+
+
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+
+
+
         }
     }
 
@@ -121,6 +187,8 @@ class ListProductsFragment : Fragment() {
             list.totalPrice = list.totalPrice + list.priceProduct
             productViewModel.updateItem(list)
         }
+
+
 
         override fun onClickMinus(list: ProductDataEntity) {
             if(list.count >= 2) {

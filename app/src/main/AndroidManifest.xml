@@ -57,6 +57,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:clearTaskOnLaunch="true"
             android:name="com.example.barkodershopapp.presentation.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">

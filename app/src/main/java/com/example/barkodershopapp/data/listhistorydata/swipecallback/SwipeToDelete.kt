@@ -1,9 +1,14 @@
 package com.example.barkodershopapp.data.listhistorydata.swipecallback
 
+import android.content.Context
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.barkoder.shoppingApp.net.R
 
-abstract class SwipeToDelete : ItemTouchHelper.Callback() {
+abstract class SwipeToDelete() : ItemTouchHelper.Callback() {
+
+//    private var deleteColor = ContextCompat.getColor(context, R.color.black)
 
     override fun getMovementFlags(
         recyclerView: RecyclerView,

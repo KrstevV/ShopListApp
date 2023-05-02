@@ -1,6 +1,7 @@
 package com.example.barkodershopapp.presentation
 
 import android.content.Intent
+import android.graphics.Canvas
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
@@ -15,9 +17,12 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.barkoder.shoppingApp.net.R
 import com.barkoder.shoppingApp.net.databinding.FragmentSelectProductBinding
+import com.example.barkodershopapp.data.listhistorydata.swipecallback.SwipeToDelete
 import com.example.barkodershopapp.data.room.ProductDataEntity
 import com.example.barkodershopapp.domain.userdataacc.Product
 import com.example.barkodershopapp.presentation.Adapters.SelectProductAdapter
@@ -25,6 +30,7 @@ import com.example.barkodershopapp.presentation.viewmodel.ListViewModel
 import com.example.barkodershopapp.presentation.viewmodel.ProductApiViewModel
 import com.example.barkodershopapp.presentation.viewmodel.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 @AndroidEntryPoint
 class SelectProductFragment : Fragment() {
@@ -46,12 +52,15 @@ class SelectProductFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-
+        val itemTouchHelper = ItemTouchHelper(swipteToDelete)
+        itemTouchHelper.attachToRecyclerView(binding.recViewSelect)
 
 
 
 
     }
+
+
 
     private fun searchView(list : List<ProductDataEntity>) {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -110,13 +119,51 @@ class SelectProductFragment : Fragment() {
 
         return  binding.root
 
-
-
-
     }
 
+    private val swipteToDelete = object : SwipeToDelete() {
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            val position = viewHolder.absoluteAdapterPosition
+            selectAdapter.notifyItemRemoved(position)
+            productViewModel.deleteItem(selectAdapter.getSelectInt(position))
 
 
+        }
+
+        override fun onChildDraw(
+            c: Canvas,
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            dX: Float,
+            dY: Float,
+            actionState: Int,
+            isCurrentlyActive: Boolean
+        ) {
+
+            RecyclerViewSwipeDecorator.Builder(
+                c,
+                recyclerView,
+                viewHolder,
+                dX,
+                dY,
+                actionState,
+                isCurrentlyActive
+
+            )
+                .addSwipeLeftBackgroundColor(
+                    ContextCompat.getColor(requireActivity(),
+                        R.color.designColor))
+                .addSwipeLeftActionIcon(R.drawable.delete_item)
+                .create()
+                .decorate()
+
+
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+
+
+
+        }
+    }
 
 }
 

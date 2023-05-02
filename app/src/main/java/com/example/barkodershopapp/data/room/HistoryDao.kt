@@ -23,6 +23,6 @@ interface HistoryDao {
     fun getItem(itemId: Long): List<HistoryDataEntity>
 
     @Update
-    fun updateItem(note: HistoryDataEntity)
+    fun updateItem(list: HistoryDataEntity)
 
 }

@@ -93,7 +93,7 @@ class AddProductFragment : Fragment() {
 
 
         var currentAddProduct = ProductDataEntity("productName","productBarcode","productNotes", 0, "", 0, false, null,
-            0,0,arrayListOf())
+            1,0,arrayListOf())
 
 
         binding.btnScanAddProduct.setOnClickListener {
@@ -146,21 +146,21 @@ class AddProductFragment : Fragment() {
     }
 
 
-    private suspend fun getBitmap(): Bitmap? {
-        val loading = ImageLoader(requireActivity().applicationContext)
-        val request = ImageRequest.Builder(requireActivity().applicationContext)
-            .data(binding.cameraImage)
-            .build()
-        val result = try {
-            (loading.execute(request) as SuccessResult).drawable
-        } catch (e: Exception) {
-            // Handle the error case
-            Log.e(TAG, "Error loading image: ${e.message}")
-            null
-        }
-
-        return (result as? BitmapDrawable)?.bitmap
-    }
+//    private suspend fun getBitmap(): Bitmap? {
+//        val loading = ImageLoader(requireActivity().applicationContext)
+//        val request = ImageRequest.Builder(requireActivity().applicationContext)
+//            .data(binding.cameraImage)
+//            .build()
+//        val result = try {
+//            (loading.execute(request) as SuccessResult).drawable
+//        } catch (e: Exception) {
+//            // Handle the error case
+//            Log.e(TAG, "Error loading image: ${e.message}")
+//            null
+//        }
+//
+//        return (result as? BitmapDrawable)?.bitmap
+//    }
 
     private fun cameraCheckPremission() {
 

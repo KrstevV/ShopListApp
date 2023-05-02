@@ -4,9 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.barkoder.shoppingApp.net.R
 import com.barkoder.shoppingApp.net.databinding.SelectproductItemBinding
 import com.example.barkodershopapp.data.room.ListDataEntity
 import com.example.barkodershopapp.data.room.ProductDataEntity
@@ -38,6 +43,7 @@ class SelectProductAdapter(private var list : ArrayList<ProductDataEntity>, priv
                         try {
                             val actions = SelectProductFragmentDirections.actionSelectProductFragmentToProductHistoryFragment(list)
                             Navigation.findNavController(binding.root).navigate(actions)
+
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
@@ -48,8 +54,8 @@ class SelectProductAdapter(private var list : ArrayList<ProductDataEntity>, priv
                     binding.btnAddProduct.setOnClickListener {
 
                         viewModel.insert(ListDataEntity(list))
-                        val actuibs = SelectProductFragmentDirections.actionSelectProductFragmentToListProductsFragment2()
-                        Navigation.findNavController(binding.root).navigate(actuibs)
+                        findNavController(binding.root).navigate(R.id.listProductsFragment, null, NavOptions.Builder().setPopUpTo(R.id.selectProductFragment, true).build())
+
                     }
 
                     val byteArray = list.imageProduct?.let { TypeConverterss.toBitmap(it) }
@@ -68,6 +74,10 @@ class SelectProductAdapter(private var list : ArrayList<ProductDataEntity>, priv
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(list[position])
+    }
+
+    fun getSelectInt(position : Int): ProductDataEntity {
+        return list[position]
     }
 
 

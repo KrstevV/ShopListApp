@@ -76,7 +76,7 @@ class ProductHistoryFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        findNavController().popBackStack()
+
     }
 
 
