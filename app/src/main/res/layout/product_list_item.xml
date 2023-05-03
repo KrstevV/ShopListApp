@@ -106,7 +106,7 @@
         android:layout_marginBottom="35dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textProductBarcode"
-        app:srcCompat="@drawable/baseline_qr_code_scanner_24" />
+        app:srcCompat="@drawable/barcode_scanner" />
 
     <TextView
         android:id="@+id/textView7"

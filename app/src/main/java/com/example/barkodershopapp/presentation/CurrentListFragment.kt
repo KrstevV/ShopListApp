@@ -227,9 +227,11 @@ class CurrentListFragment : Fragment() {
             binding.startList.visibility = View.GONE
             binding.scanLayout.visibility = View.VISIBLE
             binding.stopList.visibility = View.VISIBLE
+            binding.btnEditList.visibility = View.GONE
         } else {
             currentAdapter.showCheckboxes = false
             binding.scanLayout.visibility = View.GONE
+            binding.btnEditList.visibility = View.VISIBLE
         }
         scannedPro()
         sucessfullCheckout(args.currentList.listProducts)

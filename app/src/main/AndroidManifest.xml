@@ -22,30 +22,7 @@
             android:name="com.example.barkodershopapp.presentation.HomeScreenActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-        <activity
-            android:name="com.example.barkodershopapp.presentation.PaymentActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
 
-
-        <activity
-            android:name="com.example.barkodershopapp.presentation.HistoryListActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.example.barkodershopapp.presentation.SaveProductActivity"
-            android:exported="false"
-            android:parentActivityName="com.example.barkodershopapp.presentation.MainActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.example.barkodershopapp.presentation.RegisterActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.example.barkodershopapp.presentation.LoginActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
         <activity
             android:name="com.example.barkodershopapp.presentation.SplashScreenActivity"
             android:exported="true"

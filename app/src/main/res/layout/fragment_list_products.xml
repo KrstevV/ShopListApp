@@ -48,7 +48,7 @@
                 android:layout_marginLeft="75dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
-                app:startIconDrawable="@drawable/baseline_format_list_bulleted_24">
+                app:startIconDrawable="@drawable/list_icon">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextListName"
@@ -82,10 +82,11 @@
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="65dp"
             android:clickable="true"
-            android:src="@drawable/baseline_add_24"
+            android:src="@drawable/add_circle"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="visible"/>
+            app:maxImageSize="30dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnUpdateList"
@@ -94,10 +95,11 @@
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="65dp"
             android:clickable="true"
-            android:src="@drawable/baseline_person_24"
+            android:src="@drawable/edit_list"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="invisible"/>
+            app:maxImageSize="35dp" />
 
         <LinearLayout
             android:layout_width="100dp"

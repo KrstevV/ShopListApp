@@ -71,7 +71,7 @@
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
-            app:endIconDrawable="@drawable/baseline_qr_code_scanner_24"
+            app:endIconDrawable="@drawable/barcode_scanner"
             app:layout_constraintEnd_toStartOf="@+id/include"
             app:layout_constraintStart_toEndOf="@+id/include"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
