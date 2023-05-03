@@ -74,12 +74,13 @@ class CurrentListFragment : Fragment() {
         binding.textView25.text = args.currentList.listProducts.size.toString()
         binding.textTotalCostP.text = sumTotalCost(args.currentList.listProducts).toString() + " $"
 
-        scannedPro()
+
         binding.btnEditList.setOnClickListener {
                 val intent = Intent(requireActivity(), MainActivity::class.java)
                 intent.putExtra("editMode", true)
                 intent.putExtra("currentListId", args.currentList.id)
                 intent.putExtra("checkedDate", args.currentList.checkedDate)
+                intent.putExtra("listName", args.currentList.listName)
                 startActivity(intent)
                 requireActivity().finish()
             for (i in  args.currentList.listProducts) {
@@ -103,6 +104,7 @@ class CurrentListFragment : Fragment() {
                 scanLayout.visibility = View.GONE
             }
             binding.startList.visibility = View.GONE
+            binding.btnEditList.visibility = View.GONE
             binding.stopList.visibility = View.VISIBLE
         }
         binding.stopList.setOnClickListener {
@@ -117,6 +119,7 @@ class CurrentListFragment : Fragment() {
             }
             binding.stopList.visibility = View.GONE
             binding.startList.visibility = View.VISIBLE
+            binding.btnEditList.visibility = View.VISIBLE
         }
 
 
@@ -168,7 +171,7 @@ class CurrentListFragment : Fragment() {
                     findNavController().popBackStack()
                 }
 
-            }, 2000)
+            }, 3000)
 
 
 
@@ -228,6 +231,7 @@ class CurrentListFragment : Fragment() {
             currentAdapter.showCheckboxes = false
             binding.scanLayout.visibility = View.GONE
         }
+        scannedPro()
         sucessfullCheckout(args.currentList.listProducts)
     }
 

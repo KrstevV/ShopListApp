@@ -18,6 +18,7 @@ import android.view.LayoutInflater
 import android.view.RoundedCorner
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
@@ -138,38 +139,21 @@ class AddProductFragment : Fragment() {
                     currentAddProduct.quantityProduct = productQuantity.toInt()
 
 
-                        val bitmap = (productImage.drawable as BitmapDrawable).bitmap
-                        currentAddProduct.imageProduct = TypeConverterss.fromBitmap(bitmap)
+                    val bitmap = (productImage.drawable as BitmapDrawable).bitmap
+                    currentAddProduct.imageProduct = TypeConverterss.fromBitmap(bitmap)
 
 
-
-
-
-
-
-
-
-
-//                    if(currentAddProduct.imageProduct == null) {
-//                        val bitmap = (productImage.drawable as BitmapDrawable).bitmap
-//                        currentAddProduct.imageProduct = TypeConverterss.fromBitmap(bitmap)
-//                    }
-//                    } else {
-//                        val defaultImage = BitmapFactory.decodeResource(resources, R.drawable.ic_broken_image)
-//                        val outputStream = ByteArrayOutputStream()
-//                        defaultImage.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-//                        val byteArray = outputStream.toByteArray()
-//                        productImage.setImageBitmap(BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size))
-//                        currentAddProduct.imageProduct = byteArray
-//                    }
+                    productViewModel.insert(currentAddProduct)
+                    navContr.navigate(
+                        R.id.selectProductFragment,
+                        null,
+                        NavOptions.Builder().setPopUpTo(R.id.addProductFragment, true).build()
+                    )
+                    Toast.makeText(context, "Product is successful created", Toast.LENGTH_SHORT).show()
 
                 }
-
-
-                productViewModel.insert(currentAddProduct)
-                navContr.navigate(R.id.selectProductFragment, null, NavOptions.Builder().setPopUpTo(R.id.addProductFragment, true).build())
-
-
+            } else {
+                Toast.makeText(context, "Fields cannot be empty", Toast.LENGTH_SHORT).show()
             }
         }
     }

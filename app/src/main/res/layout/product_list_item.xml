@@ -20,14 +20,14 @@
         android:text="325324123"
         android:textColor="#0E0E0E"
         android:textSize="16sp"
-        android:textStyle="bold"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageView5"
         app:layout_constraintStart_toEndOf="@+id/imageProduct" />
 
     <TextView
         android:id="@+id/textProductName"
-        android:layout_width="150dp"
+        android:layout_width="130dp"
         android:layout_height="47dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
@@ -35,7 +35,7 @@
         android:text="Coca Cola"
         android:textColor="#0E0E0E"
         android:textSize="17sp"
-        android:textStyle="bold"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@+id/textProductBarcode"
         app:layout_constraintStart_toEndOf="@+id/imageProduct"
         app:layout_constraintTop_toTopOf="parent"
@@ -68,7 +68,7 @@
         android:text="5 $"
         android:textColor="#0E0E0E"
         android:textSize="18sp"
-        android:textStyle="bold"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -77,7 +77,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="15dp"
         android:backgroundTint="#040303"
         android:src="@drawable/ic_minus"
         android:text="-"
@@ -116,7 +116,7 @@
         android:layout_marginBottom="10dp"
         android:text="Price: "
         android:textColor="#0E0E0E"
-        android:textStyle="bold"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageProduct" />
 
@@ -128,7 +128,7 @@
         android:layout_marginBottom="10dp"
         android:text="2.5 $"
         android:textColor="#0E0E0E"
-        android:textStyle="bold"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView7" />
 
@@ -142,7 +142,7 @@
         android:text="2"
         android:textColor="#0E0E0E"
         android:textSize="18sp"
-        android:textStyle="bold"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnMinusSize"
@@ -158,7 +158,7 @@
         android:text="x"
         android:textColor="#0E0E0E"
         android:textSize="18sp"
-        android:textStyle="bold"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/textCountProduct"
         app:layout_constraintTop_toTopOf="parent"
@@ -172,7 +172,7 @@
         android:layout_marginBottom="10dp"
         android:text="Total Price:"
         android:textColor="#0E0E0E"
-        android:textStyle="bold"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/textProductTotalPrice" />
 </androidx.constraintlayout.widget.ConstraintLayout>

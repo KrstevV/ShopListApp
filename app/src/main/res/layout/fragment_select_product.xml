@@ -37,7 +37,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginRight="25dp"
             android:layout_marginBottom="13dp"
-            android:background="@drawable/rounded_searchview"
+            android:background="@drawable/rounded_searchview2"
             app:layout_constraintBottom_toTopOf="@+id/recViewSelect"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

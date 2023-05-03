@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -56,6 +57,7 @@ class ListProductsFragment : Fragment() {
         var editMode = requireActivity().intent.getBooleanExtra("editMode", false)
         var listId = requireActivity().intent.getLongExtra("currentListId", 0)
         var checkedDate = requireActivity().intent.getStringExtra("checkedDate")
+        var listName = requireActivity().intent.getStringExtra("listName")
 
 
 
@@ -71,31 +73,37 @@ class ListProductsFragment : Fragment() {
 
             listViewModel.allNotes.observe(viewLifecycleOwner, { products ->
                 productAdapter.setNotesList(products as ArrayList<ListDataEntity>)
-
-
+                binding.textTotalCostList.text = sumTotalCostList(products).toString() + " $"
             })
 
         if(editMode) {
             binding.textActivityName.text = "Update List"
             binding.btnAddNewList.visibility = View.INVISIBLE
             binding.btnUpdateList.visibility = View.VISIBLE
+            binding.editTextListName.setText(listName)
 
         }
 
         binding.btnUpdateList.setOnClickListener {
             val listName = binding.editTextListName.text.toString()
-            listViewModel.allNotes.observe(viewLifecycleOwner, {products4 ->
-                var currentList = HistoryDataEntity(listName, getCurrentDate(),
-                    sumTotalCostList(products4).toString(),
-                    checkedDate!!,
-                    false
-                    , products4 as ArrayList<ListDataEntity>, listId)
+            if(listName.isNotEmpty()) {
+                listViewModel.allNotes.observe(viewLifecycleOwner, { products4 ->
+                    var currentList = HistoryDataEntity(
+                        listName, getCurrentDate(),
+                        sumTotalCostList(products4).toString(),
+                        checkedDate!!,
+                        false, products4 as ArrayList<ListDataEntity>, listId
+                    )
 
-                historyViewModel.updateItem(currentList)
-            })
-            val intent = Intent(activity, HomeScreenActivity::class.java)
-            startActivity(intent)
-            requireActivity().finish()
+                    historyViewModel.updateItem(currentList)
+                })
+                val intent = Intent(activity, HomeScreenActivity::class.java)
+                startActivity(intent)
+                requireActivity().finish()
+                Toast.makeText(context, "List is successful updated", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "List name is empty!", Toast.LENGTH_SHORT).show()
+            }
 
         }
 
@@ -106,24 +114,28 @@ class ListProductsFragment : Fragment() {
 
             binding.btnAddNewList.setOnClickListener {
                 val listName = binding.editTextListName.text.toString()
-                listViewModel.allNotes.observe(viewLifecycleOwner, { products3 ->
+                if(listName.isNotEmpty()) {
+                    listViewModel.allNotes.observe(viewLifecycleOwner, { products3 ->
 
-                    historyViewModel.insert(
-                        HistoryDataEntity(
-                            listName,
-                            getCurrentDate(),
-                            sumTotalCostList(products3).toString(),
-                            "Not checked yet",
-                            false,
-                            products3 as ArrayList<ListDataEntity>
+                        historyViewModel.insert(
+                            HistoryDataEntity(
+                                listName,
+                                getCurrentDate(),
+                                sumTotalCostList(products3).toString(),
+                                "Not checked yet",
+                                false,
+                                products3 as ArrayList<ListDataEntity>
+                            )
                         )
-                    )
-                })
+                    })
 
-                val intent = Intent(activity, HomeScreenActivity::class.java)
-                startActivity(intent)
-                requireActivity().finish()
-
+                    val intent = Intent(activity, HomeScreenActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().finish()
+                    Toast.makeText(context, "List is successful created", Toast.LENGTH_SHORT).show()
+                }else {
+                    Toast.makeText(context, "List name is empty!", Toast.LENGTH_SHORT).show()
+                }
             }
 
 

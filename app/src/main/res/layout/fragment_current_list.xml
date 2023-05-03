@@ -58,7 +58,8 @@
                 android:layout_marginTop="7dp"
                 android:layout_marginBottom="17dp"
                 android:clickable="true"
-                android:src="@drawable/baseline_qr_code_scanner_24"
+                android:src="@drawable/barcode_scanner"
+                app:backgroundTint="#FB8C00"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
@@ -124,24 +125,15 @@
                 app:layout_constraintEnd_toStartOf="@+id/textView25"
                 app:layout_constraintStart_toEndOf="@+id/scannedProductsP" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnEditList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="48dp"
-            android:clickable="true"
-            android:src="@drawable/baseline_attach_money_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/startList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="55dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="70dp"
+            android:layout_marginBottom="50dp"
             android:clickable="true"
             android:src="@drawable/start_list2"
             app:backgroundTint="@color/checkBox"
@@ -151,10 +143,12 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/stopList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="15dp"
+            app:fabCustomSize="40dp"
+            android:scaleType="center"
             android:clickable="true"
             android:foregroundGravity="center"
             android:src="@drawable/stop_circle_fill0_wght400_grad0_opsz48"
@@ -163,6 +157,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:maxImageSize="25sp" />
+
+
+
 
         <androidx.cardview.widget.CardView
             android:id="@+id/sucessfullCard"
@@ -195,6 +192,19 @@
 
 
         </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnEditList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="70dp"
+            android:layout_marginBottom="50dp"
+            android:clickable="true"
+            android:src="@drawable/edit_list"
+            app:backgroundTint="#FB8C00"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:maxImageSize="30dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

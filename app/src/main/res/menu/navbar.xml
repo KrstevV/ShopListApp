@@ -7,7 +7,7 @@
         android:icon="@drawable/baseline_format_list_bulleted_24"/>
     <item android:title="Search"
         android:id="@+id/selectProductFragment"
-        android:icon="@drawable/rounded_searchview"/>
+        android:icon="@drawable/rounded_searchview2"/>
     <item android:title="Add"
         android:id="@+id/addProductFragment"
         android:icon="@drawable/baseline_add_24"/>

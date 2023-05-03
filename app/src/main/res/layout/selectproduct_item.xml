@@ -20,7 +20,7 @@
         android:text="325324123"
         android:textColor="#100F0F"
         android:textSize="16sp"
-        android:textStyle="bold"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageSelectProduct" />
 
@@ -30,11 +30,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="4dp"
-        android:layout_marginBottom="28dp"
         android:text="Coca Cola"
         android:textColor="#100F0F"
         android:textSize="20sp"
-        android:textStyle="bold"
+        android:textStyle="bold|italic"
         app:layout_constraintStart_toEndOf="@+id/imageSelectProduct"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -81,7 +80,7 @@
         android:text="Price: "
         android:textColor="#100F0F"
         android:textSize="20sp"
-        android:textStyle="bold"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/textSelectProductPrice"
         app:layout_constraintTop_toBottomOf="@+id/textSelectProductBarcode"
@@ -96,7 +95,7 @@
         android:text="2.5 $"
         android:textColor="#100F0F"
         android:textSize="24sp"
-        android:textStyle="bold"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -118,7 +117,7 @@
         android:layout_marginBottom="8dp"
         android:text="TextView"
         android:textColor="#100F0F"
-        android:textStyle="bold"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageSelectProduct" />
 
@@ -130,6 +129,7 @@
         android:layout_marginBottom="8dp"
         android:text="TextView"
         android:textColor="#100F0F"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView21" />
 
@@ -141,7 +141,7 @@
         android:layout_marginBottom="8dp"
         android:text=":"
         android:textColor="#0B0A0A"
-        android:textStyle="bold"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textProductUnit" />
 
