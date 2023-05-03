@@ -17,6 +17,11 @@ class ListViewModel @Inject constructor(private val repository: ListDataReposito
 
     val allNotes: LiveData<MutableList<ListDataEntity>> = repository.allNotes
 
+    var isListStarted : Boolean = false
+
+
+
+
     fun getAllProducts(): LiveData<List<ListDataEntity>> {
         return MutableLiveData<List<ListDataEntity>>().apply {
             value = repository.getAllProducts()

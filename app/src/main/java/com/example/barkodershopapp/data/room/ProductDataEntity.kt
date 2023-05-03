@@ -1,5 +1,7 @@
 package com.example.barkodershopapp.data.room
 
+import android.annotation.SuppressLint
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.media.Image
 import android.os.Parcelable
@@ -7,6 +9,7 @@ import android.widget.ImageView
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.barkoder.shoppingApp.net.R
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -35,7 +38,10 @@ data class ProductDataEntity (
     var totalPrice : Int,
     @ColumnInfo(name= "price_history")
     var priceHistory : ArrayList<String>,
+    @ColumnInfo(name = "defult_count")
+    var defultCount : Int,
     @PrimaryKey(autoGenerate = true)
     var id : Long = 0L
 
         ) : Parcelable
+

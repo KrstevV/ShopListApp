@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import com.example.barkodershopapp.typeconverters.TypeConverterss
 
 
-@Database(entities = [ProductDataEntity::class], version = 26)
+@Database(entities = [ProductDataEntity::class], version = 27)
 @TypeConverters(TypeConverterss::class)
 abstract class ProductDatabase : RoomDatabase(){
 

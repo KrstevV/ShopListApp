@@ -107,7 +107,7 @@ class ProductHistoryFragment : Fragment() {
             false,
             args.currentProduct.imageProduct,
             1,
-            30,args.currentProduct.priceHistory, args.currentProduct.id)
+            30,args.currentProduct.priceHistory, 0,args.currentProduct.id)
             args.currentProduct.priceHistory.add(price)
 
         productViewModel.updateItem(currentProduct)

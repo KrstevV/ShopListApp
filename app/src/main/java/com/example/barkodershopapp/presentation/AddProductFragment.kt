@@ -41,6 +41,7 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import java.lang.Integer.max
@@ -86,19 +87,27 @@ class AddProductFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
+
+
+
         binding.addImage.setOnClickListener {
             cameraCheckPremission()
         }
 
 
 
+
         var currentAddProduct = ProductDataEntity("productName","productBarcode","productNotes", 0, "", 0, false, null,
-            1,0,arrayListOf())
+            1,0,arrayListOf(),0)
+
+
 
 
         binding.btnScanAddProduct.setOnClickListener {
             findNavController().navigate(R.id.scanFragment)
         }
+
+
 
 
 
@@ -113,10 +122,7 @@ class AddProductFragment : Fragment() {
             var productUnit = binding.editUnitAddProduct.text.toString()
             var productQuantity = binding.editQuantityAddProduct.text.toString()
 
-            val bitmap = (binding.cameraImage.drawable as BitmapDrawable).bitmap
-            val stream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100 ,stream)
-            val byteArray = stream.toByteArray()
+
 
 
             if(productName.isNotEmpty() && productPrice.isNotEmpty() && productUnit.isNotEmpty()
@@ -131,8 +137,31 @@ class AddProductFragment : Fragment() {
                     currentAddProduct.unitProduct = productUnit
                     currentAddProduct.quantityProduct = productQuantity.toInt()
 
-                    val bitmap = (productImage.drawable as BitmapDrawable).bitmap
-                    currentAddProduct.imageProduct = TypeConverterss.fromBitmap(bitmap)
+
+                        val bitmap = (productImage.drawable as BitmapDrawable).bitmap
+                        currentAddProduct.imageProduct = TypeConverterss.fromBitmap(bitmap)
+
+
+
+
+
+
+
+
+
+
+//                    if(currentAddProduct.imageProduct == null) {
+//                        val bitmap = (productImage.drawable as BitmapDrawable).bitmap
+//                        currentAddProduct.imageProduct = TypeConverterss.fromBitmap(bitmap)
+//                    }
+//                    } else {
+//                        val defaultImage = BitmapFactory.decodeResource(resources, R.drawable.ic_broken_image)
+//                        val outputStream = ByteArrayOutputStream()
+//                        defaultImage.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+//                        val byteArray = outputStream.toByteArray()
+//                        productImage.setImageBitmap(BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size))
+//                        currentAddProduct.imageProduct = byteArray
+//                    }
 
                 }
 
@@ -145,22 +174,6 @@ class AddProductFragment : Fragment() {
         }
     }
 
-
-//    private suspend fun getBitmap(): Bitmap? {
-//        val loading = ImageLoader(requireActivity().applicationContext)
-//        val request = ImageRequest.Builder(requireActivity().applicationContext)
-//            .data(binding.cameraImage)
-//            .build()
-//        val result = try {
-//            (loading.execute(request) as SuccessResult).drawable
-//        } catch (e: Exception) {
-//            // Handle the error case
-//            Log.e(TAG, "Error loading image: ${e.message}")
-//            null
-//        }
-//
-//        return (result as? BitmapDrawable)?.bitmap
-//    }
 
     private fun cameraCheckPremission() {
 

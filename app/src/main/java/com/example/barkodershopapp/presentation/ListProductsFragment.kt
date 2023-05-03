@@ -55,6 +55,7 @@ class ListProductsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         var editMode = requireActivity().intent.getBooleanExtra("editMode", false)
         var listId = requireActivity().intent.getLongExtra("currentListId", 0)
+        var checkedDate = requireActivity().intent.getStringExtra("checkedDate")
 
 
 
@@ -69,7 +70,7 @@ class ListProductsFragment : Fragment() {
             }
 
             listViewModel.allNotes.observe(viewLifecycleOwner, { products ->
-                productAdapter.setNotesList(products)
+                productAdapter.setNotesList(products as ArrayList<ListDataEntity>)
 
 
             })
@@ -84,7 +85,10 @@ class ListProductsFragment : Fragment() {
         binding.btnUpdateList.setOnClickListener {
             val listName = binding.editTextListName.text.toString()
             listViewModel.allNotes.observe(viewLifecycleOwner, {products4 ->
-                var currentList = HistoryDataEntity(listName, getCurrentDate()
+                var currentList = HistoryDataEntity(listName, getCurrentDate(),
+                    sumTotalCostList(products4).toString(),
+                    checkedDate!!,
+                    false
                     , products4 as ArrayList<ListDataEntity>, listId)
 
                 historyViewModel.updateItem(currentList)
@@ -98,6 +102,8 @@ class ListProductsFragment : Fragment() {
 
 
 
+
+
             binding.btnAddNewList.setOnClickListener {
                 val listName = binding.editTextListName.text.toString()
                 listViewModel.allNotes.observe(viewLifecycleOwner, { products3 ->
@@ -106,6 +112,9 @@ class ListProductsFragment : Fragment() {
                         HistoryDataEntity(
                             listName,
                             getCurrentDate(),
+                            sumTotalCostList(products3).toString(),
+                            "Not checked yet",
+                            false,
                             products3 as ArrayList<ListDataEntity>
                         )
                     )
@@ -131,13 +140,15 @@ class ListProductsFragment : Fragment() {
         return formatter.format(currentDate)
     }
 
-    private fun onLoop(products : MutableList<ProductDataEntity>) : Int {
+    private fun sumTotalCostList(products : MutableList<ListDataEntity>) : Int {
         var sum = 0
-        for(product in products) {
-            sum += product.totalPrice
+
+        for (product in products) {
+            sum += product.listProducts.totalPrice
         }
         return sum
     }
+
     private val swipteToDelete = object : SwipeToDelete() {
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             val position = viewHolder.absoluteAdapterPosition
@@ -182,20 +193,20 @@ class ListProductsFragment : Fragment() {
     }
 
     private val clickListenerButtons = object : OnClickListenerButtons {
-        override fun onClickPlus(list: ProductDataEntity) {
-            list.count++
-            list.totalPrice = list.totalPrice + list.priceProduct
-            productViewModel.updateItem(list)
+        override fun onClickPlus(list: ListDataEntity) {
+            list.listProducts.count++
+            list.listProducts.totalPrice = list.listProducts.totalPrice + list.listProducts.priceProduct
+            listViewModel.updateItem(list)
         }
 
 
 
-        override fun onClickMinus(list: ProductDataEntity) {
-            if(list.count >= 2) {
-                list.count--
-                list.totalPrice = list.totalPrice - list.priceProduct
+        override fun onClickMinus(list: ListDataEntity) {
+            if(list.listProducts.count >= 2) {
+                list.listProducts.count--
+                list.listProducts.totalPrice = list.listProducts.totalPrice - list.listProducts.priceProduct
             }
-            productViewModel.updateItem(list)
+            listViewModel.updateItem(list)
         }
     }
 

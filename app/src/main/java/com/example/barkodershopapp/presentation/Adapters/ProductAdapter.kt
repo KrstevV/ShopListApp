@@ -13,16 +13,16 @@ import com.example.barkodershopapp.data.room.ProductDataEntity
 import com.example.barkodershopapp.typeconverters.TypeConverterss
 import com.squareup.picasso.Picasso
 
-class ProductAdapter (private var list : List<ListDataEntity>, private val listener : OnClickListenerButtons): RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
+class ProductAdapter (private var list : ArrayList<ListDataEntity>, private val listener : OnClickListenerButtons): RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
 
 
     class ViewHolder(private var binding : ProductListItemBinding, private val listener: OnClickListenerButtons) : RecyclerView.ViewHolder(binding.root) {
         fun bind(list : ListDataEntity) {
             binding.btnAddSize.setOnClickListener {
-                listener.onClickPlus(list.listProducts)
+                listener.onClickPlus(list)
             }
             binding.btnMinusSize.setOnClickListener {
-                listener.onClickMinus(list.listProducts)
+                listener.onClickMinus(list)
             }
             binding.textProductName.text = list.listProducts.nameProduct
             binding.textProductBarcode.text = list.listProducts.barcodeProduct.toString()
@@ -50,7 +50,7 @@ class ProductAdapter (private var list : List<ListDataEntity>, private val liste
         holder.bind(list[position])
     }
 
-    fun setNotesList(lista : List<ListDataEntity>) {
+    fun setNotesList(lista : ArrayList<ListDataEntity>) {
         this.list = lista
         notifyDataSetChanged()
     }

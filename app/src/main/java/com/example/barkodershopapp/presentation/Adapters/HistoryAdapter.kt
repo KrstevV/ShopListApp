@@ -2,6 +2,7 @@ package com.example.barkodershopapp.presentation.Adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
@@ -17,10 +18,18 @@ class HistoryAdapter (private var list : List<HistoryDataEntity>): RecyclerView.
 
                 fun bind(list : HistoryDataEntity) {
                         binding.textListName.text = list.listName
-                        binding.textCreatedDateList.text = list.listDate
+                        binding.textCheckoutDate.text = list.checkedDate
                         binding.recViewHistoryList.setOnClickListener {
                                 val actions = HistoryListFragmentDirections.actionHistoryListFragmentToCurrentListFragment(list)
                                 Navigation.findNavController(binding.root).navigate(actions)
+                        }
+                        binding.textProductsSize.text = list.listProducts.size.toString()
+                        binding.textCost.text = list.totalCost + " $"
+
+                        if(list.checkedList){
+                                binding.checkedListIcon.visibility = View.VISIBLE
+                        } else {
+                                binding.checkedListIcon.visibility = View.GONE
                         }
 
                 }
