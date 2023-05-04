@@ -41,9 +41,7 @@ class ScanFragment : Fragment(), BarkoderResultCallback {
         binding.bkdView.config = BarkoderConfig(context, "PEmBIohr9EZXgCkySoetbwP4gvOfMcGzgxKPL2X6uqPEh7C-NSQGuK_IHt6EYbMPzeLT1AQCKl8pkQkYm47d552Ox0VqVPdVROBDs0NDXebSB7D9bUsI_IJPZsrx-Hmuc-xfH8hokLbr4tmXeorlavEmLZJqBb1s3Z5Uuve8paQldQev5o7JbAEYPJj_Wgce8ftwiyAlUmU9vKt2RJTHIpmshcFNDBo3HLSsmchCI8ciT58nntrTWoYkApGly4w2")
         { Log.i("LicenseInfo", it.message)
         }
-        BarkoderHelper.applyConfigSettingsFromTemplate( context,
-            binding.bkdView.config, BarkoderConfigTemplate.INDUSTRIAL_1D, null
-        )
+
         binding.bkdView.startScanning(this)
 
         setActiveBarcodeTypes()

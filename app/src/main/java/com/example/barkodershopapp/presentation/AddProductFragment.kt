@@ -65,9 +65,10 @@ class AddProductFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        binding = FragmentAddProductBinding.inflate(inflater, container, false)
 
+
+
+        binding = FragmentAddProductBinding.inflate(inflater, container, false)
 
         val barcodeNumber = this@AddProductFragment.arguments?.getString("barcodeNum").toString()
         binding.cameraImage.setImageResource(R.drawable.photo_camera)
@@ -95,20 +96,12 @@ class AddProductFragment : Fragment() {
             cameraCheckPremission()
         }
 
-
-
-
         var currentAddProduct = ProductDataEntity("productName","productBarcode","productNotes", 0, "", 0, false, null,
             1,0,arrayListOf(),0)
-
-
-
 
         binding.btnScanAddProduct.setOnClickListener {
             findNavController().navigate(R.id.scanFragment)
         }
-
-
 
 
 

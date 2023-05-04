@@ -54,15 +54,15 @@
 
         <ImageView
             android:id="@+id/imageView9"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView13"
-            app:layout_constraintTop_toBottomOf="@+id/textView11"
-            app:srcCompat="@drawable/baseline_qr_code_scanner_24"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="34dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="58dp" />
+            android:layout_marginEnd="58dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView13"
+            app:layout_constraintTop_toBottomOf="@+id/textView11"
+            app:srcCompat="@drawable/images" />
 
         <TextView
             android:id="@+id/textView11"
@@ -95,14 +95,15 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnShopNow"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView15"
-            app:srcCompat="@drawable/baseline_shopping_cart_24"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="50dp"
-            android:clickable="true" />
+            android:clickable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView15"
+            app:maxImageSize="33dp"
+            app:srcCompat="@drawable/add_box" />
 
         <TextView
             android:id="@+id/textView15"
@@ -135,16 +136,17 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnShopHistory"
-            app:layout_constraintEnd_toStartOf="@+id/btnShopNow"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView17"
-            app:srcCompat="@drawable/baseline_payments_24"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="90dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="141dp"
-            android:clickable="true" />
+            android:clickable="true"
+            app:layout_constraintEnd_toStartOf="@+id/btnShopNow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView17"
+            app:maxImageSize="33dp"
+            app:srcCompat="@drawable/list_icon" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
