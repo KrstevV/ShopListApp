@@ -77,6 +77,7 @@ class ListProductsFragment : Fragment() {
             })
 
         if(editMode) {
+
             binding.textActivityName.text = "Update List"
             binding.btnAddNewList.visibility = View.INVISIBLE
             binding.btnUpdateList.visibility = View.VISIBLE

@@ -41,10 +41,7 @@ class ScanTwoFragment : Fragment(), BarkoderResultCallback {
         {
             Log.i("LicenseInfo", it.message)
         }
-        BarkoderHelper.applyConfigSettingsFromTemplate(
-            context,
-            binding.bkdView2.config, BarkoderConfigTemplate.INDUSTRIAL_1D, null
-        )
+
         binding.bkdView2.startScanning(this)
 
         setActiveBarcodeTypes()
