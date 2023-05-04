@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/addProductFragment"
-        android:name="com.example.barkodershopapp.presentation.AddProductFragment"
+        android:name="com.example.barkodershopapp.ui.fragments.AddProductFragment"
         android:label="fragment_add_product"
         tools:layout="@layout/fragment_add_product">
         <action
@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/selectProductFragment"
-        android:name="com.example.barkodershopapp.presentation.SelectProductFragment"
+        android:name="com.example.barkodershopapp.ui.fragments.SelectProductFragment"
         android:label="fragment_select_product"
         tools:layout="@layout/fragment_select_product" >
         <action
@@ -39,7 +39,7 @@
     </fragment>
     <fragment
         android:id="@+id/listProductsFragment"
-        android:name="com.example.barkodershopapp.presentation.ListProductsFragment"
+        android:name="com.example.barkodershopapp.ui.fragments.ListProductsFragment"
         android:label="fragment_list_products"
         tools:layout="@layout/fragment_list_products" >
         <action
@@ -57,7 +57,7 @@
     </fragment>
     <fragment
         android:id="@+id/scanFragment"
-        android:name="com.example.barkodershopapp.presentation.ScanFragment"
+        android:name="com.example.barkodershopapp.ui.fragments.ScanFragment"
         android:label="fragment_scan"
         tools:layout="@layout/fragment_scan" >
         <action
@@ -69,7 +69,7 @@
     </fragment>
     <fragment
         android:id="@+id/productHistoryFragment"
-        android:name="com.example.barkodershopapp.presentation.ProductHistoryFragment"
+        android:name="com.example.barkodershopapp.ui.fragments.ProductHistoryFragment"
         android:label="fragment_product_history"
         tools:layout="@layout/fragment_product_history" >
         <action
@@ -80,6 +80,6 @@
             app:destination="@id/listProductsFragment" />
         <argument
             android:name="currentProduct"
-            app:argType="com.example.barkodershopapp.data.room.ProductDataEntity" />
+            app:argType="com.example.barkodershopapp.data.db.productdatabase.ProductDataEntity" />
     </fragment>
 </navigation>

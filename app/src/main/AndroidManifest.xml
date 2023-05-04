@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
-        android:name="com.example.barkodershopapp.data.listhistorydata.aplication.MyApp"
+        android:name="com.example.barkodershopapp.myapp.MyApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -19,12 +19,12 @@
         tools:targetApi="31">
 
         <activity
-            android:name="com.example.barkodershopapp.presentation.HomeScreenActivity"
+            android:name="com.example.barkodershopapp.ui.activities.HomeScreenActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.example.barkodershopapp.presentation.SplashScreenActivity"
+            android:name="com.example.barkodershopapp.ui.activities.SplashScreenActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -35,7 +35,7 @@
         </activity>
         <activity
             android:clearTaskOnLaunch="true"
-            android:name="com.example.barkodershopapp.presentation.MainActivity"
+            android:name="com.example.barkodershopapp.ui.activities.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
