@@ -53,8 +53,7 @@ class CurrentListFragment : Fragment() {
         onClickScan()
         onClickStart()
         onClickStop()
-        getBarcodeString()
-        sucessfullCheckout()
+
 
 
     }
@@ -172,7 +171,6 @@ class CurrentListFragment : Fragment() {
                 }
                 handler.postDelayed(object : Runnable {
                     override fun run() {
-//                    findNavController().navigate(R.id.action_currentListFragment_to_historyListFragment)
                         findNavController().previousBackStackEntry
                         findNavController().popBackStack()
                     }
@@ -232,6 +230,8 @@ class CurrentListFragment : Fragment() {
             binding.btnEditList.visibility = View.VISIBLE
         }
         scannedPro()
+        sucessfullCheckout()
+        getBarcodeString()
 
     }
 
