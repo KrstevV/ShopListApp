@@ -3,13 +3,16 @@ package com.example.barkodershopapp.ui.fragments
 import android.content.Intent
 import android.graphics.Canvas
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +29,7 @@ import com.example.barkodershopapp.ui.viewmodels.HistoryViewModel
 import com.example.barkodershopapp.ui.viewmodels.ListViewModel
 import com.example.barkodershopapp.ui.viewmodels.ProductViewModel
 import com.example.barkodershopapp.ui.activities.HomeScreenActivity
+import com.example.barkodershopapp.ui.diffcallback.ProductDiffCallback
 import dagger.hilt.android.AndroidEntryPoint
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import java.text.SimpleDateFormat
@@ -39,6 +43,9 @@ class ListProductsFragment : Fragment() {
     private val historyViewModel: HistoryViewModel by viewModels()
     private val listViewModel: ListViewModel by viewModels()
     private val productL = arrayListOf<ListDataEntity>()
+    private var oldList: List<ListDataEntity> = emptyList()
+    private var newList: List<ListDataEntity> = emptyList()
+    private var prevProducts: List<ListDataEntity>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,15 +53,17 @@ class ListProductsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentListProductsBinding.inflate(inflater, container, false)
-
         setupRecView()
         observeList()
+
+
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         editMode()
         onClickButtonAdd()
@@ -63,16 +72,18 @@ class ListProductsFragment : Fragment() {
 
     }
 
+
     private fun setupSwipteDelete() {
         val itemTouchHelper = ItemTouchHelper(swipteToDelete)
         itemTouchHelper.attachToRecyclerView(binding.recViewProductList)
     }
 
     private fun setupRecView() {
-        productAdapter = ProductAdapter(productL, clickListenerButtons)
+        productAdapter = ProductAdapter(requireContext(),productL, clickListenerButtons)
         binding.recViewProductList.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = productAdapter
+            binding.progressBar2.visibility = View.GONE
         }
     }
 
@@ -131,8 +142,11 @@ class ListProductsFragment : Fragment() {
 
     private fun observeList() {
         listViewModel.allNotes.observe(viewLifecycleOwner, { products ->
-            productAdapter.setNotesList(products as ArrayList<ListDataEntity>)
-            binding.textTotalCostList.text = sumTotalCostList(products).toString() + " $"
+                productAdapter.setNotesList(products as ArrayList<ListDataEntity>)
+                binding.textTotalCostList.text = sumTotalCostList(products).toString() + " $"
+                binding.progressBar2.visibility = View.GONE
+
+
         })
     }
 
@@ -164,8 +178,10 @@ class ListProductsFragment : Fragment() {
     private val swipteToDelete = object : SwipeToDelete() {
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             val position = viewHolder.absoluteAdapterPosition
+            val item = productAdapter.getProductInt(position)
             productAdapter.notifyItemRemoved(position)
-            listViewModel.deleteItem(productAdapter.getProductInt(position))
+            listViewModel.deleteItem(item)
+
 
         }
 
@@ -219,6 +235,32 @@ class ListProductsFragment : Fragment() {
             }
             listViewModel.updateItem(list)
         }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                requireActivity().finish()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
+
+
+
+
+
+    override fun onResume() {
+        super.onResume()
+        binding.progressBar2.visibility = View.VISIBLE
+        val handler = Handler(Looper.getMainLooper())
+        handler.postDelayed({
+            binding.progressBar2.visibility = View.GONE
+        }, 2000)
+
+
     }
 
 

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -56,6 +57,7 @@ class SelectProductFragment : Fragment() {
     }
     private fun observeList(){
         productViewModel.allNotes.observe(viewLifecycleOwner, Observer { products ->
+            binding.progressBar3.visibility = View.GONE
             selectAdapter.setProductsList2(products as ArrayList<ProductDataEntity>)
             searchView(products)
         })
@@ -127,6 +129,17 @@ class SelectProductFragment : Fragment() {
                 return false
             }
         })
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                requireActivity().finish()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 }
 

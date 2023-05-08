@@ -1,9 +1,12 @@
 package com.example.barkodershopapp.ui.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.database.CursorWindow
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.barkoder.shoppingApp.net.R
@@ -12,6 +15,8 @@ import com.example.barkodershopapp.ui.viewmodels.ListViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.reflect.Field
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -33,14 +38,18 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setupWithNavController(navController)
         bottomNavigationView.selectedItemId = R.id.listProductsFragment
 
+
+
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        val intent = Intent(this@MainActivity, HomeScreenActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
+
+//    override fun onBackPressed() {
+//        super.onBackPressed()
+//        var currentFragment = supportFragmentManager.binding.fragment
+//        val intent = Intent(this@MainActivity, HomeScreenActivity::class.java)
+//        startActivity(intent)
+//        finish()
+//    }
 
     override fun onDestroy() {
         super.onDestroy()

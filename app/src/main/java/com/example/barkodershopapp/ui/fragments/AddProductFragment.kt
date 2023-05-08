@@ -5,7 +5,9 @@ import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.VectorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -15,6 +17,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
@@ -40,12 +43,13 @@ class AddProductFragment : Fragment() {
     private val productViewModel: ProductViewModel by viewModels()
     private val cameraRequest = 1
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-
+//        binding.editTextBarcodeAddProduct.setText("xxxxxx")
         binding = FragmentAddProductBinding.inflate(inflater, container, false)
 
 
@@ -67,7 +71,7 @@ class AddProductFragment : Fragment() {
         binding.cameraImage.setImageResource(R.drawable.photo_camera)
 
         if (barcodeNumber == "null") {
-            binding.editTextBarcodeAddProduct.setText("")
+            binding.editTextBarcodeAddProduct.setText("xxxxxxx")
         } else {
             binding.editTextBarcodeAddProduct.setText(barcodeNumber)
         }
@@ -77,11 +81,21 @@ class AddProductFragment : Fragment() {
             findNavController().navigate(R.id.scanFragment)
         }
     }
-    private fun onClickAdd(){
+    private fun onClickAdd() {
         val navContr = findNavController()
         val currentAddProduct = ProductDataEntity(
-            "productName", "productBarcode", "productNotes", 0, "", 0, false, null,
-            1, 0, arrayListOf(), 0
+            "productName",
+            "productBarcode",
+            "productNotes",
+            0,
+            "",
+            0,
+            false,
+            null,
+            1,
+            0,
+            arrayListOf(),
+            0
         )
         binding.btnAddProductToList.setOnClickListener {
             var productName = binding.editTextNameAddProduct.text.toString()
@@ -103,10 +117,40 @@ class AddProductFragment : Fragment() {
                     currentAddProduct.checkout = false
                     currentAddProduct.unitProduct = productUnit
                     currentAddProduct.quantityProduct = productQuantity.toInt()
-                    val bitmap = (productImage.drawable as BitmapDrawable).bitmap
-                    currentAddProduct.imageProduct = TypeConverterss.fromBitmap(bitmap)
-                    productViewModel.insert(currentAddProduct)
+                    currentAddProduct.defultCount = 0
+                    currentAddProduct.count = 1
 
+
+                    val drawable = productImage.drawable
+                    val imageData = when (drawable) {
+                        is BitmapDrawable -> {
+                            val bitmap = drawable.bitmap
+                            TypeConverterss.fromBitmap(bitmap)
+                        }
+                        is VectorDrawable -> {
+                            val bitmap = Bitmap.createBitmap(
+                                drawable.intrinsicWidth,
+                                drawable.intrinsicHeight,
+                                Bitmap.Config.ARGB_8888
+                            )
+                            val canvas = Canvas(bitmap)
+                            drawable.setBounds(0, 0, canvas.width, canvas.height)
+                            drawable.draw(canvas)
+                            TypeConverterss.fromBitmap(bitmap)
+                        }
+                        else -> {
+
+                            val defaultImage = requireContext().resources.getDrawable(R.drawable.photo_camera, null) as BitmapDrawable
+                            val defaultImageByteArray = TypeConverterss.fromBitmap(defaultImage.bitmap)
+                            // Use the default image data
+                            defaultImageByteArray
+                        }
+                    }
+                    currentAddProduct.imageProduct = imageData
+
+
+                    productViewModel.insert(currentAddProduct)
+                }
                     navContr.navigate(
                         R.id.selectProductFragment,
                         null,
@@ -114,10 +158,10 @@ class AddProductFragment : Fragment() {
                     )
                     Toast.makeText(context, "Product is successful created", Toast.LENGTH_SHORT)
                         .show()
+                } else {
+                    Toast.makeText(context, "Fields cannot be empty", Toast.LENGTH_SHORT).show()
                 }
-            } else {
-                Toast.makeText(context, "Fields cannot be empty", Toast.LENGTH_SHORT).show()
-            }
+
         }
     }
 
@@ -191,6 +235,17 @@ class AddProductFragment : Fragment() {
                 dialog.dismiss()
             }
 
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                requireActivity().finish()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
 

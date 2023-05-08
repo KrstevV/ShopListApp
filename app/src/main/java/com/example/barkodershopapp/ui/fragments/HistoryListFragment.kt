@@ -1,7 +1,10 @@
 package com.example.barkodershopapp.ui.fragments
 
+import android.database.CursorWindow
 import android.graphics.Canvas
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +23,7 @@ import com.example.barkodershopapp.ui.adapters.HistoryAdapter
 import com.example.barkodershopapp.ui.viewmodels.HistoryViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
+import java.lang.reflect.Field
 
 @AndroidEntryPoint
 class HistoryListFragment : Fragment() {
@@ -35,8 +39,17 @@ class HistoryListFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentHistoryListBinding.inflate(inflater, container, false)
 
+        try {
+            val field: Field = CursorWindow::class.java.getDeclaredField("sCursorWindowSize")
+            field.setAccessible(true)
+            field.set(null, 100 * 1024 * 1024) //the 100MB is the new size
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
         setupRecView()
         observeList()
+
 
         return binding.root
     }
@@ -59,6 +72,7 @@ class HistoryListFragment : Fragment() {
     private fun observeList() {
         historyViewmodel.allNotes.observe(viewLifecycleOwner, Observer { products4 ->
             historyAdapter.setNotesList(products4)
+            binding.progressBar4.visibility = View.GONE
         })
     }
     private fun swipeDelete() {
@@ -106,4 +120,14 @@ class HistoryListFragment : Fragment() {
 
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        binding.progressBar4.visibility = View.VISIBLE
+        val handler = Handler(Looper.getMainLooper())
+        handler.postDelayed({
+            binding.progressBar4.visibility = View.GONE
+        }, 2000)
+    }
+
 }

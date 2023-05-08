@@ -6,6 +6,7 @@
     tools:context="com.example.barkodershopapp.ui.fragments.ListProductsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -13,7 +14,7 @@
         <include
             android:id="@+id/include"
             layout="@layout/tool_bar"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+            app:layout_constraintBottom_toTopOf="@+id/guideline23"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -31,55 +32,91 @@
             app:layout_constraintStart_toStartOf="@+id/include"
             app:layout_constraintTop_toTopOf="@+id/include" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="match_parent"
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recViewProductList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_weight="1"
+            android:paddingBottom="200dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline26"
+            app:layout_constraintStart_toStartOf="@+id/guideline25"
+            app:layout_constraintTop_toTopOf="@+id/guideline24"
+            tools:listitem="@layout/product_list_item" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline21"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include">
+            app:layout_constraintGuide_percent="0.15" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.85" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline23"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.12" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.18" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.06" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline26"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.94" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout5"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/guideline24"
+            app:layout_constraintEnd_toStartOf="@+id/guideline22"
+            app:layout_constraintStart_toStartOf="@+id/guideline21"
+            app:layout_constraintTop_toTopOf="@+id/guideline23"
+            app:startIconDrawable="@drawable/list_icon">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextListName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="75dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="10dp"
-                app:startIconDrawable="@drawable/list_icon">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextListName"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="50dp"
-                    android:hint="Cart Name"
-                    android:maxLength="40"
-                    android:singleLine="true"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"/>
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:hint="Cart Name"
+                android:maxLength="40"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:singleLine="true" />
 
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recViewProductList"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:paddingBottom="100dp"
-                tools:listitem="@layout/product_list_item" />
-        </LinearLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnAddNewList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="40dp"
+            android:layout_marginEnd="50dp"
             android:layout_marginBottom="65dp"
             android:clickable="true"
             android:src="@drawable/add_circle"
@@ -101,10 +138,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:maxImageSize="35dp" />
 
+
         <LinearLayout
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:layout_marginStart="2dp"
+            android:layout_marginStart="20dp"
             android:layout_marginBottom="60dp"
             android:background="@drawable/totalcost_bacground"
             android:orientation="vertical"
@@ -123,6 +161,17 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar2"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:foregroundGravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

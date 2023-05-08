@@ -43,7 +43,7 @@ class SelectProductAdapter(
         fun bind(list: ProductDataEntity) {
             binding.textSelectProductName.text = list.nameProduct
             binding.textSelectProductBarcode.text = list.barcodeProduct
-            binding.textSelectProductPrice.text = list.priceProduct.toString()
+            binding.textSelectProductPrice.text = list.priceProduct.toString() + " $"
             binding.selectLayout.setOnClickListener {
                 try {
                     val actions =

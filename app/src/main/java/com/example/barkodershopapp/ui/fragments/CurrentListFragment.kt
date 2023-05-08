@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -47,13 +48,18 @@ class CurrentListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         onClickEdit()
         onClickScan()
         onClickStart()
         onClickStop()
         getBarcodeString()
+        sucessfullCheckout()
+
 
     }
+
+
 
     private fun getBarcodeString(){
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("barcodeNum2")
@@ -65,6 +71,7 @@ class CurrentListFragment : Fragment() {
         binding.textView25.text = args.currentList.listProducts.size.toString()
         binding.textTotalCostP.text = sumTotalCost(args.currentList.listProducts).toString() + " $"
     }
+
 
     private fun onClickScan(){
         binding.btnScan2.setOnClickListener {
@@ -129,6 +136,7 @@ class CurrentListFragment : Fragment() {
     }
     private fun setupRecView() {
         currentAdapter = CurrentListAdapter(args.currentList.listProducts)
+        currentAdapter.setNotesList(args.currentList.listProducts)
         binding.currentRecView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = currentAdapter
@@ -140,35 +148,37 @@ class CurrentListFragment : Fragment() {
         val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm")
         return formatter.format(currentDate)
     }
-    private fun sucessfullCheckout(list: ArrayList<ListDataEntity>) {
+    private fun sucessfullCheckout() {
         var allCheckedOut = true
-        for (listData in list) {
+        for (listData in args.currentList.listProducts) {
             if (listData.listProducts.checkout == false) {
                 allCheckedOut = false
                 break
             }
         }
         if (allCheckedOut) {
-            binding.sucessfullCard.visibility = View.VISIBLE
-            val handler = Handler(Looper.getMainLooper())
-            binding.scanLayout.visibility = View.GONE
-            args.currentList.checkedList = true
-            args.currentList.checkedDate = getCurrentDate()
-            historyViewModel.updateItem(args.currentList)
 
-            for (i in args.currentList.listProducts) {
-                i.listProducts.defultCount = 0
-                i.listProducts.checkout = false
-                listViewModel.isListStarted = false
-            }
-            handler.postDelayed(object : Runnable {
-                override fun run() {
-//                    findNavController().navigate(R.id.action_currentListFragment_to_historyListFragment)
-                    findNavController().previousBackStackEntry
-                    findNavController().popBackStack()
+                binding.sucessfullCard.visibility = View.VISIBLE
+                val handler = Handler(Looper.getMainLooper())
+                binding.scanLayout.visibility = View.GONE
+                args.currentList.checkedList = true
+                args.currentList.checkedDate = getCurrentDate()
+                historyViewModel.updateItem(args.currentList)
+
+                for (i in args.currentList.listProducts) {
+                    i.listProducts.defultCount = 0
+                    i.listProducts.checkout = false
+                    listViewModel.isListStarted = false
                 }
-            }, 3000)
-        }
+                handler.postDelayed(object : Runnable {
+                    override fun run() {
+//                    findNavController().navigate(R.id.action_currentListFragment_to_historyListFragment)
+                        findNavController().previousBackStackEntry
+                        findNavController().popBackStack()
+                    }
+                }, 2000)
+            }
+
     }
     private fun scannedPro() {
         var numScannedProduct = 0
@@ -195,10 +205,10 @@ class CurrentListFragment : Fragment() {
                 args.currentList.listProducts[i].listProducts.defultCount < args.currentList.listProducts[i].listProducts.count
             ) {
                 args.currentList.listProducts[i].listProducts.defultCount++
-                if (args.currentList.listProducts[i].listProducts.count == args.currentList.listProducts[i].listProducts.defultCount) {
+                if (args.currentList.listProducts[i].listProducts.defultCount == args.currentList.listProducts[i].listProducts.count) {
                     args.currentList.listProducts[i].listProducts.checkout = true
-                    args.currentList.listProducts[i].listProducts.defultCount =
-                        args.currentList.listProducts[i].listProducts.count
+//                    args.currentList.listProducts[i].listProducts.defultCount =
+//                        args.currentList.listProducts[i].listProducts.count
                     currentAdapter.notifyItemChanged(i)
                     break
                 }
@@ -210,7 +220,6 @@ class CurrentListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        // Update the visibility of the button and layout based on the state
         if (listViewModel.isListStarted) {
             currentAdapter.showCheckboxes = true
             binding.startList.visibility = View.GONE
@@ -223,7 +232,9 @@ class CurrentListFragment : Fragment() {
             binding.btnEditList.visibility = View.VISIBLE
         }
         scannedPro()
-        sucessfullCheckout(args.currentList.listProducts)
+
     }
+
+
 
 }
