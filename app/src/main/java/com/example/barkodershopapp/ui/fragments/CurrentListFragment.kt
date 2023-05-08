@@ -38,7 +38,7 @@ class CurrentListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentCurrentListBinding.inflate(inflater, container, false)
-        getBarcodeString()
+
         setupRecView()
         setupTextViews()
 
@@ -52,7 +52,7 @@ class CurrentListFragment : Fragment() {
         onClickScan()
         onClickStart()
         onClickStop()
-
+//        getBarcodeString()
 
 
     }
@@ -155,7 +155,7 @@ class CurrentListFragment : Fragment() {
             }
         }
         if (allCheckedOut) {
-
+            if (listViewModel.isListStarted) {
                 binding.sucessfullCard.visibility = View.VISIBLE
                 val handler = Handler(Looper.getMainLooper())
                 binding.scanLayout.visibility = View.GONE
@@ -175,6 +175,7 @@ class CurrentListFragment : Fragment() {
                     }
                 }, 2000)
             }
+        }
 
     }
     private fun scannedPro() {
@@ -202,7 +203,7 @@ class CurrentListFragment : Fragment() {
                 args.currentList.listProducts[i].listProducts.defultCount < args.currentList.listProducts[i].listProducts.count
             ) {
                 args.currentList.listProducts[i].listProducts.defultCount++
-                if (args.currentList.listProducts[i].listProducts.defultCount == args.currentList.listProducts[i].listProducts.count) {
+                if (args.currentList.listProducts[i].listProducts.count == args.currentList.listProducts[i].listProducts.defultCount) {
                     args.currentList.listProducts[i].listProducts.checkout = true
                     args.currentList.listProducts[i].listProducts.defultCount =
                         args.currentList.listProducts[i].listProducts.count
@@ -230,6 +231,7 @@ class CurrentListFragment : Fragment() {
         }
         scannedPro()
         sucessfullCheckout()
+        getBarcodeString()
 
 
     }
