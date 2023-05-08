@@ -38,7 +38,7 @@ class CurrentListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentCurrentListBinding.inflate(inflater, container, false)
-
+        getBarcodeString()
         setupRecView()
         setupTextViews()
 
@@ -47,7 +47,6 @@ class CurrentListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         onClickEdit()
         onClickScan()
@@ -205,8 +204,8 @@ class CurrentListFragment : Fragment() {
                 args.currentList.listProducts[i].listProducts.defultCount++
                 if (args.currentList.listProducts[i].listProducts.defultCount == args.currentList.listProducts[i].listProducts.count) {
                     args.currentList.listProducts[i].listProducts.checkout = true
-//                    args.currentList.listProducts[i].listProducts.defultCount =
-//                        args.currentList.listProducts[i].listProducts.count
+                    args.currentList.listProducts[i].listProducts.defultCount =
+                        args.currentList.listProducts[i].listProducts.count
                     currentAdapter.notifyItemChanged(i)
                     break
                 }
@@ -231,7 +230,7 @@ class CurrentListFragment : Fragment() {
         }
         scannedPro()
         sucessfullCheckout()
-        getBarcodeString()
+
 
     }
 
