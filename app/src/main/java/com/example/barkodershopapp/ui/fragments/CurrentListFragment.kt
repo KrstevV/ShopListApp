@@ -23,6 +23,7 @@ import com.example.barkodershopapp.ui.activities.MainActivity
 import com.example.barkodershopapp.ui.listeners.OnCheckedListener
 import com.example.barkodershopapp.ui.viewmodels.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.serialization.descriptors.StructureKind
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -45,13 +46,11 @@ class CurrentListFragment : Fragment(){
         setupRecView()
         setupTextViews()
 
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         onClickEdit()
         onClickScan()
@@ -59,7 +58,6 @@ class CurrentListFragment : Fragment(){
         onClickStop()
         getBarcodeString()
         onClickRestore()
-
     }
 
     private fun getBarcodeString(){

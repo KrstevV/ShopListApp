@@ -31,7 +31,6 @@ import com.example.barkodershopapp.ui.viewmodels.HistoryViewModel
 import com.example.barkodershopapp.ui.viewmodels.ListViewModel
 import com.example.barkodershopapp.ui.viewmodels.ProductViewModel
 import com.example.barkodershopapp.ui.activities.HomeScreenActivity
-import com.example.barkodershopapp.ui.diffcallback.ProductDiffCallback
 import dagger.hilt.android.AndroidEntryPoint
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import java.text.SimpleDateFormat
@@ -45,9 +44,7 @@ class ListProductsFragment : Fragment() {
     private val historyViewModel: HistoryViewModel by viewModels()
     private val listViewModel: ListViewModel by viewModels()
     private val productL = arrayListOf<ListDataEntity>()
-    private var oldList: List<ListDataEntity> = emptyList()
-    private var newList: List<ListDataEntity> = emptyList()
-    private var prevProducts: List<ListDataEntity>? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -107,9 +104,9 @@ class ListProductsFragment : Fragment() {
                 val intent = Intent(activity, HomeScreenActivity::class.java)
                 startActivity(intent)
                 requireActivity().finish()
-                Toast.makeText(context, "List is successful updated", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.toast_list_sucessful_updated, Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(context, "List name is empty!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.toast_list_name_empty, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -125,7 +122,7 @@ class ListProductsFragment : Fragment() {
                             listName,
                             getCurrentDate(),
                             sumTotalCostList(products3).toString(),
-                            "Not checked yet",
+                            R.string.history_list_not_checeked_yet.toString(),
                             false,
                             products3 as ArrayList<ListDataEntity>
                         )
@@ -135,9 +132,9 @@ class ListProductsFragment : Fragment() {
                 val intent = Intent(activity, HomeScreenActivity::class.java)
                 startActivity(intent)
                 requireActivity().finish()
-                Toast.makeText(context, "List is successful created", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.toast_list_secesfful_created, Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(context, "List name is empty!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.toast_list_name_empty, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -244,22 +241,28 @@ class ListProductsFragment : Fragment() {
 
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
+                var editMode = requireActivity().intent.getBooleanExtra("editMode", false)
+                if (editMode) {
+                    var intent = Intent(requireActivity(), HomeScreenActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().finish()
+                } else {
+                    val builder = AlertDialog.Builder(context)
+                        .setTitle(R.string.alert_title_list_save)
+                    builder.setMessage(R.string.alert_dialog_back)
+                        .setCancelable(false)
+                        .setNegativeButton(R.string.alert_title_list_save_negative) { dialog, id ->
+                            dialog.dismiss()
+                        }
+                        .setPositiveButton(R.string.alert_title_list_save_positive) { dialog, id ->
+                            requireActivity().finish()
+                            dialog.dismiss()
+                        }
 
-                val builder = AlertDialog.Builder(context)
-                    .setTitle("List Save")
-                builder.setMessage("If you back to home screen ur list created will be delted!")
-                    .setCancelable(false)
-                    .setNegativeButton("stay") { dialog, id ->
-                        dialog.dismiss()
-                    }
-                    .setPositiveButton("OK") { dialog, id ->
-                        requireActivity().finish()
-                        dialog.dismiss()
-                    }
+                    val alert = builder.create()
+                    alert.show()
 
-                val alert = builder.create()
-                alert.show()
-
+                }
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)

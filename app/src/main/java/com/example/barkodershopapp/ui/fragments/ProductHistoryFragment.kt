@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.barkoder.shoppingApp.net.R
 import com.barkoder.shoppingApp.net.databinding.FragmentProductHistoryBinding
+import com.example.barkodershopapp.data.db.pricedb.PriceHistory
 import com.example.barkodershopapp.data.db.productdatabase.ProductDataEntity
 import com.example.barkodershopapp.ui.adapters.PriceHistoryAdapter
 import com.example.barkodershopapp.ui.viewmodels.HistoryViewModel
@@ -92,7 +93,7 @@ class ProductHistoryFragment : Fragment() {
             args.currentProduct.imageProduct,
             1,
             price.toInt(),args.currentProduct.priceHistory, 0,args.currentProduct.id)
-            args.currentProduct.priceHistory.add(price)
+            args.currentProduct.priceHistory.add(PriceHistory(price, getCurrentDate()))
 
         productViewModel.updateItem(currentProduct)
 

@@ -38,12 +38,14 @@
         app:layout_constraintStart_toEndOf="@+id/imageSelectProduct"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/imageSelectProduct"
         android:layout_width="60dp"
         android:layout_height="75dp"
         android:layout_marginStart="6dp"
         app:cardCornerRadius="14dp"
+        app:strokeWidth="2dp"
+        app:strokeColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -59,7 +61,7 @@
             app:layout_constraintVertical_bias="0.5"
             app:srcCompat="@drawable/coca_cola" />
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 
     <ImageView

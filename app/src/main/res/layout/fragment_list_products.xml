@@ -3,12 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#676464"
     tools:context="com.example.barkodershopapp.ui.fragments.ListProductsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#201E1E">
 
 
         <include
@@ -64,14 +66,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.1" />
+            app:layout_constraintGuide_percent="0.12" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline24"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.14" />
+            app:layout_constraintGuide_percent="0.16" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline25"
@@ -89,9 +91,19 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout5"
+            android:textColorHint="@color/black"
+            app:counterTextColor="@color/black"
+            android:background="@drawable/edittext_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
             android:layout_height="wrap_content"
+            android:paddingBottom="3dp"
+            android:paddingStart="3dp"
+            android:paddingEnd="3dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline24"
             app:layout_constraintEnd_toStartOf="@+id/guideline22"
             app:layout_constraintStart_toStartOf="@+id/guideline21"

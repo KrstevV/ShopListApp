@@ -5,5 +5,15 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="dialog_update">List is successful updated</string>
     <string name="listName_empty_dialog">List name is empty!</string>
+    <string name="alert_dialog_back">If you back to home screen ur list create will be delted!</string>
+    <string name="alert_title_list_save">List Save</string>
+    <string name="alert_title_list_save_positive">OK</string>
+    <string name="alert_title_list_save_negative">Stay</string>
+    <string name="toast_list_secesfful_created">List is successful created</string>
+    <string name="toast_list_name_empty">List name is empty!</string>
+    <string name="history_list_not_checeked_yet">Not checked yet</string>
+    <string name="toast_list_sucessful_updated">List is successful updated</string>
+
+
 
 </resources>

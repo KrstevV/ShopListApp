@@ -20,7 +20,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.barkodershopapp.ui.listeners.OnClickListenerButtons
 import com.example.barkodershopapp.data.db.listdatabase.ListDataEntity
-import com.example.barkodershopapp.ui.diffcallback.ProductDiffCallback
 import com.example.barkodershopapp.ui.typeconverters.TypeConverterss
 import com.squareup.picasso.Picasso
 import java.io.ByteArrayInputStream

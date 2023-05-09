@@ -1,6 +1,7 @@
 package com.example.barkodershopapp.ui.fragments
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.graphics.Canvas
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -19,6 +20,7 @@ import com.barkoder.shoppingApp.net.R
 import com.barkoder.shoppingApp.net.databinding.FragmentSelectProductBinding
 import com.example.barkodershopapp.ui.listeners.swipecallback.SwipeToDelete
 import com.example.barkodershopapp.data.db.productdatabase.ProductDataEntity
+import com.example.barkodershopapp.ui.activities.HomeScreenActivity
 import com.example.barkodershopapp.ui.adapters.SelectProductAdapter
 import com.example.barkodershopapp.ui.viewmodels.ListViewModel
 import com.example.barkodershopapp.ui.viewmodels.ProductViewModel
@@ -137,21 +139,28 @@ class SelectProductFragment : Fragment() {
 
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
+                var editMode = requireActivity().intent.getBooleanExtra("editMode", false)
+                if (editMode) {
+                    var intent = Intent(requireActivity(), HomeScreenActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().finish()
+                } else {
 
-                val builder = AlertDialog.Builder(context)
-                    .setTitle("List Save")
-                builder.setMessage("If you back to home screen ur list create will be delted!")
-                    .setCancelable(false)
-                    .setNegativeButton("stay") { dialog, id ->
-                        dialog.dismiss()
-                    }
-                    .setPositiveButton("OK") { dialog, id ->
-                        requireActivity().finish()
-                        dialog.dismiss()
-                    }
+                    val builder = AlertDialog.Builder(context)
+                        .setTitle(R.string.alert_title_list_save)
+                    builder.setMessage(R.string.alert_dialog_back)
+                        .setCancelable(false)
+                        .setNegativeButton(R.string.alert_title_list_save_negative) { dialog, id ->
+                            dialog.dismiss()
+                        }
+                        .setPositiveButton(R.string.alert_title_list_save_positive) { dialog, id ->
+                            requireActivity().finish()
+                            dialog.dismiss()
+                        }
 
-                val alert = builder.create()
-                alert.show()
+                    val alert = builder.create()
+                    alert.show()
+                }
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)

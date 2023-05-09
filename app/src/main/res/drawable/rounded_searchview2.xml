@@ -4,6 +4,10 @@
 
     <corners
         android:radius="16dp"/>
+    <gradient
+        android:startColor="@color/white"
+        android:endColor="@color/white"
+        />
 
     <stroke
         android:color="#C0BEBE"

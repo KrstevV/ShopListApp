@@ -10,11 +10,14 @@
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#201E1E"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/navbar" />
+        app:menu="@menu/navbar"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"/>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment"

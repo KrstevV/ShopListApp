@@ -9,11 +9,16 @@ import android.widget.ImageView
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import com.barkoder.shoppingApp.net.R
+import com.example.barkodershopapp.data.db.pricedb.PriceHistory
+import com.example.barkodershopapp.ui.typeconverters.PriceHistoryConverter
 import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 
 @Parcelize
 @Entity(tableName = "product_table")
+@TypeConverters(PriceHistoryConverter::class)
 data class ProductDataEntity (
 
     @ColumnInfo(name = "Name Product")
@@ -37,7 +42,7 @@ data class ProductDataEntity (
     @ColumnInfo(name= "total price")
     var totalPrice : Int,
     @ColumnInfo(name= "price_history")
-    var priceHistory : ArrayList<String>,
+    var priceHistory : @RawValue ArrayList<PriceHistory>,
     @ColumnInfo(name = "defult_count")
     var defultCount : Int,
     @PrimaryKey(autoGenerate = true)
