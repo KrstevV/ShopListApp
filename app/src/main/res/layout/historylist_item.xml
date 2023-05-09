@@ -7,7 +7,7 @@
     android:layout_height="100dp"
     android:layout_marginTop="12dp"
     android:layout_marginBottom="12dp"
-    android:background="@drawable/rounded_background">
+    android:background="@drawable/totalcost_bacground">
 
     <TextView
         android:id="@+id/textCheckoutDate"

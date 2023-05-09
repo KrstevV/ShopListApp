@@ -1,5 +1,7 @@
 package com.example.barkodershopapp.ui.fragments
 
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Canvas
 import android.os.Bundle
@@ -242,7 +244,22 @@ class ListProductsFragment : Fragment() {
 
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                requireActivity().finish()
+
+                val builder = AlertDialog.Builder(context)
+                    .setTitle("List Save")
+                builder.setMessage("If you back to home screen ur list created will be delted!")
+                    .setCancelable(false)
+                    .setNegativeButton("stay") { dialog, id ->
+                        dialog.dismiss()
+                    }
+                    .setPositiveButton("OK") { dialog, id ->
+                        requireActivity().finish()
+                        dialog.dismiss()
+                    }
+
+                val alert = builder.create()
+                alert.show()
+
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
@@ -260,6 +277,10 @@ class ListProductsFragment : Fragment() {
             binding.progressBar2.visibility = View.GONE
         }, 2000)
 
+
+    }
+
+    fun showAlert(context: Context) {
 
     }
 

@@ -20,17 +20,20 @@ import com.example.barkodershopapp.ui.adapters.CurrentListAdapter
 import com.example.barkodershopapp.ui.viewmodels.HistoryViewModel
 import com.example.barkodershopapp.ui.viewmodels.ListViewModel
 import com.example.barkodershopapp.ui.activities.MainActivity
+import com.example.barkodershopapp.ui.listeners.OnCheckedListener
+import com.example.barkodershopapp.ui.viewmodels.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
-class CurrentListFragment : Fragment() {
+class CurrentListFragment : Fragment(){
     lateinit var binding: FragmentCurrentListBinding
     lateinit var currentAdapter: CurrentListAdapter
     val listViewModel: ListViewModel by viewModels()
     val historyViewModel: HistoryViewModel by viewModels()
+    val productViewModel : ProductViewModel by viewModels()
     private val args by navArgs<CurrentListFragmentArgs>()
 
     override fun onCreateView(
@@ -42,22 +45,22 @@ class CurrentListFragment : Fragment() {
         setupRecView()
         setupTextViews()
 
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         onClickEdit()
         onClickScan()
         onClickStart()
         onClickStop()
-//        getBarcodeString()
-
+        getBarcodeString()
+        onClickRestore()
 
     }
-
-
 
     private fun getBarcodeString(){
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("barcodeNum2")
@@ -92,6 +95,7 @@ class CurrentListFragment : Fragment() {
             binding.stopList.visibility = View.GONE
             binding.startList.visibility = View.VISIBLE
             binding.btnEditList.visibility = View.VISIBLE
+            binding.btnRestoreCheckout.visibility = View.VISIBLE
         }
     }
 
@@ -110,6 +114,16 @@ class CurrentListFragment : Fragment() {
             binding.startList.visibility = View.GONE
             binding.btnEditList.visibility = View.GONE
             binding.stopList.visibility = View.VISIBLE
+            binding.btnRestoreCheckout.visibility = View.GONE
+        }
+    }
+
+    private fun onClickRestore(){
+        binding.btnRestoreCheckout.setOnClickListener {
+            for (i in args.currentList.listProducts) {
+                i.listProducts.defultCount = 0
+                i.listProducts.checkout = false
+            }
         }
     }
     private fun onClickEdit(){
@@ -133,7 +147,7 @@ class CurrentListFragment : Fragment() {
         }
     }
     private fun setupRecView() {
-        currentAdapter = CurrentListAdapter(args.currentList.listProducts)
+        currentAdapter = CurrentListAdapter(args.currentList.listProducts, productViewModel, onCheckedListener)
         currentAdapter.setNotesList(args.currentList.listProducts)
         binding.currentRecView.apply {
             layoutManager = LinearLayoutManager(context)
@@ -224,18 +238,37 @@ class CurrentListFragment : Fragment() {
             binding.scanLayout.visibility = View.VISIBLE
             binding.stopList.visibility = View.VISIBLE
             binding.btnEditList.visibility = View.GONE
+            binding.btnRestoreCheckout.visibility = View.GONE
         } else {
             currentAdapter.showCheckboxes = false
             binding.scanLayout.visibility = View.GONE
             binding.btnEditList.visibility = View.VISIBLE
+            binding.btnRestoreCheckout.visibility = View.VISIBLE
         }
         scannedPro()
         sucessfullCheckout()
-        getBarcodeString()
-
 
     }
 
+    val onCheckedListener = object  : OnCheckedListener {
+        override fun onCheckedChanged(list : ListDataEntity) {
+            list.listProducts.checkout = !list.listProducts.checkout
+            for(i in args.currentList.listProducts.indices){
+                if(args.currentList.listProducts[i].listProducts.checkout){
+                    args.currentList.listProducts[i].listProducts.defultCount =
+                        args.currentList.listProducts[i].listProducts.count
+                    currentAdapter.notifyItemChanged(i)
+                } else {
+                    args.currentList.listProducts[i].listProducts.defultCount = 0
+                    currentAdapter.notifyItemChanged(i)
+                }
+            }
 
+           listViewModel.updateItem(list)
+
+            sucessfullCheckout()
+        }
+
+    }
 
 }

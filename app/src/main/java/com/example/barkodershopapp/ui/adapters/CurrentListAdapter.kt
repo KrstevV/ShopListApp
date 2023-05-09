@@ -7,16 +7,25 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.barkoder.shoppingApp.net.databinding.CurrentlistListBinding
 import com.example.barkodershopapp.data.db.listdatabase.ListDataEntity
+import com.example.barkodershopapp.ui.listeners.OnCheckedListener
 import com.example.barkodershopapp.ui.typeconverters.TypeConverterss
+import com.example.barkodershopapp.ui.viewmodels.ProductViewModel
 import okhttp3.internal.notify
 
-class CurrentListAdapter(private var list : List<ListDataEntity>) : RecyclerView.Adapter<CurrentListAdapter.ViewHolder>() {
+class CurrentListAdapter(private var list : List<ListDataEntity>, private val productViewModel : ProductViewModel,
+private val listener : OnCheckedListener) : RecyclerView.Adapter<CurrentListAdapter.ViewHolder>() {
 
     var showCheckboxes = false
+
+
+
+
     class ViewHolder(private val binding: CurrentlistListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(list: ListDataEntity, showCheckboxes : Boolean) {
+
+        fun bind(list: ListDataEntity, showCheckboxes: Boolean, productViewModel: ProductViewModel, listener : OnCheckedListener) {
+
             binding.textProductName.text = list.listProducts.nameProduct
             binding.textProductPrice.text = list.listProducts.priceProduct.toString()
             binding.textProductBarcode.text = list.listProducts.barcodeProduct
@@ -25,8 +34,15 @@ class CurrentListAdapter(private var list : List<ListDataEntity>) : RecyclerView
             binding.textProductTotalPrice.text = list.listProducts.totalPrice.toString()
             binding.textView12.text = list.listProducts.count.toString()
             val byteArray = list.listProducts.imageProduct?.let { TypeConverterss.toBitmap(it) }
-            binding.imageProduct.load(byteArray) {
+            binding.imageProduct2.load(byteArray) {
                 crossfade(true)
+            }
+            binding.checkBox.isChecked = list.listProducts.checkout
+
+            binding.checkBox.setOnClickListener {
+
+                listener.onCheckedChanged(list)
+
             }
 
             if (showCheckboxes) {
@@ -60,7 +76,7 @@ class CurrentListAdapter(private var list : List<ListDataEntity>) : RecyclerView
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(list[position], showCheckboxes)
+        holder.bind(list[position], showCheckboxes, productViewModel, listener)
 //        notifyItemChanged(position)
 
 

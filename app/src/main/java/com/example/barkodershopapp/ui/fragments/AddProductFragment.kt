@@ -52,7 +52,6 @@ class AddProductFragment : Fragment() {
 //        binding.editTextBarcodeAddProduct.setText("xxxxxx")
         binding = FragmentAddProductBinding.inflate(inflater, container, false)
 
-
         getBarcodeString()
 
         return binding.root
@@ -64,9 +63,9 @@ class AddProductFragment : Fragment() {
         onClickAdd()
         onClickAddImage()
         onClickScan()
-
     }
-    private fun getBarcodeString(){
+
+    private fun getBarcodeString() {
         val barcodeNumber = this@AddProductFragment.arguments?.getString("barcodeNum").toString()
         binding.cameraImage.setImageResource(R.drawable.photo_camera)
 
@@ -76,11 +75,13 @@ class AddProductFragment : Fragment() {
             binding.editTextBarcodeAddProduct.setText(barcodeNumber)
         }
     }
+
     private fun onClickScan() {
         binding.btnScanAddProduct.setOnClickListener {
             findNavController().navigate(R.id.scanFragment)
         }
     }
+
     private fun onClickAdd() {
         val navContr = findNavController()
         val currentAddProduct = ProductDataEntity(
@@ -140,8 +141,12 @@ class AddProductFragment : Fragment() {
                         }
                         else -> {
 
-                            val defaultImage = requireContext().resources.getDrawable(R.drawable.photo_camera, null) as BitmapDrawable
-                            val defaultImageByteArray = TypeConverterss.fromBitmap(defaultImage.bitmap)
+                            val defaultImage = requireContext().resources.getDrawable(
+                                R.drawable.photo_camera,
+                                null
+                            ) as BitmapDrawable
+                            val defaultImageByteArray =
+                                TypeConverterss.fromBitmap(defaultImage.bitmap)
                             // Use the default image data
                             defaultImageByteArray
                         }
@@ -151,16 +156,16 @@ class AddProductFragment : Fragment() {
 
                     productViewModel.insert(currentAddProduct)
                 }
-                    navContr.navigate(
-                        R.id.selectProductFragment,
-                        null,
-                        NavOptions.Builder().setPopUpTo(R.id.addProductFragment, true).build()
-                    )
-                    Toast.makeText(context, "Product is successful created", Toast.LENGTH_SHORT)
-                        .show()
-                } else {
-                    Toast.makeText(context, "Fields cannot be empty", Toast.LENGTH_SHORT).show()
-                }
+                navContr.navigate(
+                    R.id.selectProductFragment,
+                    null,
+                    NavOptions.Builder().setPopUpTo(R.id.addProductFragment, true).build()
+                )
+                Toast.makeText(context, "Product is successful created", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                Toast.makeText(context, "Fields cannot be empty", Toast.LENGTH_SHORT).show()
+            }
 
         }
     }
@@ -170,6 +175,7 @@ class AddProductFragment : Fragment() {
             cameraCheckPremission()
         }
     }
+
     private fun cameraCheckPremission() {
 
         Dexter.withContext(requireActivity().applicationContext)
@@ -237,16 +243,43 @@ class AddProductFragment : Fragment() {
 
     }
 
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                requireActivity().finish()
+
+                val builder = AlertDialog.Builder(context)
+                    .setTitle("List Save")
+                builder.setMessage("If you back to home screen ur list created will be delted!")
+                    .setCancelable(false)
+                    .setNegativeButton("stay") { dialog, id ->
+                        dialog.dismiss()
+                    }
+                    .setPositiveButton("OK") { dialog, id ->
+                        requireActivity().finish()
+                        dialog.dismiss()
+                    }
+
+                val alert = builder.create()
+                alert.show()
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("nameAdd", binding.editTextNameAddProduct.text.toString())
+        outState.putInt("priceAdd", binding.editPriceAddProduct.text.toString().toInt())
+        outState.putString("unitAdd", binding.editUnitAddProduct.text.toString())
+        outState.putInt("quantityAdd", binding.editUnitAddProduct.text.toString().toInt())
+
+        // save the image here
+    }
+
+
 
 
 }
