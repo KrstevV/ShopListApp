@@ -122,7 +122,7 @@ class ListProductsFragment : Fragment() {
                             listName,
                             getCurrentDate(),
                             sumTotalCostList(products3).toString(),
-                            R.string.history_list_not_checeked_yet.toString(),
+                            "Not checked yet!",
                             false,
                             products3 as ArrayList<ListDataEntity>
                         )

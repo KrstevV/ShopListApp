@@ -16,13 +16,12 @@ import com.barkoder.shoppingApp.net.databinding.FragmentProductHistoryBinding
 import com.example.barkodershopapp.data.db.pricedb.PriceHistory
 import com.example.barkodershopapp.data.db.productdatabase.ProductDataEntity
 import com.example.barkodershopapp.ui.adapters.PriceHistoryAdapter
-import com.example.barkodershopapp.ui.viewmodels.HistoryViewModel
-import com.example.barkodershopapp.ui.viewmodels.ListViewModel
 import com.example.barkodershopapp.ui.viewmodels.ProductViewModel
 import com.example.barkodershopapp.ui.typeconverters.TypeConverterss
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class ProductHistoryFragment : Fragment() {
@@ -40,6 +39,7 @@ class ProductHistoryFragment : Fragment() {
 
         setupRecView()
         setupTextViews()
+//        obserevePrice()
 
 
         return  binding.root
@@ -66,24 +66,37 @@ class ProductHistoryFragment : Fragment() {
         }
     }
 
+
+
     private fun setupRecView(){
         priceAdapter = PriceHistoryAdapter(args.currentProduct.priceHistory)
-
         binding.recViewHistoryProduct.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = priceAdapter
         }
 
-        priceAdapter.setPricesList(args.currentProduct.priceHistory)
+
     }
     @SuppressLint("SuspiciousIndentation")
-    private fun updateProduct(){
+    private fun updateProduct() {
         var name = binding.editTextNameUpdateProduct.text.toString()
         var barcode = binding.editTextBarcodeUpdateProduct.text.toString()
         var price = binding.editPriceUpdateProduct.text.toString()
         var unit = binding.editUnitUpdateProduct.text.toString()
         var quantity = binding.editQuantityUpdateProduct.text.toString()
-        var currentProduct = ProductDataEntity(name,
+
+        if (price.toInt() != args.currentProduct.priceProduct) {
+            var arrowResId = if (price.toInt() > args.currentProduct.priceProduct) {
+                R.drawable.arrow_up
+            } else {
+                R.drawable.arrow_down
+            }
+            args.currentProduct.priceHistory.add(PriceHistory(price + " $", getCurrentDate(), arrowResId))
+
+        }
+
+        var currentProduct = ProductDataEntity(
+            name,
             barcode,
             getCurrentDate(),
             price.toInt(),
@@ -92,15 +105,15 @@ class ProductHistoryFragment : Fragment() {
             false,
             args.currentProduct.imageProduct,
             1,
-            price.toInt(),args.currentProduct.priceHistory, 0,args.currentProduct.id)
-            args.currentProduct.priceHistory.add(PriceHistory(price, getCurrentDate()))
-
+            price.toInt(), args.currentProduct.priceHistory, 0, args.currentProduct.id
+        )
         productViewModel.updateItem(currentProduct)
 
         findNavController().navigate(R.id.selectProductFragment)
 
-    }
 
+
+    }
 
     private fun getCurrentDate(): String {
         val currentDate = Calendar.getInstance().time
@@ -108,4 +121,10 @@ class ProductHistoryFragment : Fragment() {
         return formatter.format(currentDate)
     }
 
-}
+
+
+
+    }
+
+
+

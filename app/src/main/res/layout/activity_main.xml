@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.MainActivity">
+    tools:context="com.example.barkodershopapp.ui.activities.MainActivity">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
@@ -16,8 +16,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/navbar"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white"/>
+        app:itemIconTint="@color/designColor"
+        app:itemTextColor="@color/designColor" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment"

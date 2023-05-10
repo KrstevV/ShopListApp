@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.barkoder.Barkoder
 import com.barkoder.BarkoderConfig
@@ -69,7 +70,12 @@ class ScanFragment : Fragment(), BarkoderResultCallback {
         binding.textView7.text = barcodeNum
         val bundle = Bundle()
         bundle.putString("barcodeNum", barcodeNum)
-        findNavController().navigate(R.id.action_scanFragment_to_addProductFragment, bundle)
+//        findNavController().navigate(R.id.action_scanFragment_to_addProductFragment, bundle)
+        findNavController().navigate(
+            R.id.addProductFragment,
+            bundle,
+            NavOptions.Builder().setPopUpTo(R.id.scanFragment, true).build()
+        )
     }
 
     override fun scanningFinished(results: Array<Barkoder.Result>, resultImage: Bitmap?) {

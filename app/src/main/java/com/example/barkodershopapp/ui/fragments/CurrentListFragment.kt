@@ -260,6 +260,7 @@ class CurrentListFragment : Fragment(){
                     args.currentList.listProducts[i].listProducts.defultCount = 0
                     currentAdapter.notifyItemChanged(i)
                 }
+                scannedPro()
             }
 
            listViewModel.updateItem(list)

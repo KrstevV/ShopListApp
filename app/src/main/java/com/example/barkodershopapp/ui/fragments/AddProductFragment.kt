@@ -79,12 +79,15 @@ class AddProductFragment : Fragment() {
 
     private fun onClickScan() {
         binding.btnScanAddProduct.setOnClickListener {
-            findNavController().navigate(R.id.scanFragment)
+//            findNavController().navigate(R.id.scanFragment)
+            findNavController().navigate(
+                R.id.scanFragment,
+                null,
+                NavOptions.Builder().setPopUpTo(R.id.addProductFragment, true).build()
+            )
         }
     }
-
     private fun onClickAdd() {
-        val navContr = findNavController()
         val currentAddProduct = ProductDataEntity(
             "productName",
             "productBarcode",
@@ -157,7 +160,7 @@ class AddProductFragment : Fragment() {
 
                     productViewModel.insert(currentAddProduct)
                 }
-                navContr.navigate(
+                findNavController().navigate(
                     R.id.selectProductFragment,
                     null,
                     NavOptions.Builder().setPopUpTo(R.id.addProductFragment, true).build()
@@ -167,7 +170,6 @@ class AddProductFragment : Fragment() {
             } else {
                 Toast.makeText(context, "Fields cannot be empty", Toast.LENGTH_SHORT).show()
             }
-
         }
     }
 

@@ -115,7 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:hint="Cart Name"
+                android:hint="List Name"
                 android:maxLength="40"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
@@ -135,7 +135,7 @@
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:maxImageSize="30dp" />
+            app:maxImageSize="32dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnUpdateList"

@@ -3,8 +3,11 @@ package com.example.barkodershopapp.ui.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.Coil
+import coil.load
 import com.barkoder.shoppingApp.net.databinding.PricehistoryItemBinding
 import com.example.barkodershopapp.data.db.pricedb.PriceHistory
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -22,6 +25,8 @@ class PriceHistoryAdapter(private var list: ArrayList<PriceHistory>) :
         fun bind(list: PriceHistory) {
             binding.textPriceHistory.setText(list.lastPrice)
             binding.textPriceDate.setText(list.dataChangedPrice)
+
+            binding.imageView.load(list.imageArrow)
 
         }
     }
