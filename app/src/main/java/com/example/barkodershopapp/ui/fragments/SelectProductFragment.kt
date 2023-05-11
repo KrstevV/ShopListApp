@@ -9,10 +9,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.NavOptions
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +27,7 @@ import com.example.barkodershopapp.ui.listeners.swipecallback.SwipeToDelete
 import com.example.barkodershopapp.data.db.productdatabase.ProductDataEntity
 import com.example.barkodershopapp.ui.activities.HomeScreenActivity
 import com.example.barkodershopapp.ui.adapters.SelectProductAdapter
+import com.example.barkodershopapp.ui.listeners.swipeicons.SwipeHelper
 import com.example.barkodershopapp.ui.viewmodels.ListViewModel
 import com.example.barkodershopapp.ui.viewmodels.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,8 +48,6 @@ class SelectProductFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentSelectProductBinding.inflate(inflater, container, false)
 
-        setupRecView()
-        observeList()
 
         return binding.root
     }
@@ -51,29 +55,87 @@ class SelectProductFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        swipteDelete()
+        setupRecView()
+        observeList()
 
     }
-    private fun swipteDelete(){
+
+    private fun swipteDelete() {
         val itemTouchHelper = ItemTouchHelper(swipteToDelete)
         itemTouchHelper.attachToRecyclerView(binding.recViewSelect)
     }
-    private fun observeList(){
+
+    private fun observeList() {
         productViewModel.allNotes.observe(viewLifecycleOwner, Observer { products ->
             binding.progressBar3.visibility = View.GONE
             selectAdapter.setProductsList2(products as ArrayList<ProductDataEntity>)
             searchView(products)
         })
     }
-    private fun setupRecView(){
+
+    private fun setupRecView() {
         selectAdapter = SelectProductAdapter(productS, listViewMOdel)
         selectAdapter.setProductsList2(productS)
 
         binding.recViewSelect.apply {
+            addItemDecoration(
+                DividerItemDecoration(
+                    requireContext(),
+                    DividerItemDecoration.VERTICAL
+                )
+            )
             layoutManager = LinearLayoutManager(context)
             adapter = selectAdapter
+
+            val itemTouchHelper = ItemTouchHelper(object : SwipeHelper(binding.recViewSelect) {
+                override fun instantiateUnderlayButton(position: Int): List<UnderlayButton> {
+                    var buttons = listOf<UnderlayButton>()
+                    val deleteButton = deleteButton(position)
+                    val archiveButton = archiveButton(position)
+
+                    buttons = listOf(deleteButton, archiveButton)
+                    return buttons
+                }
+            })
+
+            itemTouchHelper.attachToRecyclerView(binding.recViewSelect)
         }
     }
+
+
+    private fun deleteButton(position: Int): SwipeHelper.UnderlayButton {
+        return SwipeHelper.UnderlayButton(
+            requireContext(),
+            "Delete",
+            14.0f,
+            android.R.color.holo_red_light,
+            object : SwipeHelper.UnderlayButtonClickListener {
+                override fun onClick() {
+//                    selectAdapter.notifyItemRemoved(position)
+//                    productViewModel.deleteItem(selectAdapter.getSelectInt(position))
+                    Toast.makeText(requireContext(), "Marked as unread item $position", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            })
+    }
+
+
+    private fun archiveButton(position: Int): SwipeHelper.UnderlayButton {
+        return SwipeHelper.UnderlayButton(
+            requireContext(),
+            "Edit Product",
+            14.0f,
+            R.color.editButton,
+            object : SwipeHelper.UnderlayButtonClickListener {
+                override fun onClick() {
+                    val currentProduct = selectAdapter.getSelectInt(position)
+                    val action = SelectProductFragmentDirections.actionSelectProductFragmentToProductInfoFragment(currentProduct)
+                    Navigation.findNavController(binding.root).navigate(action,
+                        NavOptions.Builder().setPopUpTo(R.id.selectProductFragment, true).build())
+                }
+            })
+    }
+
 
     private val swipteToDelete = object : SwipeToDelete() {
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -120,6 +182,7 @@ class SelectProductFragment : Fragment() {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return false
             }
+
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.isNullOrEmpty()) {
                     selectAdapter.setProductsList(list as ArrayList<ProductDataEntity>)
@@ -166,4 +229,5 @@ class SelectProductFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 }
+
 

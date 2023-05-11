@@ -10,7 +10,7 @@
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#201E1E">
+        android:background="@color/white">
 
 
         <include
@@ -91,19 +91,19 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout5"
-            android:textColorHint="@color/black"
-            app:counterTextColor="@color/black"
-            android:background="@drawable/edittext_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_layout"
+            android:paddingStart="3dp"
+            android:paddingEnd="3dp"
+            android:paddingBottom="3dp"
+            android:textColorHint="@color/black"
             app:boxCornerRadiusBottomEnd="10dp"
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
-            android:layout_height="wrap_content"
-            android:paddingBottom="3dp"
-            android:paddingStart="3dp"
-            android:paddingEnd="3dp"
+            app:counterTextColor="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/guideline24"
             app:layout_constraintEnd_toStartOf="@+id/guideline22"
             app:layout_constraintStart_toStartOf="@+id/guideline21"
@@ -113,13 +113,14 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextListName"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:hint="List Name"
                 android:maxLength="40"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textSize="13sp" />
 
 
         </com.google.android.material.textfield.TextInputLayout>

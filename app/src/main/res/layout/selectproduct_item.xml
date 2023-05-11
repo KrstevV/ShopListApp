@@ -4,12 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/selectLayout"
     android:layout_width="match_parent"
-    android:layout_height="90dp"
-    android:layout_marginStart="10dp"
-    android:layout_marginTop="15dp"
-    android:layout_marginEnd="10dp"
-    android:background="@drawable/rounded_background"
+    android:layout_height="70dp"
     android:elevation="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#AAA3A3"
+        android:backgroundTint="#AAA3A3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textSelectProductPrice">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/textSelectProductBarcode"
@@ -19,7 +27,7 @@
         android:layout_marginBottom="30dp"
         android:text="325324123"
         android:textColor="#100F0F"
-        android:textSize="13sp"
+        android:textSize="12sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageSelectProduct" />
@@ -27,12 +35,12 @@
     <TextView
         android:id="@+id/textSelectProductName"
         android:layout_width="120dp"
-        android:layout_height="40dp"
+        android:layout_height="30dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="4dp"
         android:text="Coca Cola"
         android:textColor="#100F0F"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@+id/textSelectProductBarcode"
         app:layout_constraintStart_toEndOf="@+id/imageSelectProduct"
@@ -40,15 +48,15 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/imageSelectProduct"
-        android:layout_width="60dp"
-        android:layout_height="75dp"
+        android:layout_width="50dp"
+        android:layout_height="60dp"
         android:layout_marginStart="6dp"
         app:cardCornerRadius="14dp"
-        app:strokeWidth="2dp"
-        app:strokeColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/black"
+        app:strokeWidth="2dp">
 
         <ImageView
             android:id="@+id/imageSelectProduct2"
@@ -82,15 +90,15 @@
         android:layout_marginBottom="3dp"
         android:text="2.5 $"
         android:textColor="#100F0F"
-        android:textSize="24sp"
+        android:textSize="15sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
         android:id="@+id/btnAddProduct"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginTop="6dp"
         android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -105,6 +113,7 @@
         android:layout_marginBottom="8dp"
         android:text="TextView"
         android:textColor="#100F0F"
+        android:textSize="12sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageSelectProduct" />
@@ -117,6 +126,7 @@
         android:layout_marginBottom="8dp"
         android:text="TextView"
         android:textColor="#100F0F"
+        android:textSize="12sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView21" />

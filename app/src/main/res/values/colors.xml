@@ -9,6 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="designColor">#C10E0E</color>
     <color name="checkBox">#4DCE09</color>
+    <color name="hintColor">#545753</color>
+    <color name="editTextBoxColor">#EDF2F7</color>
+    <color name="editButton">#4F8E0F</color>
 
 
 

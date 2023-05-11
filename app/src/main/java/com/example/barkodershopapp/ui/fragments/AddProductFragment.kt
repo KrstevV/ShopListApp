@@ -4,8 +4,10 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.VectorDrawable
 import android.net.Uri
@@ -18,6 +20,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
@@ -29,6 +32,8 @@ import com.example.barkodershopapp.data.db.productdatabase.ProductDataEntity
 import com.example.barkodershopapp.ui.activities.HomeScreenActivity
 import com.example.barkodershopapp.ui.viewmodels.ProductViewModel
 import com.example.barkodershopapp.ui.typeconverters.TypeConverterss
+import com.google.android.material.shape.MaterialShapeDrawable
+import com.google.android.material.shape.ShapeAppearanceModel
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -61,6 +66,8 @@ class AddProductFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
         onClickAdd()
         onClickAddImage()
         onClickScan()
@@ -68,10 +75,10 @@ class AddProductFragment : Fragment() {
 
     private fun getBarcodeString() {
         val barcodeNumber = this@AddProductFragment.arguments?.getString("barcodeNum").toString()
-        binding.cameraImage.setImageResource(R.drawable.photo_camera)
+        binding.cameraImage.setImageResource(R.drawable.ic_launcher_background)
 
         if (barcodeNumber == "null") {
-            binding.editTextBarcodeAddProduct.setText("xxxxxxx")
+            binding.editTextBarcodeAddProduct.setText("")
         } else {
             binding.editTextBarcodeAddProduct.setText(barcodeNumber)
         }

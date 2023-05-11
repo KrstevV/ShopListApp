@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.barkodershopapp.ui.fragments.AddProductFragment">
+    tools:context="com.example.barkodershopapp.ui.fragments.ProductInfoFragment">
+
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -22,8 +24,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.50" />
-
-
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,7 +47,7 @@
                 app:strokeColor="@color/white">
 
                 <ImageView
-                    android:id="@+id/cameraImage"
+                    android:id="@+id/cameraImageUpdate"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
@@ -59,33 +59,21 @@
         <include
             android:id="@+id/include"
             layout="@layout/tool_bar"
-            tools:layout_editor_absoluteY="561dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textActivityName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Product"
+            android:text="Update Product"
             android:textColor="#FBFAFA"
             android:textSize="28sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/addImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#F1E9E9"
-            android:text="Take a Photo"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/cardView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.711"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include"
-            app:layout_constraintVertical_bias="0.284" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
@@ -211,7 +199,7 @@
                 app:layout_constraintTop_toTopOf="@+id/guideline10">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextNameAddProduct"
+                    android:id="@+id/editTextNameUpdateProduct"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -243,7 +231,7 @@
                 app:layout_constraintTop_toTopOf="@+id/guideline11">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextBarcodeAddProduct"
+                    android:id="@+id/editTextBarcodeUpdateProduct"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -277,7 +265,7 @@
                 app:layout_constraintTop_toTopOf="@+id/guideline13">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editUnitAddProduct"
+                    android:id="@+id/editUnitUpdateProduct"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -309,7 +297,7 @@
                 app:layout_constraintTop_toTopOf="@+id/guideline13">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editQuantityAddProduct"
+                    android:id="@+id/editQuantityUpdateProduct"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -342,7 +330,7 @@
                 app:layout_constraintTop_toTopOf="@+id/guideline17">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editPriceAddProduct"
+                    android:id="@+id/editPriceUpdateProduct"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -358,13 +346,13 @@
 
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnAddProductToList"
+                android:id="@+id/btnUpdateProductToList"
                 style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:clickable="true"
-                android:text="Add"
+                android:text="Update"
                 app:cornerRadius="50dp"
                 app:layout_constraintBottom_toTopOf="@+id/guideline18"
                 app:layout_constraintEnd_toStartOf="@+id/guideline5"
@@ -387,6 +375,9 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </FrameLayout>

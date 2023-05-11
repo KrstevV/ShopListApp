@@ -3,12 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="15dp"
-    android:layout_marginEnd="8dp"
-    android:background="@drawable/rounded_background"
+    android:layout_height="70dp"
+    android:layout_marginTop="5dp"
     android:elevation="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#AAA3A3"
+        android:backgroundTint="#AAA3A3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageProduct">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/textProductBarcode"
@@ -19,39 +28,38 @@
         android:layout_marginBottom="35dp"
         android:text="325324123"
         android:textColor="#0E0E0E"
-        android:textSize="14sp"
+        android:textSize="12sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageView5"
-        app:layout_constraintStart_toEndOf="@+id/imageProduct" />
+        app:layout_constraintStart_toEndOf="@+id/imageProduct"
+        app:layout_constraintTop_toBottomOf="@+id/textProductName" />
 
     <TextView
         android:id="@+id/textProductName"
         android:layout_width="120dp"
-        android:layout_height="47dp"
+        android:layout_height="30dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="14dp"
         android:text="Coca Cola"
         android:textColor="#0E0E0E"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@+id/textProductBarcode"
         app:layout_constraintStart_toEndOf="@+id/imageProduct"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.083" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/imageProduct"
-        android:layout_width="60dp"
-        android:layout_height="80dp"
+        android:layout_width="50dp"
+        android:layout_height="60dp"
         android:layout_marginStart="7dp"
         app:cardCornerRadius="14dp"
-        app:strokeWidth="2dp"
-        app:strokeColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/black"
+        app:strokeWidth="2dp">
 
         <ImageView
             android:id="@+id/imageProduct2"
@@ -66,10 +74,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="50dp"
-        android:layout_marginBottom="6dp"
+        android:layout_marginBottom="8dp"
         android:text="5 $"
         android:textColor="#0E0E0E"
-        android:textSize="18sp"
+        android:textSize="15sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -77,10 +85,10 @@
 
     <ImageView
         android:id="@+id/btnMinusSize"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="10dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="20dp"
         android:backgroundTint="#040303"
         android:src="@drawable/ic_minus"
         android:text="-"
@@ -90,9 +98,9 @@
 
     <ImageView
         android:id="@+id/btnAddSize"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="8dp"
         android:backgroundTint="#090909"
         android:src="@drawable/ic_plus"
@@ -103,12 +111,14 @@
 
     <ImageView
         android:id="@+id/imageView5"
-        android:layout_width="17sp"
-        android:layout_height="17sp"
+        android:layout_width="13sp"
+        android:layout_height="13sp"
         android:layout_marginStart="3dp"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="35dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textProductBarcode"
+        app:layout_constraintTop_toBottomOf="@+id/textProductName"
         app:srcCompat="@drawable/barcode_scanner" />
 
     <TextView
@@ -119,6 +129,7 @@
         android:layout_marginBottom="10dp"
         android:text="Price: "
         android:textColor="#0E0E0E"
+        android:textSize="12sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageProduct" />
@@ -131,6 +142,7 @@
         android:layout_marginBottom="10dp"
         android:text="2.5 $"
         android:textColor="#0E0E0E"
+        android:textSize="12sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView7" />
@@ -139,43 +151,38 @@
         android:id="@+id/textCountProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="20dp"
         android:text="2"
         android:textColor="#0E0E0E"
-        android:textSize="18sp"
+        android:textSize="15sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnMinusSize"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginBottom="41dp"
+        android:layout_marginBottom="20dp"
         android:text="x"
         android:textColor="#0E0E0E"
-        android:textSize="18sp"
+        android:textSize="15sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textCountProduct"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.75" />
+        app:layout_constraintEnd_toStartOf="@+id/textCountProduct" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
+        android:layout_marginStart="20dp"
         android:layout_marginEnd="2dp"
         android:layout_marginBottom="10dp"
         android:text="Total:"
         android:textColor="#0E0E0E"
+        android:textSize="12sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/textProductTotalPrice"

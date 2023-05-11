@@ -34,8 +34,8 @@
             app:destination="@id/listProductsFragment"
             app:popUpToInclusive="true"/>
         <action
-            android:id="@+id/action_selectProductFragment_to_productHistoryFragment"
-            app:destination="@id/productHistoryFragment" />
+            android:id="@+id/action_selectProductFragment_to_productInfoFragment"
+            app:destination="@id/productInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/listProductsFragment"
@@ -78,6 +78,18 @@
         <action
             android:id="@+id/action_productHistoryFragment_to_listProductsFragment"
             app:destination="@id/listProductsFragment" />
+        <argument
+            android:name="currentProduct"
+            app:argType="com.example.barkodershopapp.data.db.productdatabase.ProductDataEntity" />
+    </fragment>
+    <fragment
+        android:id="@+id/productInfoFragment"
+        android:name="com.example.barkodershopapp.ui.fragments.ProductInfoFragment"
+        android:label="fragment_product_info"
+        tools:layout="@layout/fragment_product_info" >
+        <action
+            android:id="@+id/action_productInfoFragment_to_productHistoryFragment"
+            app:destination="@id/productHistoryFragment" />
         <argument
             android:name="currentProduct"
             app:argType="com.example.barkodershopapp.data.db.productdatabase.ProductDataEntity" />

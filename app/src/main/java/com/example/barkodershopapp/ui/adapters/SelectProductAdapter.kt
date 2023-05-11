@@ -4,15 +4,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.barkodershopapp.data.db.productdatabase.ProductDataEntity
 import com.barkoder.shoppingApp.net.R
 import com.barkoder.shoppingApp.net.databinding.SelectproductItemBinding
 import com.example.barkodershopapp.data.db.listdatabase.ListDataEntity
+import com.example.barkodershopapp.ui.fragments.ProductInfoFragment
 import com.example.barkodershopapp.ui.fragments.SelectProductFragmentDirections
 import com.example.barkodershopapp.ui.viewmodels.ListViewModel
 import com.example.barkodershopapp.ui.typeconverters.TypeConverterss
@@ -44,18 +47,18 @@ class SelectProductAdapter(
             binding.textSelectProductName.text = list.nameProduct
             binding.textSelectProductBarcode.text = list.barcodeProduct
             binding.textSelectProductPrice.text = list.priceProduct.toString() + " $"
-            binding.selectLayout.setOnClickListener {
-                try {
-                    val actions =
-                        SelectProductFragmentDirections.actionSelectProductFragmentToProductHistoryFragment(
-                            list
-                        )
-                    Navigation.findNavController(binding.root).navigate(actions)
-
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
+//            binding.selectLayout.setOnClickListener {
+//                try {
+//                    val actions = SelectProductFragmentDirections.actionSelectProductFragmentToProductInfoFragment(list)
+//                    Navigation.findNavController(binding.root).navigate(actions,
+//                        NavOptions.Builder().setPopUpTo(R.id.selectProductFragment, true).build()
+//                    )
+//
+//
+//                } catch (e: Exception) {
+//                    e.printStackTrace()
+//                }
+//            }
             binding.textProductUnit.text = list.unitProduct
             binding.textQuanitityProduct.text = list.quantityProduct.toString()
 

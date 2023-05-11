@@ -13,46 +13,50 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.barkoder.shoppingApp.net.R
-import com.barkoder.shoppingApp.net.databinding.FragmentProductHistoryBinding
+import com.barkoder.shoppingApp.net.databinding.FragmentProductInfoBinding
 import com.example.barkodershopapp.data.db.pricedb.PriceHistory
 import com.example.barkodershopapp.data.db.productdatabase.ProductDataEntity
 import com.example.barkodershopapp.ui.adapters.PriceHistoryAdapter
-import com.example.barkodershopapp.ui.viewmodels.ProductViewModel
 import com.example.barkodershopapp.ui.typeconverters.TypeConverterss
+import com.example.barkodershopapp.ui.viewmodels.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
+
 
 @AndroidEntryPoint
-class ProductHistoryFragment : Fragment() {
-    lateinit var priceAdapter: PriceHistoryAdapter
-    private val args by navArgs<ProductHistoryFragmentArgs>()
-    lateinit var binding: FragmentProductHistoryBinding
+class ProductInfoFragment : Fragment() {
+    private val args by navArgs<ProductInfoFragmentArgs>()
+    lateinit var binding : FragmentProductInfoBinding
     private val productViewModel: ProductViewModel by viewModels()
+    lateinit var priceAdapter: PriceHistoryAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentProductHistoryBinding.inflate(inflater, container, false)
-
-        setupRecView()
+        binding =  FragmentProductInfoBinding.inflate(inflater, container, false)
+//        setupRecView()
         setupTextViews()
-
-
-        return  binding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         binding.btnUpdateProductToList.setOnClickListener {
             updateProduct()
         }
+
+
     }
+
 
     private fun setupTextViews(){
         binding.editTextNameUpdateProduct.setText(args.currentProduct.nameProduct)
@@ -69,15 +73,15 @@ class ProductHistoryFragment : Fragment() {
 
 
 
-    private fun setupRecView(){
-        priceAdapter = PriceHistoryAdapter(args.currentProduct.priceHistory)
-        binding.recViewHistoryProduct.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = priceAdapter
-        }
+//    private fun setupRecView(){
+//        priceAdapter = PriceHistoryAdapter(args.currentProduct.priceHistory)
+//        binding.recViewHistoryProduct.apply {
+//            layoutManager = LinearLayoutManager(context)
+//            adapter = priceAdapter
+//        }
 
 
-    }
+//    }
     @SuppressLint("SuspiciousIndentation")
     private fun updateProduct() {
         var name = binding.editTextNameUpdateProduct.text.toString()
@@ -125,11 +129,4 @@ class ProductHistoryFragment : Fragment() {
         val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm")
         return formatter.format(currentDate)
     }
-
-
-
-
-    }
-
-
-
+}
