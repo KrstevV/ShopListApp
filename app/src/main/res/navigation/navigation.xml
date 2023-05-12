@@ -20,6 +20,9 @@
         <action
             android:id="@+id/action_addProductFragment_to_scanFragment2"
             app:destination="@id/scanFragment" />
+        <action
+            android:id="@+id/action_addProductFragment_to_homeScreenFragment"
+            app:destination="@id/homeScreenFragment" />
     </fragment>
     <fragment
         android:id="@+id/selectProductFragment"
@@ -36,6 +39,15 @@
         <action
             android:id="@+id/action_selectProductFragment_to_productInfoFragment"
             app:destination="@id/productInfoFragment" />
+        <action
+            android:id="@+id/action_selectProductFragment_to_productHistoryFragment"
+            app:destination="@id/productHistoryFragment" />
+        <action
+            android:id="@+id/action_selectProductFragment_to_historyListFragment2"
+            app:destination="@id/historyListFragment2" />
+        <action
+            android:id="@+id/action_selectProductFragment_to_homeScreenFragment"
+            app:destination="@id/homeScreenFragment" />
     </fragment>
     <fragment
         android:id="@+id/listProductsFragment"
@@ -66,6 +78,9 @@
         <action
             android:id="@+id/action_scanFragment_to_addProductFragment"
             app:destination="@id/addProductFragment" />
+        <action
+            android:id="@+id/action_scanFragment_to_historyListFragment2"
+            app:destination="@id/historyListFragment2" />
     </fragment>
     <fragment
         android:id="@+id/productHistoryFragment"
@@ -93,5 +108,35 @@
         <argument
             android:name="currentProduct"
             app:argType="com.example.barkodershopapp.data.db.productdatabase.ProductDataEntity" />
+    </fragment>
+    <fragment
+        android:id="@+id/historyListFragment2"
+        android:name="com.example.barkodershopapp.ui.fragments.HistoryListFragment"
+        android:label="fragment_history_list"
+        tools:layout="@layout/fragment_history_list" >
+        <action
+            android:id="@+id/action_historyListFragment2_to_scanFragment"
+            app:destination="@id/scanFragment" />
+        <action
+            android:id="@+id/action_historyListFragment2_to_selectProductFragment"
+            app:destination="@id/selectProductFragment" />
+        <action
+            android:id="@+id/action_historyListFragment2_to_homeScreenFragment"
+            app:destination="@id/homeScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeScreenFragment"
+        android:name="com.example.barkodershopapp.ui.fragments.HomeScreenFragment"
+        android:label="fragment_home_screen"
+        tools:layout="@layout/fragment_home_screen" >
+        <action
+            android:id="@+id/action_homeScreenFragment_to_historyListFragment2"
+            app:destination="@id/historyListFragment2" />
+        <action
+            android:id="@+id/action_homeScreenFragment_to_selectProductFragment"
+            app:destination="@id/selectProductFragment" />
+        <action
+            android:id="@+id/action_homeScreenFragment_to_addProductFragment"
+            app:destination="@id/addProductFragment" />
     </fragment>
 </navigation>

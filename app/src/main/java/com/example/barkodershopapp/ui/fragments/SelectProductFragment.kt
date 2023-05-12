@@ -32,6 +32,8 @@ import com.example.barkodershopapp.ui.viewmodels.ListViewModel
 import com.example.barkodershopapp.ui.viewmodels.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
+import java.util.*
+import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class SelectProductFragment : Fragment() {
@@ -57,6 +59,7 @@ class SelectProductFragment : Fragment() {
 
         setupRecView()
         observeList()
+        binding.recViewSelect.smoothScrollToPosition(0)
 
     }
 
@@ -70,7 +73,9 @@ class SelectProductFragment : Fragment() {
             binding.progressBar3.visibility = View.GONE
             selectAdapter.setProductsList2(products as ArrayList<ProductDataEntity>)
             searchView(products)
+
         })
+
     }
 
     private fun setupRecView() {
@@ -111,10 +116,9 @@ class SelectProductFragment : Fragment() {
             android.R.color.holo_red_light,
             object : SwipeHelper.UnderlayButtonClickListener {
                 override fun onClick() {
-//                    selectAdapter.notifyItemRemoved(position)
-//                    productViewModel.deleteItem(selectAdapter.getSelectInt(position))
-                    Toast.makeText(requireContext(), "Marked as unread item $position", Toast.LENGTH_SHORT)
-                        .show()
+                    selectAdapter.notifyItemRemoved(position)
+                    productViewModel.deleteItem(selectAdapter.getSelectInt(position))
+
                 }
             })
     }

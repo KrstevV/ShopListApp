@@ -47,18 +47,18 @@ class SelectProductAdapter(
             binding.textSelectProductName.text = list.nameProduct
             binding.textSelectProductBarcode.text = list.barcodeProduct
             binding.textSelectProductPrice.text = list.priceProduct.toString() + " $"
-//            binding.selectLayout.setOnClickListener {
-//                try {
-//                    val actions = SelectProductFragmentDirections.actionSelectProductFragmentToProductInfoFragment(list)
-//                    Navigation.findNavController(binding.root).navigate(actions,
-//                        NavOptions.Builder().setPopUpTo(R.id.selectProductFragment, true).build()
-//                    )
-//
-//
-//                } catch (e: Exception) {
-//                    e.printStackTrace()
-//                }
-//            }
+            binding.selectLayout.setOnClickListener {
+                try {
+                    val actions = SelectProductFragmentDirections.actionSelectProductFragmentToProductHistoryFragment(list)
+                    Navigation.findNavController(binding.root).navigate(actions,
+                        NavOptions.Builder().setPopUpTo(R.id.selectProductFragment, true).build()
+                    )
+
+
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
             binding.textProductUnit.text = list.unitProduct
             binding.textQuanitityProduct.text = list.quantityProduct.toString()
 

@@ -49,20 +49,19 @@ class ProductHistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        binding.btnUpdateProductToList.setOnClickListener {
-            updateProduct()
-        }
+
     }
 
     private fun setupTextViews(){
-        binding.editTextNameUpdateProduct.setText(args.currentProduct.nameProduct)
-        binding.editTextBarcodeUpdateProduct.setText(args.currentProduct.barcodeProduct)
-        binding.editPriceUpdateProduct.setText(args.currentProduct.priceProduct.toString())
-        binding.editQuantityUpdateProduct.setText(args.currentProduct.quantityProduct.toString())
-        binding.editUnitUpdateProduct.setText(args.currentProduct.unitProduct)
+        binding.textActivityName.setText(args.currentProduct.nameProduct)
+        binding.textNameInfo.setText(args.currentProduct.nameProduct)
+        binding.textBarcodeInfo.setText(args.currentProduct.barcodeProduct)
+        binding.textPriceInfo.setText(args.currentProduct.priceProduct.toString())
+        binding.textQuantityInfo.setText(args.currentProduct.quantityProduct.toString())
+        binding.textUnitInfo.setText(args.currentProduct.unitProduct)
 
         val byteArray = args.currentProduct.imageProduct?.let { TypeConverterss.toBitmap(it) }
-        binding.cameraImageUpdate.load(byteArray) {
+        binding.imageProductInfo.load(byteArray) {
             crossfade(true)
         }
     }
@@ -71,60 +70,17 @@ class ProductHistoryFragment : Fragment() {
 
     private fun setupRecView(){
         priceAdapter = PriceHistoryAdapter(args.currentProduct.priceHistory)
-        binding.recViewHistoryProduct.apply {
+        priceAdapter.setPricesList(args.currentProduct.priceHistory)
+        binding.recViewPrice.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = priceAdapter
         }
 
 
     }
-    @SuppressLint("SuspiciousIndentation")
-    private fun updateProduct() {
-        var name = binding.editTextNameUpdateProduct.text.toString()
-        var barcode = binding.editTextBarcodeUpdateProduct.text.toString()
-        var price = binding.editPriceUpdateProduct.text.toString()
-        var unit = binding.editUnitUpdateProduct.text.toString()
-        var quantity = binding.editQuantityUpdateProduct.text.toString()
-
-        if (price.toInt() != args.currentProduct.priceProduct) {
-            var arrowResId = if (price.toInt() > args.currentProduct.priceProduct) {
-                R.drawable.arrow_up
-            } else {
-                R.drawable.arrow_down
-            }
-            args.currentProduct.priceHistory.add(PriceHistory(price + " $", getCurrentDate(), arrowResId))
-
-        }
-
-        var currentProduct = ProductDataEntity(
-            name,
-            barcode,
-            getCurrentDate(),
-            price.toInt(),
-            unit,
-            quantity.toInt(),
-            false,
-            args.currentProduct.imageProduct,
-            1,
-            price.toInt(), args.currentProduct.priceHistory, 0, args.currentProduct.id
-        )
-        productViewModel.updateItem(currentProduct)
-
-        findNavController().navigate(
-            R.id.selectProductFragment,
-            null,
-            NavOptions.Builder().setPopUpTo(R.id.productHistoryFragment, true).build()
-        )
 
 
 
-    }
-
-    private fun getCurrentDate(): String {
-        val currentDate = Calendar.getInstance().time
-        val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm")
-        return formatter.format(currentDate)
-    }
 
 
 

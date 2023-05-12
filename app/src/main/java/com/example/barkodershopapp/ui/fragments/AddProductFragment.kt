@@ -41,6 +41,7 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.util.*
 
 
 @AndroidEntryPoint
@@ -163,7 +164,6 @@ class AddProductFragment : Fragment() {
                         }
                     }
                     currentAddProduct.imageProduct = imageData
-
 
                     productViewModel.insert(currentAddProduct)
                 }

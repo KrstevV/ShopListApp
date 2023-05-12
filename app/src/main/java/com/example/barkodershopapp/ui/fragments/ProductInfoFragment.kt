@@ -66,7 +66,7 @@ class ProductInfoFragment : Fragment() {
         binding.editUnitUpdateProduct.setText(args.currentProduct.unitProduct)
 
         val byteArray = args.currentProduct.imageProduct?.let { TypeConverterss.toBitmap(it) }
-        binding.cameraImageUpdate.load(byteArray) {
+        binding.imageProductInfo.load(byteArray) {
             crossfade(true)
         }
     }
