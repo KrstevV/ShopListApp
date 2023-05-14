@@ -14,6 +14,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,6 +33,8 @@ import com.example.barkodershopapp.ui.viewmodels.HistoryViewModel
 import com.example.barkodershopapp.ui.viewmodels.ListViewModel
 import com.example.barkodershopapp.ui.viewmodels.ProductViewModel
 import com.example.barkodershopapp.ui.activities.HomeScreenActivity
+import com.google.android.material.bottomappbar.BottomAppBar
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import java.text.SimpleDateFormat
@@ -44,6 +48,16 @@ class ListProductsFragment : Fragment() {
     private val historyViewModel: HistoryViewModel by viewModels()
     private val listViewModel: ListViewModel by viewModels()
     private val productL = arrayListOf<ListDataEntity>()
+    var editMode = this@ListProductsFragment.arguments?.getBoolean("editMode")
+
+    private lateinit var callback: OnBackPressedCallback
+    override fun onDestroy() {
+        // Remove the callback to prevent memory leaks
+        callback.remove()
+        super.onDestroy()
+    }
+
+
 
 
     override fun onCreateView(
@@ -54,6 +68,8 @@ class ListProductsFragment : Fragment() {
         binding = FragmentListProductsBinding.inflate(inflater, container, false)
         setupRecView()
         observeList()
+        onBackButton()
+        editOrCreateMode()
 
 
 
@@ -62,15 +78,48 @@ class ListProductsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
+        var editMode = this@ListProductsFragment.arguments?.getBoolean("editMode")
+        if(editMode == true) {
+            listViewModel.isEditMode = true
+        }
         editMode()
         onClickButtonAdd()
         onClickButtonUpdate()
         setupSwipteDelete()
+        navInvisible()
+        onButtonSelect()
 
     }
 
+    fun editOrCreateMode() : Boolean{
+        if(editMode == true){
+            return true
+        } else {
+
+        return false}
+    }
+
+    private fun onButtonSelect(){
+        var editMode = this@ListProductsFragment.arguments?.getBoolean("editMode")
+        binding.buttonImage.setOnClickListener {
+            if(editMode == true){
+                val bundle = Bundle()
+                bundle.putBoolean("editMode", true)
+                findNavController().navigate(R.id.selectProductFragment, bundle)
+            } else {
+                findNavController().navigate(R.id.selectProductFragment)
+            }
+
+        }
+    }
+
+
+    private fun navInvisible(){
+        var bottomNav = requireActivity().findViewById<BottomAppBar>(R.id.bottomNavigationApp)
+        bottomNav.visibility = View.GONE
+        var bottomFab = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
+        bottomFab.visibility = View.GONE
+    }
 
     private fun setupSwipteDelete() {
         val itemTouchHelper = ItemTouchHelper(swipteToDelete)
@@ -87,8 +136,8 @@ class ListProductsFragment : Fragment() {
     }
 
     private fun onClickButtonUpdate() {
-        var listId = requireActivity().intent.getLongExtra("currentListId", 0)
-        var checkedDate = requireActivity().intent.getStringExtra("checkedDate")
+        var listId = this@ListProductsFragment.arguments?.getLong("currentListId")
+        var checkedDate = this@ListProductsFragment.arguments?.getString("checkedDate").toString()
         binding.btnUpdateList.setOnClickListener {
             val listName = binding.editTextListName.text.toString()
             if (listName.isNotEmpty()) {
@@ -97,13 +146,12 @@ class ListProductsFragment : Fragment() {
                         listName, getCurrentDate(),
                         sumTotalCostList(products4).toString(),
                         checkedDate!!,
-                        false, products4 as ArrayList<ListDataEntity>, listId
+                        false, products4 as ArrayList<ListDataEntity>, listId!!
                     )
                     historyViewModel.updateItem(currentList)
+                    listViewModel.delete()
                 })
-                val intent = Intent(activity, HomeScreenActivity::class.java)
-                startActivity(intent)
-                requireActivity().finish()
+                findNavController().navigate(R.id.historyListFragment2)
                 Toast.makeText(context, R.string.toast_list_sucessful_updated, Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(context, R.string.toast_list_name_empty, Toast.LENGTH_SHORT).show()
@@ -129,9 +177,7 @@ class ListProductsFragment : Fragment() {
                     )
                 })
 
-                val intent = Intent(activity, HomeScreenActivity::class.java)
-                startActivity(intent)
-                requireActivity().finish()
+                    findNavController().navigate(R.id.historyListFragment2)
                 Toast.makeText(context, R.string.toast_list_secesfful_created, Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(context, R.string.toast_list_name_empty, Toast.LENGTH_SHORT).show()
@@ -150,13 +196,20 @@ class ListProductsFragment : Fragment() {
     }
 
     private fun editMode() {
-        var editMode = requireActivity().intent.getBooleanExtra("editMode", false)
-        var listName = requireActivity().intent.getStringExtra("listName")
-        if (editMode) {
+        var editMode = this@ListProductsFragment.arguments?.getBoolean("editMode")
+        var listName = this@ListProductsFragment.arguments?.getString("listName")
+        var editMode2 = this@ListProductsFragment.arguments?.getBoolean("editMode2")
+
+        if (editMode == true || editMode2 == true) {
             binding.textActivityName.text = "Update List"
             binding.btnAddNewList.visibility = View.INVISIBLE
             binding.btnUpdateList.visibility = View.VISIBLE
             binding.editTextListName.setText(listName)
+        } else {
+            binding.textActivityName.text = "Create List"
+            binding.btnAddNewList.visibility = View.VISIBLE
+            binding.btnUpdateList.visibility = View.INVISIBLE
+            binding.editTextListName.setText("")
         }
     }
 
@@ -218,6 +271,23 @@ class ListProductsFragment : Fragment() {
         }
     }
 
+    private fun onBackButton(){
+        callback = object : OnBackPressedCallback(true ) {
+            override fun handleOnBackPressed() {
+                listViewModel.delete()
+                findNavController().navigate(
+                    R.id.historyListFragment2,
+                    null,
+                    NavOptions.Builder().setPopUpTo(R.id.listProductsFragment, true).build()
+                )
+                isEnabled = false
+                requireActivity().onBackPressed()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
+    }
+
     private val clickListenerButtons = object : OnClickListenerButtons {
         override fun onClickPlus(list: ListDataEntity) {
             list.listProducts.count++
@@ -235,43 +305,6 @@ class ListProductsFragment : Fragment() {
             listViewModel.updateItem(list)
         }
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                var editMode = requireActivity().intent.getBooleanExtra("editMode", false)
-                if (editMode) {
-                    var intent = Intent(requireActivity(), HomeScreenActivity::class.java)
-                    startActivity(intent)
-                    requireActivity().finish()
-                } else {
-                    val builder = AlertDialog.Builder(context)
-                        .setTitle(R.string.alert_title_list_save)
-                    builder.setMessage(R.string.alert_dialog_back)
-                        .setCancelable(false)
-                        .setNegativeButton(R.string.alert_title_list_save_negative) { dialog, id ->
-                            dialog.dismiss()
-                        }
-                        .setPositiveButton(R.string.alert_title_list_save_positive) { dialog, id ->
-                            requireActivity().finish()
-                            dialog.dismiss()
-                        }
-
-                    val alert = builder.create()
-                    alert.show()
-
-                }
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
-    }
-
-
-
-
-
     override fun onResume() {
         super.onResume()
         binding.progressBar2.visibility = View.VISIBLE
@@ -279,13 +312,14 @@ class ListProductsFragment : Fragment() {
         handler.postDelayed({
             binding.progressBar2.visibility = View.GONE
         }, 2000)
-
-
     }
 
-    fun showAlert(context: Context) {
+    override fun onPause() {
+        super.onPause()
 
+        var bottomNav = requireActivity().findViewById<BottomAppBar>(R.id.bottomNavigationApp)
+        bottomNav.visibility = View.VISIBLE
+        var bottomFab = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
+        bottomFab.visibility = View.VISIBLE
     }
-
-
 }

@@ -22,6 +22,9 @@ import com.example.barkodershopapp.ui.viewmodels.ListViewModel
 import com.example.barkodershopapp.ui.activities.MainActivity
 import com.example.barkodershopapp.ui.listeners.OnCheckedListener
 import com.example.barkodershopapp.ui.viewmodels.ProductViewModel
+import com.google.android.material.bottomappbar.BottomAppBar
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.descriptors.StructureKind
 import java.text.SimpleDateFormat
@@ -45,12 +48,16 @@ class CurrentListFragment : Fragment(){
 
         setupRecView()
         setupTextViews()
+        navInvisible()
+
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
 
         onClickEdit()
         onClickScan()
@@ -60,6 +67,13 @@ class CurrentListFragment : Fragment(){
         onClickRestore()
     }
 
+
+    private fun navInvisible(){
+        var bottomNav = requireActivity().findViewById<BottomAppBar>(R.id.bottomNavigationApp)
+        bottomNav.visibility = View.GONE
+        var bottomFab = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
+        bottomFab.visibility = View.GONE
+    }
     private fun getBarcodeString(){
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("barcodeNum2")
             ?.observe(viewLifecycleOwner) { result ->
@@ -74,7 +88,7 @@ class CurrentListFragment : Fragment(){
 
     private fun onClickScan(){
         binding.btnScan2.setOnClickListener {
-            findNavController().navigate(R.id.action_currentListFragment_to_scanTwoFragment)
+//            findNavController().navigate(R.id.action_currentListFragment_to_scanTwoFragment)
         }
     }
 
@@ -127,13 +141,16 @@ class CurrentListFragment : Fragment(){
     private fun onClickEdit(){
         var scanLayout = binding.scanLayout
         binding.btnEditList.setOnClickListener {
-            val intent = Intent(requireActivity(), MainActivity::class.java)
-            intent.putExtra("editMode", true)
-            intent.putExtra("currentListId", args.currentList.id)
-            intent.putExtra("checkedDate", args.currentList.checkedDate)
-            intent.putExtra("listName", args.currentList.listName)
-            startActivity(intent)
-            requireActivity().finish()
+
+
+            val bundle = Bundle()
+            bundle.putBoolean("editMode", true)
+            bundle.putLong("currentListId", args.currentList.id)
+            bundle.putString("checkedDate", args.currentList.checkedDate)
+            bundle.putString("listName", args.currentList.listName)
+
+            findNavController().navigate(R.id.listProductsFragment, bundle)
+
             for (i in args.currentList.listProducts) {
                 listViewModel.insert(i)
             }
@@ -270,4 +287,12 @@ class CurrentListFragment : Fragment(){
 
     }
 
+    override fun onPause() {
+        super.onPause()
+
+        var bottomNav = requireActivity().findViewById<BottomAppBar>(R.id.bottomNavigationApp)
+        bottomNav.visibility = View.VISIBLE
+        var bottomFab = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
+        bottomFab.visibility = View.VISIBLE
+    }
 }

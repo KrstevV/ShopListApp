@@ -19,6 +19,8 @@ import com.example.barkodershopapp.data.db.productdatabase.ProductDataEntity
 import com.example.barkodershopapp.ui.adapters.PriceHistoryAdapter
 import com.example.barkodershopapp.ui.viewmodels.ProductViewModel
 import com.example.barkodershopapp.ui.typeconverters.TypeConverterss
+import com.google.android.material.bottomappbar.BottomAppBar
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
@@ -40,6 +42,8 @@ class ProductHistoryFragment : Fragment() {
 
         setupRecView()
         setupTextViews()
+        navInvisible()
+        onClickCancel()
 
 
         return  binding.root
@@ -52,25 +56,74 @@ class ProductHistoryFragment : Fragment() {
 
     }
 
-    private fun setupTextViews(){
-        binding.textActivityName.setText(args.currentProduct.nameProduct)
-        binding.textNameInfo.setText(args.currentProduct.nameProduct)
-        binding.textBarcodeInfo.setText(args.currentProduct.barcodeProduct)
-        binding.textPriceInfo.setText(args.currentProduct.priceProduct.toString())
-        binding.textQuantityInfo.setText(args.currentProduct.quantityProduct.toString())
-        binding.textUnitInfo.setText(args.currentProduct.unitProduct)
-
-        val byteArray = args.currentProduct.imageProduct?.let { TypeConverterss.toBitmap(it) }
-        binding.imageProductInfo.load(byteArray) {
-            crossfade(true)
+    private fun onClickCancel(){
+        binding.btnCancel.setOnClickListener {
+            findNavController().navigate(
+                R.id.homeScreenFragment,
+                null,
+                NavOptions.Builder().setPopUpTo(R.id.productHistoryFragment, true).build()
+            )
         }
+    }
+
+    private fun navInvisible(){
+        var bottomNav = requireActivity().findViewById<BottomAppBar>(R.id.bottomNavigationApp)
+        bottomNav.visibility = View.GONE
+        var bottomFab = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
+        bottomFab.visibility = View.GONE
+    }
+
+    private fun setupTextViews(){
+
+        var scanned = this@ProductHistoryFragment.arguments?.getBoolean("scanned")
+        var productId = this@ProductHistoryFragment.arguments?.getLong("productId")
+        var productName = this@ProductHistoryFragment.arguments?.getString("productName")
+        var productBarcode = this@ProductHistoryFragment.arguments?.getString("productBarcode")
+        var productUnit = this@ProductHistoryFragment.arguments?.getString("productUnit")
+        var productQuantity = this@ProductHistoryFragment.arguments?.getString("productQuantity")
+        var productPrice = this@ProductHistoryFragment.arguments?.getString("productPrice")
+        var productImage = this@ProductHistoryFragment.arguments?.getByteArray("productImage")
+        if(scanned == true) {
+            binding.textActivityName.setText(productName)
+            binding.textNameInfo.setText(productName)
+            binding.textBarcodeInfo.setText(productBarcode)
+            binding.textPriceInfo.setText(productPrice)
+            binding.textQuantityInfo.setText(productQuantity)
+            binding.textUnitInfo.setText(productUnit)
+            val byteArray = productImage?.let { TypeConverterss.toBitmap(it) }
+            binding.imageProductInfo.load(byteArray) {
+                crossfade(true)
+            }
+
+        } else {
+            binding.textActivityName.setText(args.currentProduct.nameProduct)
+            binding.textNameInfo.setText(args.currentProduct.nameProduct)
+            binding.textBarcodeInfo.setText(args.currentProduct.barcodeProduct)
+            binding.textPriceInfo.setText(args.currentProduct.priceProduct.toString())
+            binding.textQuantityInfo.setText(args.currentProduct.quantityProduct.toString())
+            binding.textUnitInfo.setText(args.currentProduct.unitProduct)
+
+            val byteArray = args.currentProduct.imageProduct?.let { TypeConverterss.toBitmap(it) }
+            binding.imageProductInfo.load(byteArray) {
+                crossfade(true)
+            }
+        }
+
     }
 
 
 
     private fun setupRecView(){
-        priceAdapter = PriceHistoryAdapter(args.currentProduct.priceHistory)
-        priceAdapter.setPricesList(args.currentProduct.priceHistory)
+        var scanned = this@ProductHistoryFragment.arguments?.getBoolean("scanned")
+        var priceHistory = this@ProductHistoryFragment.arguments?.getSerializable("priceHistory") as? ArrayList<PriceHistory>
+        if(scanned == true) {
+            priceAdapter = PriceHistoryAdapter(priceHistory!!)
+            priceAdapter.setPricesList(priceHistory!!)
+        } else {
+            priceAdapter = PriceHistoryAdapter(args.currentProduct.priceHistory)
+            priceAdapter.setPricesList(args.currentProduct.priceHistory)
+        }
+
         binding.recViewPrice.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = priceAdapter
@@ -79,13 +132,14 @@ class ProductHistoryFragment : Fragment() {
 
     }
 
-
-
-
-
-
-
+    override fun onPause() {
+        super.onPause()
+        var bottomNav = requireActivity().findViewById<BottomAppBar>(R.id.bottomNavigationApp)
+        bottomNav.visibility = View.VISIBLE
+        var bottomFab = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
+        bottomFab.visibility = View.VISIBLE
     }
+}
 
 
 

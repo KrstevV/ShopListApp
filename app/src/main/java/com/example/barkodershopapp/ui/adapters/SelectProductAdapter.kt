@@ -1,5 +1,6 @@
 package com.example.barkodershopapp.ui.adapters
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
@@ -15,7 +16,9 @@ import com.example.barkodershopapp.data.db.productdatabase.ProductDataEntity
 import com.barkoder.shoppingApp.net.R
 import com.barkoder.shoppingApp.net.databinding.SelectproductItemBinding
 import com.example.barkodershopapp.data.db.listdatabase.ListDataEntity
+import com.example.barkodershopapp.ui.fragments.ListProductsFragment
 import com.example.barkodershopapp.ui.fragments.ProductInfoFragment
+import com.example.barkodershopapp.ui.fragments.SelectProductFragment
 import com.example.barkodershopapp.ui.fragments.SelectProductFragmentDirections
 import com.example.barkodershopapp.ui.viewmodels.ListViewModel
 import com.example.barkodershopapp.ui.typeconverters.TypeConverterss
@@ -63,6 +66,12 @@ class SelectProductAdapter(
             binding.textQuanitityProduct.text = list.quantityProduct.toString()
 
             binding.btnAddProduct.setOnClickListener {
+
+
+
+
+
+
 
                 viewModel.insert(ListDataEntity(list))
                 findNavController(binding.root).navigate(

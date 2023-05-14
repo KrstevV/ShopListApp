@@ -50,7 +50,7 @@ class ProductInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnUpdateProductToList.setOnClickListener {
+        binding.btnUpdate.setOnClickListener {
             updateProduct()
         }
 

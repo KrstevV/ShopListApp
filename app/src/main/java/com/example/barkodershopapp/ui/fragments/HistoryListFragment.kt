@@ -12,6 +12,8 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +23,8 @@ import com.example.barkodershopapp.ui.listeners.swipecallback.SwipeToDelete
 import com.example.barkodershopapp.data.db.historydatabase.HistoryDataEntity
 import com.example.barkodershopapp.ui.adapters.HistoryAdapter
 import com.example.barkodershopapp.ui.viewmodels.HistoryViewModel
+import com.example.barkodershopapp.ui.viewmodels.ListViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import java.lang.reflect.Field
@@ -30,6 +34,7 @@ class HistoryListFragment : Fragment() {
     lateinit var binding: FragmentHistoryListBinding
     lateinit var historyAdapter: HistoryAdapter
     private val historyViewmodel: HistoryViewModel by viewModels()
+    private val listViewModel : ListViewModel by viewModels()
     private val listH = arrayListOf<HistoryDataEntity>()
 
     override fun onCreateView(
@@ -49,6 +54,7 @@ class HistoryListFragment : Fragment() {
 
         setupRecView()
         observeList()
+        onClickNewList()
 
 
         return binding.root
@@ -56,8 +62,28 @@ class HistoryListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        onCLickScan()
         swipeDelete()
+    }
+    private fun onCLickScan() {
+        var btnScan = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
+        btnScan.setOnClickListener {
+            findNavController().navigate(
+                R.id.scanFragment,
+                null,
+                NavOptions.Builder().setPopUpTo(R.id.historyListFragment2, true).build()
+            )
+        }
+    }
+
+    private fun onClickNewList(){
+        binding.fabNewList.setOnClickListener {
+            findNavController().navigate(
+                R.id.listProductsFragment
+            )
+            listViewModel.delete()
+
+        }
     }
 
     private fun setupRecView() {

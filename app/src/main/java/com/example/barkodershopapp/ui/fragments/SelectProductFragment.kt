@@ -30,6 +30,7 @@ import com.example.barkodershopapp.ui.adapters.SelectProductAdapter
 import com.example.barkodershopapp.ui.listeners.swipeicons.SwipeHelper
 import com.example.barkodershopapp.ui.viewmodels.ListViewModel
 import com.example.barkodershopapp.ui.viewmodels.ProductViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import java.util.*
@@ -42,6 +43,7 @@ class SelectProductFragment : Fragment() {
     lateinit var binding: FragmentSelectProductBinding
     val listViewMOdel: ListViewModel by viewModels()
     var productS = ArrayList<ProductDataEntity>()
+    var editMode = this@SelectProductFragment.arguments?.getBoolean("editMode")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,22 +53,22 @@ class SelectProductFragment : Fragment() {
         binding = FragmentSelectProductBinding.inflate(inflater, container, false)
 
 
+
+
         return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecView()
+        onCLickScan()
         observeList()
         binding.recViewSelect.smoothScrollToPosition(0)
 
     }
 
-    private fun swipteDelete() {
-        val itemTouchHelper = ItemTouchHelper(swipteToDelete)
-        itemTouchHelper.attachToRecyclerView(binding.recViewSelect)
-    }
 
     private fun observeList() {
         productViewModel.allNotes.observe(viewLifecycleOwner, Observer { products ->
@@ -121,6 +123,17 @@ class SelectProductFragment : Fragment() {
 
                 }
             })
+    }
+
+    private fun onCLickScan() {
+        var btnScan = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
+        btnScan.setOnClickListener {
+            findNavController().navigate(
+                R.id.scanFragment,
+                null,
+                NavOptions.Builder().setPopUpTo(R.id.selectProductFragment, true).build()
+            )
+        }
     }
 
 

@@ -3,8 +3,10 @@ package com.example.barkodershopapp.ui.activities
 import android.content.Intent
 import android.database.CursorWindow
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.Navigation
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -39,7 +41,8 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
         val navController = navHostFragment.navController
         bottomNavigationView.setupWithNavController(navController)
-        bottomNavigationView.selectedItemId = R.id.listProductsFragment
+        bottomNavigationView.selectedItemId = R.id.homeScreenFragment
+
 
     }
 

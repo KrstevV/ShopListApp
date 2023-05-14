@@ -349,7 +349,7 @@
 
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnUpdateProductToList"
+                    android:id="@+id/btnUpdate"
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

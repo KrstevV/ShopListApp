@@ -55,17 +55,8 @@
         android:label="fragment_list_products"
         tools:layout="@layout/fragment_list_products" >
         <action
-            android:id="@+id/action_listProductsFragment_to_selectProductFragment2"
-            app:destination="@id/selectProductFragment" />
-        <action
-            android:id="@+id/action_listProductsFragment_to_addProductFragment2"
-            app:destination="@id/addProductFragment" />
-        <action
-            android:id="@+id/action_listProductsFragment_to_scanFragment"
-            app:destination="@id/scanFragment" />
-        <action
-            android:id="@+id/action_listProductsFragment_to_productHistoryFragment"
-            app:destination="@id/productHistoryFragment" />
+            android:id="@+id/action_listProductsFragment_to_historyListFragment2"
+            app:destination="@id/historyListFragment2" />
     </fragment>
     <fragment
         android:id="@+id/scanFragment"
@@ -123,6 +114,12 @@
         <action
             android:id="@+id/action_historyListFragment2_to_homeScreenFragment"
             app:destination="@id/homeScreenFragment" />
+        <action
+            android:id="@+id/action_historyListFragment2_to_currentListFragment2"
+            app:destination="@id/currentListFragment2" />
+        <action
+            android:id="@+id/action_historyListFragment2_to_listProductsFragment"
+            app:destination="@id/listProductsFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeScreenFragment"
@@ -138,5 +135,17 @@
         <action
             android:id="@+id/action_homeScreenFragment_to_addProductFragment"
             app:destination="@id/addProductFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/currentListFragment2"
+        android:name="com.example.barkodershopapp.ui.fragments.CurrentListFragment"
+        android:label="fragment_current_list"
+        tools:layout="@layout/fragment_current_list" >
+        <action
+            android:id="@+id/action_currentListFragment2_to_historyListFragment2"
+            app:destination="@id/historyListFragment2" />
+        <argument
+            android:name="currentList"
+            app:argType="com.example.barkodershopapp.data.db.historydatabase.HistoryDataEntity" />
     </fragment>
 </navigation>

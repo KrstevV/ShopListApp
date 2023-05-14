@@ -19,11 +19,11 @@ class HistoryAdapter(private var list: List<HistoryDataEntity>) :
         fun bind(list: HistoryDataEntity) {
             binding.textListName.text = list.listName
             binding.textCheckoutDate.text = list.checkedDate
-//            binding.recViewHistoryList.setOnClickListener {
-//                val actions =
-//                    HistoryListFragmentDirections.actionHistoryListFragmentToCurrentListFragment(list)
-//                Navigation.findNavController(binding.root).navigate(actions)
-//            }
+            binding.recViewHistoryList.setOnClickListener {
+                val actions = HistoryListFragmentDirections.actionHistoryListFragment2ToCurrentListFragment2(list)
+                Navigation.findNavController(binding.root).navigate(actions)
+            }
+
             binding.textProductsSize.text = list.listProducts.size.toString()
             binding.textCost.text = list.totalCost + " $"
 

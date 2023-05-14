@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import com.example.barkodershopapp.ui.typeconverters.RoomListConverter
 
 
-@Database(entities = [HistoryDataEntity::class], version = 28)
+@Database(entities = [HistoryDataEntity::class], version = 30)
 @TypeConverters(RoomListConverter::class)
 abstract class HistoryDatabase : RoomDatabase() {
 

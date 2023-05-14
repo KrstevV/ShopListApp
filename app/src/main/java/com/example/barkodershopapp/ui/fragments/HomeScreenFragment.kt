@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.barkoder.shoppingApp.net.R
@@ -19,6 +20,7 @@ import com.example.barkodershopapp.ui.adapters.*
 import com.example.barkodershopapp.ui.viewmodels.HistoryViewModel
 import com.example.barkodershopapp.ui.viewmodels.ListViewModel
 import com.example.barkodershopapp.ui.viewmodels.ProductViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -49,6 +51,7 @@ class HomeScreenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        onCLickScan()
 
     }
 
@@ -100,4 +103,22 @@ class HomeScreenFragment : Fragment() {
         })
     }
 
+    private fun onCLickScan() {
+        var btnScan = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
+        btnScan.setOnClickListener {
+            findNavController().navigate(
+                R.id.scanFragment,
+                null,
+                NavOptions.Builder().setPopUpTo(R.id.homeScreenFragment, true).build()
+            )
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        observeListList()
+        observeListProduct()
+    }
 }
+

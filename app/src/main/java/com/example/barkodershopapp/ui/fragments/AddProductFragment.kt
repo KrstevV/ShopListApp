@@ -32,6 +32,7 @@ import com.example.barkodershopapp.data.db.productdatabase.ProductDataEntity
 import com.example.barkodershopapp.ui.activities.HomeScreenActivity
 import com.example.barkodershopapp.ui.viewmodels.ProductViewModel
 import com.example.barkodershopapp.ui.typeconverters.TypeConverterss
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
 import com.karumi.dexter.Dexter
@@ -72,18 +73,63 @@ class AddProductFragment : Fragment() {
         onClickAdd()
         onClickAddImage()
         onClickScan()
+        onCLickScanFab()
+    }
+
+    private fun onCLickScanFab() {
+        var btnScan = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
+        btnScan.setOnClickListener {
+            findNavController().navigate(
+                R.id.scanFragment,
+                null,
+                NavOptions.Builder().setPopUpTo(R.id.addProductFragment, true).build()
+            )
+        }
     }
 
     private fun getBarcodeString() {
         val barcodeNumber = this@AddProductFragment.arguments?.getString("barcodeNum").toString()
         binding.cameraImage.setImageResource(R.drawable.ic_launcher_background)
+//
+//        if (barcodeNumber == "null") {
+//            binding.editTextBarcodeAddProduct.setText("")
+//        } else {
+//            binding.editTextBarcodeAddProduct.setText(barcodeNumber)
+//        }
 
-        if (barcodeNumber == "null") {
-            binding.editTextBarcodeAddProduct.setText("")
-        } else {
-            binding.editTextBarcodeAddProduct.setText(barcodeNumber)
-        }
-    }
+        productViewModel.allNotes.observe(viewLifecycleOwner, { products ->
+            for(i in products){
+                if(barcodeNumber == i.barcodeProduct.toString()) {
+                    val bundle = Bundle()
+                    bundle.putBoolean("scanned", true)
+                    bundle.putLong("productId", i.id)
+                    bundle.putString("productName",i.nameProduct)
+                    bundle.putString("productBarcode",i.barcodeProduct.toString())
+                    bundle.putString("productQuantity",i.quantityProduct.toString())
+                    bundle.putString("productUnit",i.unitProduct.toString())
+                    bundle.putString("productPrice",i.priceProduct.toString())
+                    bundle.putByteArray("productImage", i.imageProduct)
+                    bundle.putSerializable("priceHistory", i.priceHistory)
+
+//                    findNavController().navigate(R.id.productHistoryFragment, bundle)
+
+                    findNavController().navigate(
+                        R.id.productHistoryFragment,
+                        bundle,
+                        NavOptions.Builder().setPopUpTo(R.id.addProductFragment, true).build()
+                    )
+
+                } else  {
+                    binding.editTextBarcodeAddProduct.setText(barcodeNumber)
+                }
+            }
+
+        })
+
+}
+
+
+
 
     private fun onClickScan() {
         binding.btnScanAddProduct.setOnClickListener {
