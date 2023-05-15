@@ -3,8 +3,10 @@ package com.example.barkodershopapp.ui.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import com.barkoder.shoppingApp.net.R
 import com.barkoder.shoppingApp.net.databinding.HistorylistItemBinding
 import com.example.barkodershopapp.data.db.historydatabase.HistoryDataEntity
 import com.example.barkodershopapp.ui.fragments.HistoryListFragmentDirections
@@ -17,20 +19,13 @@ class HistoryAdapter(private var list: List<HistoryDataEntity>) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(list: HistoryDataEntity) {
-            binding.textListName.text = list.listName
-            binding.textCheckoutDate.text = list.checkedDate
+            binding.listNameHome2.text = list.listName
+            binding.listSizeHome2.text = list.listProducts.size.toString()
+            binding.listCircleText2.text = list.listName.first().toUpperCase().toString()
             binding.recViewHistoryList.setOnClickListener {
-                val actions = HistoryListFragmentDirections.actionHistoryListFragment2ToCurrentListFragment2(list)
-                Navigation.findNavController(binding.root).navigate(actions)
-            }
-
-            binding.textProductsSize.text = list.listProducts.size.toString()
-            binding.textCost.text = list.totalCost + " $"
-
-            if (list.checkedList) {
-                binding.checkedListIcon.visibility = View.VISIBLE
-            } else {
-                binding.checkedListIcon.visibility = View.GONE
+                val action = HistoryListFragmentDirections.actionHistoryListFragment2ToCurrentListFragment2(list)
+                Navigation.findNavController(binding.root).navigate(action,
+                    NavOptions.Builder().setPopUpTo(R.id.historyListFragment2, true).build())
             }
         }
     }

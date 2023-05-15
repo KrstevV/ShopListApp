@@ -135,6 +135,12 @@
         <action
             android:id="@+id/action_homeScreenFragment_to_addProductFragment"
             app:destination="@id/addProductFragment" />
+        <action
+            android:id="@+id/action_homeScreenFragment_to_currentListFragment2"
+            app:destination="@id/currentListFragment2" />
+        <action
+            android:id="@+id/action_homeScreenFragment_to_productHistoryFragment"
+            app:destination="@id/productHistoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/currentListFragment2"

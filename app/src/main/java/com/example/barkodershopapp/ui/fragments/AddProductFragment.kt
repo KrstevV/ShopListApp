@@ -68,8 +68,6 @@ class AddProductFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         onClickAdd()
         onClickAddImage()
         onClickScan()
@@ -89,8 +87,9 @@ class AddProductFragment : Fragment() {
 
     private fun getBarcodeString() {
         val barcodeNumber = this@AddProductFragment.arguments?.getString("barcodeNum").toString()
-        binding.cameraImage.setImageResource(R.drawable.ic_launcher_background)
-//
+        binding.cameraImage.setImageResource(R.drawable.photo_camera)
+
+
 //        if (barcodeNumber == "null") {
 //            binding.editTextBarcodeAddProduct.setText("")
 //        } else {
@@ -120,17 +119,17 @@ class AddProductFragment : Fragment() {
                     )
 
                 } else  {
-                    binding.editTextBarcodeAddProduct.setText(barcodeNumber)
-                }
+                    if (barcodeNumber == "null") {
+                 binding.editTextBarcodeAddProduct.setText("")
+                } else {
+                binding.editTextBarcodeAddProduct.setText(barcodeNumber)
+           }
+                 }
             }
 
         })
 
 }
-
-
-
-
     private fun onClickScan() {
         binding.btnScanAddProduct.setOnClickListener {
 //            findNavController().navigate(R.id.scanFragment)
@@ -212,6 +211,7 @@ class AddProductFragment : Fragment() {
                     currentAddProduct.imageProduct = imageData
 
                     productViewModel.insert(currentAddProduct)
+
                 }
                 findNavController().navigate(
                     R.id.selectProductFragment,

@@ -4,95 +4,84 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/recViewHistoryList"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:layout_marginTop="12dp"
-    android:layout_marginBottom="12dp"
-    android:background="@drawable/totalcost_bacground">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/rounded_background"
+    android:backgroundTint="@color/white">
 
-    <TextView
-        android:id="@+id/textCheckoutDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="80dp"
-        android:layout_marginBottom="6dp"
-        android:text="29.11.2022"
-        android:textColor="#100F0F"
-        android:textSize="14sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:id="@+id/textListName"
-        android:layout_width="80dp"
-        android:layout_height="90dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="40dp"
-        android:text="ShopList"
-        android:textColor="#100F0F"
-        android:textSize="20sp"
-        android:textStyle="bold|italic"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView3"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:backgroundTint="#C84141"
+        app:cardCornerRadius="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/listCircleText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="M J"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+    </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/listNameHome2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginBottom="65dp"
-        android:text="products:"
-        android:textColor="#100F0F"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="77dp"
+        android:text="Morning Breakfast"
+        android:textSize="18sp"
         android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/listSizeHome2"
+        app:layout_constraintEnd_toStartOf="@+id/imageView3"
+        app:layout_constraintStart_toEndOf="@+id/cardView3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
+        android:id="@+id/listSizeHome2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="5dp"
+        android:text="12"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textProductsSize"
-        app:layout_constraintStart_toEndOf="@+id/textListName"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textProductsSize"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="17"
-        android:textColor="#100F0F"
-        android:textSize="16sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintEnd_toStartOf="@+id/textCost"
-        app:layout_constraintStart_toEndOf="@+id/textView9"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textCost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="110dp"
-        android:text="1240"
-        android:textColor="#100F0F"
-        android:textSize="20sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textProductsSize"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/textView190"
+        app:layout_constraintStart_toEndOf="@+id/cardView3"
+        app:layout_constraintTop_toBottomOf="@+id/listNameHome2"
+        app:layout_constraintVertical_bias="0.5" />
 
     <ImageView
-        android:id="@+id/checkedListIcon"
+        android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="15dp"
-        android:visibility="gone"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="11dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textCheckoutDate"
-        app:layout_constraintTop_toBottomOf="@+id/textCost"
-        app:srcCompat="@drawable/done_fill0_wght400_grad0_opsz48" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/keyboard_arrow_right_fill0_wght400_grad0_opsz48" />
+
+    <TextView
+        android:id="@+id/textView190"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="10dp"
+        android:text="products"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/listSizeHome2"
+        app:layout_constraintTop_toBottomOf="@+id/listNameHome2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,12 +2,17 @@ package com.example.barkodershopapp.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.NavOptions
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.barkoder.shoppingApp.net.R
 import com.barkoder.shoppingApp.net.databinding.HomeListListBinding
 import com.barkoder.shoppingApp.net.databinding.HomeProductListBinding
 import com.example.barkodershopapp.data.db.historydatabase.HistoryDataEntity
 import com.example.barkodershopapp.data.db.productdatabase.ProductDataEntity
+import com.example.barkodershopapp.ui.fragments.HistoryListFragmentDirections
+import com.example.barkodershopapp.ui.fragments.HomeScreenFragmentDirections
 import com.example.barkodershopapp.ui.typeconverters.TypeConverterss
 import com.example.barkodershopapp.ui.viewmodels.ListViewModel
 
@@ -35,6 +40,12 @@ class HomeListAdapter (private var list: ArrayList<HistoryDataEntity>,
             binding.listNameHome.text = list.listName
             binding.listSizeHome.text = list.listProducts.size.toString()
             binding.listCircleText.text = list.listName.first().toUpperCase().toString()
+            binding.recViewHomeList.setOnClickListener {
+                val action = HomeScreenFragmentDirections.actionHomeScreenFragmentToCurrentListFragment2(list)
+                Navigation.findNavController(binding.root).navigate(action,
+                    NavOptions.Builder().setPopUpTo(R.id.homeScreenFragment, true).build())
+            }
+
         }
     }
 

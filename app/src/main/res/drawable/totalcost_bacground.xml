@@ -5,10 +5,10 @@
     <corners
         android:radius="16dp"/>
     <gradient
-        android:startColor="#ACA8A8"
-        android:endColor="#ACA8A8"/>
+        android:startColor="@color/editTextBoxColor"
+        android:endColor="@color/editTextBoxColor"/>
 
     <stroke
-        android:color="#D1CECE"
+        android:color="#D2DDF3"
         android:width="4dp"/>
 </shape>

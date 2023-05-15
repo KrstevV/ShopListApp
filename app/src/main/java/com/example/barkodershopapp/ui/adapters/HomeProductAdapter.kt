@@ -12,6 +12,8 @@ import com.barkoder.shoppingApp.net.databinding.HomeProductListBinding
 import com.barkoder.shoppingApp.net.databinding.SelectproductItemBinding
 import com.example.barkodershopapp.data.db.listdatabase.ListDataEntity
 import com.example.barkodershopapp.data.db.productdatabase.ProductDataEntity
+import com.example.barkodershopapp.ui.fragments.HistoryListFragmentDirections
+import com.example.barkodershopapp.ui.fragments.HomeScreenFragmentDirections
 import com.example.barkodershopapp.ui.fragments.SelectProductFragmentDirections
 import com.example.barkodershopapp.ui.typeconverters.TypeConverterss
 import com.example.barkodershopapp.ui.viewmodels.ListViewModel
@@ -44,6 +46,12 @@ class HomeProductAdapter (private var list: ArrayList<ProductDataEntity>,
             binding.imageSelectProduct2.load(byteArray) {
                 crossfade(true)
             }
+            binding.constHomeProduct.setOnClickListener {
+                val action = HomeScreenFragmentDirections.actionHomeScreenFragmentToProductHistoryFragment(list)
+                Navigation.findNavController(binding.root).navigate(action,
+                    NavOptions.Builder().setPopUpTo(R.id.historyListFragment2, true).build())
+            }
+
         }
     }
 

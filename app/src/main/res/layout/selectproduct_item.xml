@@ -5,19 +5,10 @@
     android:id="@+id/selectLayout"
     android:layout_width="match_parent"
     android:layout_height="70dp"
+    android:layout_marginTop="5dp"
+    android:background="@drawable/rounded_background"
+    android:backgroundTint="@color/white"
     android:elevation="4dp">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#AAA3A3"
-        android:backgroundTint="#AAA3A3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textSelectProductPrice">
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/textSelectProductBarcode"
