@@ -50,6 +50,7 @@ class AddProductFragment : Fragment() {
     lateinit var binding: FragmentAddProductBinding
     private val productViewModel: ProductViewModel by viewModels()
     private val cameraRequest = 1
+    private lateinit var callback: OnBackPressedCallback
 
 
     override fun onCreateView(
@@ -72,6 +73,7 @@ class AddProductFragment : Fragment() {
         onClickAddImage()
         onClickScan()
         onCLickScanFab()
+        onBackButton()
     }
 
     private fun onCLickScanFab() {
@@ -119,10 +121,12 @@ class AddProductFragment : Fragment() {
                     )
 
                 } else  {
+
                     if (barcodeNumber == "null") {
                  binding.editTextBarcodeAddProduct.setText("")
                 } else {
                 binding.editTextBarcodeAddProduct.setText(barcodeNumber)
+
            }
                  }
             }
@@ -298,39 +302,53 @@ class AddProductFragment : Fragment() {
             }
 
     }
-
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-
-        val callback = object : OnBackPressedCallback(true) {
+    private fun onBackButton(){
+        callback = object : OnBackPressedCallback(true ) {
             override fun handleOnBackPressed() {
-                var editMode = requireActivity().intent.getBooleanExtra("editMode", false)
-                if (editMode) {
-                    var intent = Intent(requireActivity(), HomeScreenActivity::class.java)
-                    startActivity(intent)
-                    requireActivity().finish()
-                } else {
-                    val builder = AlertDialog.Builder(context)
-                        .setTitle(R.string.alert_title_list_save)
-                    builder.setMessage(R.string.alert_dialog_back)
-                        .setCancelable(false)
-                        .setNegativeButton(R.string.alert_title_list_save_negative) { dialog, id ->
-                            dialog.dismiss()
-                        }
-                        .setPositiveButton(R.string.alert_title_list_save_positive) { dialog, id ->
-                            requireActivity().finish()
-                            dialog.dismiss()
-                        }
 
-                    val alert = builder.create()
-                    alert.show()
-                }
+                findNavController().navigate(
+                    R.id.homeScreenFragment,
+                    null,
+                    NavOptions.Builder().setPopUpTo(R.id.addProductFragment, true).build()
+                )
+
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
+
+
+//    override fun onActivityCreated(savedInstanceState: Bundle?) {
+//        super.onActivityCreated(savedInstanceState)
+//
+//
+//        val callback = object : OnBackPressedCallback(true) {
+//            override fun handleOnBackPressed() {
+//                var editMode = requireActivity().intent.getBooleanExtra("editMode", false)
+//                if (editMode) {
+//                    var intent = Intent(requireActivity(), HomeScreenActivity::class.java)
+//                    startActivity(intent)
+//                    requireActivity().finish()
+//                } else {
+//                    val builder = AlertDialog.Builder(context)
+//                        .setTitle(R.string.alert_title_list_save)
+//                    builder.setMessage(R.string.alert_dialog_back)
+//                        .setCancelable(false)
+//                        .setNegativeButton(R.string.alert_title_list_save_negative) { dialog, id ->
+//                            dialog.dismiss()
+//                        }
+//                        .setPositiveButton(R.string.alert_title_list_save_positive) { dialog, id ->
+//                            requireActivity().finish()
+//                            dialog.dismiss()
+//                        }
+//
+//                    val alert = builder.create()
+//                    alert.show()
+//                }
+//            }
+//        }
+//        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+//    }
 
 
 

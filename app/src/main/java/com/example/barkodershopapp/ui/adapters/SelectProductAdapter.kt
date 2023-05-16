@@ -2,6 +2,7 @@ package com.example.barkodershopapp.ui.adapters
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
@@ -32,6 +33,7 @@ class SelectProductAdapter(
 
     private var productListFull: List<ProductDataEntity> = ArrayList()
 
+    var showAddButton = false
     init {
         productListFull = list
     }
@@ -46,16 +48,14 @@ class SelectProductAdapter(
         private val binding: SelectproductItemBinding,
         private var viewModel: ListViewModel
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(list: ProductDataEntity) {
+        fun bind(list: ProductDataEntity, showAddButton : Boolean) {
             binding.textSelectProductName.text = list.nameProduct
             binding.textSelectProductBarcode.text = list.barcodeProduct
             binding.textSelectProductPrice.text = list.priceProduct.toString() + " $"
             binding.selectLayout.setOnClickListener {
                 try {
                     val actions = SelectProductFragmentDirections.actionSelectProductFragmentToProductHistoryFragment(list)
-                    Navigation.findNavController(binding.root).navigate(actions,
-                        NavOptions.Builder().setPopUpTo(R.id.selectProductFragment, true).build()
-                    )
+                    Navigation.findNavController(binding.root).navigate(actions)
 
 
                 } catch (e: Exception) {
@@ -65,14 +65,13 @@ class SelectProductAdapter(
             binding.textProductUnit.text = list.unitProduct
             binding.textQuanitityProduct.text = list.quantityProduct.toString()
 
+            if(showAddButton) {
+                binding.btnAddProduct.visibility = View.VISIBLE
+            } else {
+                binding.btnAddProduct.visibility = View.GONE
+            }
+
             binding.btnAddProduct.setOnClickListener {
-
-
-
-
-
-
-
                 viewModel.insert(ListDataEntity(list))
                 findNavController(binding.root).navigate(
                     R.id.listProductsFragment,
@@ -97,7 +96,7 @@ class SelectProductAdapter(
     override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(list[position])
+        holder.bind(list[position], showAddButton)
     }
 
     fun getSelectInt(position: Int): ProductDataEntity {

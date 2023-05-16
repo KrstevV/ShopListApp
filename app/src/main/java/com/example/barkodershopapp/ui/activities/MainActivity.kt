@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
@@ -26,12 +27,11 @@ class MainActivity : AppCompatActivity() {
     lateinit var auth: FirebaseAuth
     val listViewModel: ListViewModel by viewModels()
     lateinit var binding: ActivityMainBinding
+    lateinit var navController : NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
 
         auth = FirebaseAuth.getInstance()
 
@@ -39,24 +39,23 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.background = null
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
-        val navController = navHostFragment.navController
+        navController = navHostFragment.navController
+
+
         bottomNavigationView.setupWithNavController(navController)
         bottomNavigationView.selectedItemId = R.id.homeScreenFragment
+
+
 
 
     }
 
 
-//    override fun onBackPressed() {
-//        super.onBackPressed()
-//        var currentFragment = supportFragmentManager.binding.fragment
-//        val intent = Intent(this@MainActivity, HomeScreenActivity::class.java)
-//        startActivity(intent)
-//        finish()
-//    }
 
     override fun onDestroy() {
         super.onDestroy()
         listViewModel.delete()
     }
+
+
 }

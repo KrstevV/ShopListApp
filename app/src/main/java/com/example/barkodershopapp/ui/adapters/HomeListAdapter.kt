@@ -42,8 +42,7 @@ class HomeListAdapter (private var list: ArrayList<HistoryDataEntity>,
             binding.listCircleText.text = list.listName.first().toUpperCase().toString()
             binding.recViewHomeList.setOnClickListener {
                 val action = HomeScreenFragmentDirections.actionHomeScreenFragmentToCurrentListFragment2(list)
-                Navigation.findNavController(binding.root).navigate(action,
-                    NavOptions.Builder().setPopUpTo(R.id.homeScreenFragment, true).build())
+                Navigation.findNavController(binding.root).navigate(action)
             }
 
         }

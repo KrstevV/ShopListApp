@@ -39,6 +39,7 @@ class CurrentListFragment : Fragment(){
     val historyViewModel: HistoryViewModel by viewModels()
     val productViewModel : ProductViewModel by viewModels()
     private val args by navArgs<CurrentListFragmentArgs>()
+    private lateinit var callback: OnBackPressedCallback
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,6 +66,7 @@ class CurrentListFragment : Fragment(){
         onClickStop()
         getBarcodeString()
         onClickRestore()
+        onBackButton()
     }
 
 
@@ -294,5 +296,16 @@ class CurrentListFragment : Fragment(){
         bottomNav.visibility = View.VISIBLE
         var bottomFab = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
         bottomFab.visibility = View.VISIBLE
+    }
+
+    private fun onBackButton(){
+        callback = object : OnBackPressedCallback(true ) {
+            override fun handleOnBackPressed() {
+
+                findNavController().popBackStack()
+
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 }

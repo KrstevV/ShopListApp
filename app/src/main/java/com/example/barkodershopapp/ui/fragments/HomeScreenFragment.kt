@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
@@ -33,6 +34,7 @@ class HomeScreenFragment : Fragment() {
     var list = arrayListOf<ProductDataEntity>()
     val listViewMOdel: ListViewModel by viewModels()
     val historyViewModel : HistoryViewModel by viewModels()
+    private lateinit var callback: OnBackPressedCallback
 
 
     override fun onCreateView(
@@ -46,6 +48,7 @@ class HomeScreenFragment : Fragment() {
         observeListList()
         recViewProduct()
         observeListProduct()
+        onBackButton()
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -113,6 +116,16 @@ class HomeScreenFragment : Fragment() {
             )
         }
     }
+    private fun onBackButton(){
+        callback = object : OnBackPressedCallback(true ) {
+            override fun handleOnBackPressed() {
+
+                requireActivity().finish()
+
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
 
     override fun onPause() {
         super.onPause()
@@ -120,5 +133,7 @@ class HomeScreenFragment : Fragment() {
         observeListList()
         observeListProduct()
     }
+
+
 }
 

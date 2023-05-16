@@ -78,10 +78,7 @@ class ListProductsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var editMode = this@ListProductsFragment.arguments?.getBoolean("editMode")
-        if(editMode == true) {
-            listViewModel.isEditMode = true
-        }
+
         editMode()
         onClickButtonAdd()
         onClickButtonUpdate()
@@ -100,18 +97,15 @@ class ListProductsFragment : Fragment() {
     }
 
     private fun onButtonSelect(){
-        var editMode = this@ListProductsFragment.arguments?.getBoolean("editMode")
         binding.buttonImage.setOnClickListener {
-            if(editMode == true){
                 val bundle = Bundle()
                 bundle.putBoolean("editMode", true)
                 findNavController().navigate(R.id.selectProductFragment, bundle)
-            } else {
-                findNavController().navigate(R.id.selectProductFragment)
+
             }
 
         }
-    }
+
 
 
     private fun navInvisible(){
@@ -151,7 +145,11 @@ class ListProductsFragment : Fragment() {
                     historyViewModel.updateItem(currentList)
                     listViewModel.delete()
                 })
-                findNavController().navigate(R.id.historyListFragment2)
+                findNavController().navigate(
+                    R.id.historyListFragment2,
+                    null,
+                    NavOptions.Builder().setPopUpTo(R.id.listProductsFragment, true).build()
+                )
                 Toast.makeText(context, R.string.toast_list_sucessful_updated, Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(context, R.string.toast_list_name_empty, Toast.LENGTH_SHORT).show()
@@ -177,7 +175,11 @@ class ListProductsFragment : Fragment() {
                     )
                 })
 
-                    findNavController().navigate(R.id.historyListFragment2)
+                findNavController().navigate(
+                    R.id.historyListFragment2,
+                    null,
+                    NavOptions.Builder().setPopUpTo(R.id.listProductsFragment, true).build()
+                )
                 Toast.makeText(context, R.string.toast_list_secesfful_created, Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(context, R.string.toast_list_name_empty, Toast.LENGTH_SHORT).show()
@@ -274,12 +276,13 @@ class ListProductsFragment : Fragment() {
     private fun onBackButton(){
         callback = object : OnBackPressedCallback(true ) {
             override fun handleOnBackPressed() {
-                listViewModel.delete()
+
                 findNavController().navigate(
                     R.id.historyListFragment2,
                     null,
                     NavOptions.Builder().setPopUpTo(R.id.listProductsFragment, true).build()
                 )
+                listViewModel.delete()
                 isEnabled = false
                 requireActivity().onBackPressed()
             }
@@ -322,4 +325,5 @@ class ListProductsFragment : Fragment() {
         var bottomFab = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
         bottomFab.visibility = View.VISIBLE
     }
+
 }

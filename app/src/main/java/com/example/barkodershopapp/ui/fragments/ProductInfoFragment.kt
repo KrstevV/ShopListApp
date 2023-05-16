@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
@@ -30,6 +31,7 @@ class ProductInfoFragment : Fragment() {
     lateinit var binding : FragmentProductInfoBinding
     private val productViewModel: ProductViewModel by viewModels()
     lateinit var priceAdapter: PriceHistoryAdapter
+    private lateinit var callback: OnBackPressedCallback
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +46,7 @@ class ProductInfoFragment : Fragment() {
         binding =  FragmentProductInfoBinding.inflate(inflater, container, false)
 //        setupRecView()
         setupTextViews()
+        onBackButton()
         return binding.root
     }
 
@@ -114,15 +117,19 @@ class ProductInfoFragment : Fragment() {
         )
         productViewModel.updateItem(currentProduct)
 
-        findNavController().navigate(
-            R.id.selectProductFragment,
-            null,
-            NavOptions.Builder().setPopUpTo(R.id.productHistoryFragment, true).build()
-        )
+        findNavController().popBackStack()
+    }
+    private fun onBackButton(){
+        callback = object : OnBackPressedCallback(true ) {
+            override fun handleOnBackPressed() {
 
-
+                findNavController().popBackStack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
     }
+
 
     private fun getCurrentDate(): String {
         val currentDate = Calendar.getInstance().time

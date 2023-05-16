@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -36,6 +37,7 @@ class HistoryListFragment : Fragment() {
     private val historyViewmodel: HistoryViewModel by viewModels()
     private val listViewModel : ListViewModel by viewModels()
     private val listH = arrayListOf<HistoryDataEntity>()
+    private lateinit var callback: OnBackPressedCallback
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,6 +57,7 @@ class HistoryListFragment : Fragment() {
         setupRecView()
         observeList()
         onClickNewList()
+        onBackButton()
 
 
         return binding.root
@@ -145,6 +148,21 @@ class HistoryListFragment : Fragment() {
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
 
         }
+    }
+
+    private fun onBackButton(){
+        callback = object : OnBackPressedCallback(true ) {
+            override fun handleOnBackPressed() {
+
+                findNavController().navigate(
+                    R.id.homeScreenFragment,
+                    null,
+                    NavOptions.Builder().setPopUpTo(R.id.historyListFragment2, true).build()
+                )
+
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
     override fun onResume() {

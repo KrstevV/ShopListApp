@@ -35,13 +35,11 @@
         android:id="@+id/listNameHome2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="77dp"
+        android:layout_marginStart="10dp"
         android:text="Morning Breakfast"
         android:textSize="18sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@+id/listSizeHome2"
-        app:layout_constraintEnd_toStartOf="@+id/imageView3"
         app:layout_constraintStart_toEndOf="@+id/cardView3"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5" />
@@ -50,26 +48,12 @@
         android:id="@+id/listSizeHome2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginStart="10dp"
         android:text="12"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textView190"
         app:layout_constraintStart_toEndOf="@+id/cardView3"
         app:layout_constraintTop_toBottomOf="@+id/listNameHome2"
         app:layout_constraintVertical_bias="0.5" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="11dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/keyboard_arrow_right_fill0_wght400_grad0_opsz48" />
 
     <TextView
         android:id="@+id/textView190"
@@ -83,5 +67,30 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/listSizeHome2"
         app:layout_constraintTop_toBottomOf="@+id/listNameHome2" />
+
+    <TextView
+        android:id="@+id/checkedDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="12/232/423"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageChecked"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/checkedDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/done_fill0_wght400_grad0_opsz48" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

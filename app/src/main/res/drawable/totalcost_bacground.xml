@@ -8,7 +8,5 @@
         android:startColor="@color/editTextBoxColor"
         android:endColor="@color/editTextBoxColor"/>
 
-    <stroke
-        android:color="#D2DDF3"
-        android:width="4dp"/>
+
 </shape>

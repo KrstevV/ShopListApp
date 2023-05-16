@@ -24,9 +24,14 @@ class HistoryAdapter(private var list: List<HistoryDataEntity>) :
             binding.listCircleText2.text = list.listName.first().toUpperCase().toString()
             binding.recViewHistoryList.setOnClickListener {
                 val action = HistoryListFragmentDirections.actionHistoryListFragment2ToCurrentListFragment2(list)
-                Navigation.findNavController(binding.root).navigate(action,
-                    NavOptions.Builder().setPopUpTo(R.id.historyListFragment2, true).build())
+                Navigation.findNavController(binding.root).navigate(action)
             }
+            binding.checkedDate.text = list.checkedDate
+            if(list.checkedList){
+                binding.imageChecked.visibility = View.VISIBLE
+            } else {
+                    binding.imageChecked.visibility = View.GONE
+                }
         }
     }
 

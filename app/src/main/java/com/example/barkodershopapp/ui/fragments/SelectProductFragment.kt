@@ -43,7 +43,8 @@ class SelectProductFragment : Fragment() {
     lateinit var binding: FragmentSelectProductBinding
     val listViewMOdel: ListViewModel by viewModels()
     var productS = ArrayList<ProductDataEntity>()
-    var editMode = this@SelectProductFragment.arguments?.getBoolean("editMode")
+
+    private lateinit var callback: OnBackPressedCallback
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,7 +52,6 @@ class SelectProductFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentSelectProductBinding.inflate(inflater, container, false)
-
 
 
 
@@ -65,7 +65,15 @@ class SelectProductFragment : Fragment() {
         setupRecView()
         onCLickScan()
         observeList()
-        binding.recViewSelect.smoothScrollToPosition(0)
+        onBackButton()
+
+        var editMode = this@SelectProductFragment.arguments?.getBoolean("editMode")
+        if(editMode == true) {
+            selectAdapter.showAddButton = true
+        } else {
+            selectAdapter.showAddButton = false
+        }
+
 
     }
 
@@ -146,9 +154,11 @@ class SelectProductFragment : Fragment() {
             object : SwipeHelper.UnderlayButtonClickListener {
                 override fun onClick() {
                     val currentProduct = selectAdapter.getSelectInt(position)
-                    val action = SelectProductFragmentDirections.actionSelectProductFragmentToProductInfoFragment(currentProduct)
-                    Navigation.findNavController(binding.root).navigate(action,
-                        NavOptions.Builder().setPopUpTo(R.id.selectProductFragment, true).build())
+                    val action =
+                        SelectProductFragmentDirections.actionSelectProductFragmentToProductInfoFragment(
+                            currentProduct
+                        )
+                    Navigation.findNavController(binding.root).navigate(action)
                 }
             })
     }
@@ -214,37 +224,22 @@ class SelectProductFragment : Fragment() {
         })
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        val callback = object : OnBackPressedCallback(true) {
+    private fun onBackButton(){
+        callback = object : OnBackPressedCallback(true ) {
             override fun handleOnBackPressed() {
-                var editMode = requireActivity().intent.getBooleanExtra("editMode", false)
-                if (editMode) {
-                    var intent = Intent(requireActivity(), HomeScreenActivity::class.java)
-                    startActivity(intent)
-                    requireActivity().finish()
-                } else {
 
-                    val builder = AlertDialog.Builder(context)
-                        .setTitle(R.string.alert_title_list_save)
-                    builder.setMessage(R.string.alert_dialog_back)
-                        .setCancelable(false)
-                        .setNegativeButton(R.string.alert_title_list_save_negative) { dialog, id ->
-                            dialog.dismiss()
-                        }
-                        .setPositiveButton(R.string.alert_title_list_save_positive) { dialog, id ->
-                            requireActivity().finish()
-                            dialog.dismiss()
-                        }
+                findNavController().navigate(
+                    R.id.homeScreenFragment,
+                    null,
+                    NavOptions.Builder().setPopUpTo(R.id.selectProductFragment, true).build()
+                )
 
-                    val alert = builder.create()
-                    alert.show()
-                }
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
+
+
 }
 
 

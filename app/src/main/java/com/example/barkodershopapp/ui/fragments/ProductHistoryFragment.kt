@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.core.view.size
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
@@ -32,6 +34,7 @@ class ProductHistoryFragment : Fragment() {
     private val args by navArgs<ProductHistoryFragmentArgs>()
     lateinit var binding: FragmentProductHistoryBinding
     private val productViewModel: ProductViewModel by viewModels()
+    private lateinit var callback: OnBackPressedCallback
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +47,8 @@ class ProductHistoryFragment : Fragment() {
         setupTextViews()
         navInvisible()
         onClickCancel()
+        onBackButton()
+
 
 
         return  binding.root
@@ -58,11 +63,7 @@ class ProductHistoryFragment : Fragment() {
 
     private fun onClickCancel(){
         binding.btnCancel.setOnClickListener {
-            findNavController().navigate(
-                R.id.homeScreenFragment,
-                null,
-                NavOptions.Builder().setPopUpTo(R.id.productHistoryFragment, true).build()
-            )
+            findNavController().popBackStack()
         }
     }
 
@@ -119,9 +120,23 @@ class ProductHistoryFragment : Fragment() {
         if(scanned == true) {
             priceAdapter = PriceHistoryAdapter(priceHistory!!)
             priceAdapter.setPricesList(priceHistory!!)
+            if(priceHistory.size == 0) {
+                binding.recViewPrice.visibility = View.GONE
+                binding.priceCardViewText.visibility = View.VISIBLE
+            } else {
+                binding.recViewPrice.visibility = View.VISIBLE
+                binding.priceCardViewText.visibility = View.GONE
+            }
         } else {
             priceAdapter = PriceHistoryAdapter(args.currentProduct.priceHistory)
             priceAdapter.setPricesList(args.currentProduct.priceHistory)
+            if(args.currentProduct.priceHistory.size == 0) {
+                binding.recViewPrice.visibility = View.GONE
+                binding.priceCardViewText.visibility = View.VISIBLE
+            } else {
+                binding.recViewPrice.visibility = View.VISIBLE
+                binding.priceCardViewText.visibility = View.GONE
+            }
         }
 
         binding.recViewPrice.apply {
@@ -131,6 +146,19 @@ class ProductHistoryFragment : Fragment() {
 
 
     }
+
+    private fun onBackButton(){
+        callback = object : OnBackPressedCallback(true ) {
+            override fun handleOnBackPressed() {
+
+                findNavController().popBackStack()
+
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
+
+
 
     override fun onPause() {
         super.onPause()

@@ -12,7 +12,7 @@
         android:id="@+id/textPriceHistory"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
+        android:layout_marginStart="80dp"
         android:layout_marginEnd="10dp"
         android:text="124"
         android:textColor="#0E0E0E"
