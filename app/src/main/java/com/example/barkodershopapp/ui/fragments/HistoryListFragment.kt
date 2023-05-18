@@ -23,6 +23,7 @@ import com.barkoder.shoppingApp.net.databinding.FragmentHistoryListBinding
 import com.example.barkodershopapp.ui.listeners.swipecallback.SwipeToDelete
 import com.example.barkodershopapp.data.db.historydatabase.HistoryDataEntity
 import com.example.barkodershopapp.ui.adapters.HistoryAdapter
+import com.example.barkodershopapp.ui.listeners.swipeicons.SwipeHelper
 import com.example.barkodershopapp.ui.viewmodels.HistoryViewModel
 import com.example.barkodershopapp.ui.viewmodels.ListViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -66,7 +67,7 @@ class HistoryListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         onCLickScan()
-        swipeDelete()
+//        swipeDelete()
     }
     private fun onCLickScan() {
         var btnScan = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
@@ -95,7 +96,34 @@ class HistoryListFragment : Fragment() {
         binding.recViewHistory2.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = historyAdapter
+
+            val itemTouchHelper = ItemTouchHelper(object : SwipeHelper(binding.recViewHistory2) {
+                override fun instantiateUnderlayButton(position: Int): List<UnderlayButton> {
+                    var buttons = listOf<UnderlayButton>()
+                    val deleteButton = deleteButton(position)
+
+                    buttons = listOf(deleteButton)
+                    return buttons
+                }
+            })
+
+            itemTouchHelper.attachToRecyclerView(binding.recViewHistory2)
         }
+    }
+
+    private fun deleteButton(position: Int): SwipeHelper.UnderlayButton {
+        return SwipeHelper.UnderlayButton(
+            requireContext(),
+            "Delete",
+            14.0f,
+            android.R.color.holo_red_light,
+            object : SwipeHelper.UnderlayButtonClickListener {
+                override fun onClick() {
+                    historyAdapter.notifyItemRemoved(position)
+                    historyViewmodel.deleteItem(historyAdapter.getHistoryInt(position))
+
+                }
+            })
     }
 
     private fun observeList() {

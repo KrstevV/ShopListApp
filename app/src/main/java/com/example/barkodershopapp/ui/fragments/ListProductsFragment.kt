@@ -51,11 +51,7 @@ class ListProductsFragment : Fragment() {
     var editMode = this@ListProductsFragment.arguments?.getBoolean("editMode")
 
     private lateinit var callback: OnBackPressedCallback
-    override fun onDestroy() {
-        // Remove the callback to prevent memory leaks
-        callback.remove()
-        super.onDestroy()
-    }
+
 
 
 
@@ -325,5 +321,7 @@ class ListProductsFragment : Fragment() {
         var bottomFab = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
         bottomFab.visibility = View.VISIBLE
     }
+
+
 
 }

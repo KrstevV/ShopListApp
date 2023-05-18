@@ -70,7 +70,6 @@ class ScanFragment : Fragment(), BarkoderResultCallback {
         binding.textView7.text = barcodeNum
         val bundle = Bundle()
         bundle.putString("barcodeNum", barcodeNum)
-//        findNavController().navigate(R.id.action_scanFragment_to_addProductFragment, bundle)
         findNavController().navigate(
             R.id.addProductFragment,
             bundle,
