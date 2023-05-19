@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.barkoder.Barkoder
+import com.barkoder.Barkoder.LicenseCheckListener
+import com.barkoder.Barkoder.LicenseCheckResult
 import com.barkoder.BarkoderConfig
 import com.barkoder.interfaces.BarkoderResultCallback
 import com.barkoder.shoppingApp.net.R
@@ -17,7 +19,7 @@ import com.barkoder.shoppingApp.net.databinding.FragmentScanBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ScanFragment : Fragment(), BarkoderResultCallback {
+class ScanFragment : Fragment(), BarkoderResultCallback{
     lateinit var binding: FragmentScanBinding
 
     override fun onCreateView(
@@ -29,7 +31,7 @@ class ScanFragment : Fragment(), BarkoderResultCallback {
 
         binding.bkdView.config = BarkoderConfig(
             context,
-            "PEmBIohr9EZXgCkySoetbwP4gvOfMcGzgxKPL2X6uqPEh7C-NSQGuK_IHt6EYbMPzeLT1AQCKl8pkQkYm47d552Ox0VqVPdVROBDs0NDXebSB7D9bUsI_IJPZsrx-Hmuc-xfH8hokLbr4tmXeorlavEmLZJqBb1s3Z5Uuve8paQldQev5o7JbAEYPJj_Wgce8ftwiyAlUmU9vKt2RJTHIpmshcFNDBo3HLSsmchCI8ciT58nntrTWoYkApGly4w2"
+            "PEmBIohr9EZXgCkySoetbwP4gvOfMcGzgxKPL2X6uqPEh7C-NSQGuK_IHt6EYbMPXg2o0WbjAzGF9mRZeL-hAMzUHLYRmxeuHlH3yXiPf0ET7RUMN4HS_-xvZkoYsrgP8Eus3e9OaFTV-SkKu-c6g1mwZwMYHHTd9mfp1u9bAzqQlJgk_3xSb3_GFCqnDOUkPW_a9KTXtobdEbTXFI3b_tTWATSfBgIfeO-uzbhyI8xUT4xTDLU6GaIsXzHenpljgw3LoYqmIs86nLfx1zrtXvANu-YhYC1GowX2WPMJXVI."
         )
         {
             Log.i("LicenseInfo", it.message)
@@ -83,5 +85,7 @@ class ScanFragment : Fragment(), BarkoderResultCallback {
         else
             updateUI()
     }
+
+
 
 }

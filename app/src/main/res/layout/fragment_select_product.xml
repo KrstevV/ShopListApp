@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context="com.example.barkodershopapp.ui.fragments.SelectProductFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
-            android:text="Select Product"
+            android:text="My Products"
             android:textColor="#FBFAFA"
             android:textSize="28sp"
             android:textStyle="bold"
@@ -47,10 +47,10 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recViewSelect"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="15dp"
             android:layout_weight="1"
-            android:paddingBottom="200dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline27"
             app:layout_constraintEnd_toStartOf="@+id/guideline26"
             app:layout_constraintStart_toStartOf="@+id/guideline25"
             app:layout_constraintTop_toTopOf="@+id/guideline24"
@@ -98,6 +98,13 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.94" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline27"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.85" />
+
         <ProgressBar
             android:id="@+id/progressBar3"
             style="?android:attr/progressBarStyle"
@@ -110,7 +117,6 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 </FrameLayout>

@@ -17,7 +17,6 @@
         android:layout_marginStart="12dp"
         android:layout_marginBottom="30dp"
         android:text="325324123"
-        android:textColor="#100F0F"
         android:textSize="12sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -30,7 +29,6 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="4dp"
         android:text="Coca Cola"
-        android:textColor="#100F0F"
         android:textSize="14sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@+id/textSelectProductBarcode"
@@ -45,9 +43,7 @@
         app:cardCornerRadius="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="@color/black"
-        app:strokeWidth="2dp">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/imageSelectProduct2"
@@ -80,7 +76,6 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="3dp"
         android:text="2.5 $"
-        android:textColor="#100F0F"
         android:textSize="15sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -104,7 +99,6 @@
         android:layout_marginStart="12dp"
         android:layout_marginBottom="8dp"
         android:text="TextView"
-        android:textColor="#100F0F"
         android:textSize="12sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -117,7 +111,6 @@
         android:layout_marginStart="5dp"
         android:layout_marginBottom="8dp"
         android:text="TextView"
-        android:textColor="#100F0F"
         android:textSize="12sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
