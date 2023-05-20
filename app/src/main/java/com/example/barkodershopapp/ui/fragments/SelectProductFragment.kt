@@ -30,6 +30,7 @@ import com.example.barkodershopapp.ui.adapters.SelectProductAdapter
 import com.example.barkodershopapp.ui.listeners.swipeicons.SwipeHelper
 import com.example.barkodershopapp.ui.viewmodels.ListViewModel
 import com.example.barkodershopapp.ui.viewmodels.ProductViewModel
+import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
@@ -70,8 +71,19 @@ class SelectProductFragment : Fragment() {
         var editMode = this@SelectProductFragment.arguments?.getBoolean("editMode")
         if(editMode == true) {
             selectAdapter.showAddButton = true
+
+                var bottomNav = requireActivity().findViewById<BottomAppBar>(R.id.bottomNavigationApp)
+                bottomNav.visibility = View.GONE
+                var bottomFab = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
+                bottomFab.visibility = View.GONE
+                binding.guideline27.setGuidelinePercent(1F)
+
         } else {
             selectAdapter.showAddButton = false
+            var bottomNav = requireActivity().findViewById<BottomAppBar>(R.id.bottomNavigationApp)
+            bottomNav.visibility = View.VISIBLE
+            var bottomFab = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
+            bottomFab.visibility = View.VISIBLE
         }
 
 

@@ -81,16 +81,21 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <ImageView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnAddProduct"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        style="?attr/materialButtonOutlinedStyle"
+        app:strokeColor="@color/designColor"
+        app:strokeWidth="1dp"
+        android:text="Add"
+        android:textSize="10sp"
+        android:clickable="true"
+        app:cornerRadius="50dp"
+        android:layout_width="55dp"
+        android:layout_height="40dp"
         android:layout_marginTop="6dp"
         android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/add_circle"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textProductUnit"

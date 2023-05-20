@@ -153,5 +153,17 @@
         <argument
             android:name="currentList"
             app:argType="com.example.barkodershopapp.data.db.historydatabase.HistoryDataEntity" />
+        <action
+            android:id="@+id/action_currentListFragment2_to_scanTwoFragment"
+            app:destination="@id/scanTwoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/scanTwoFragment"
+        android:name="com.example.barkodershopapp.ui.fragments.ScanTwoFragment"
+        android:label="fragment_scan_two"
+        tools:layout="@layout/fragment_scan_two" >
+        <action
+            android:id="@+id/action_scanTwoFragment_to_currentListFragment2"
+            app:destination="@id/currentListFragment2" />
     </fragment>
 </navigation>

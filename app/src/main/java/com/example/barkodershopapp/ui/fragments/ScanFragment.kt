@@ -1,12 +1,15 @@
 package com.example.barkodershopapp.ui.fragments
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.barkoder.Barkoder
@@ -16,19 +19,24 @@ import com.barkoder.BarkoderConfig
 import com.barkoder.interfaces.BarkoderResultCallback
 import com.barkoder.shoppingApp.net.R
 import com.barkoder.shoppingApp.net.databinding.FragmentScanBinding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ScanFragment : Fragment(), BarkoderResultCallback{
     lateinit var binding: FragmentScanBinding
+    private lateinit var callback: OnBackPressedCallback
 
+    @SuppressLint("ResourceAsColor")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentScanBinding.inflate(inflater, container, false)
-
+        var btnScan = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
+        btnScan.isClickable = false
+        btnScan.setBackgroundResource(R.color.checkBox)
         binding.bkdView.config = BarkoderConfig(
             context,
             "PEmBIohr9EZXgCkySoetbwP4gvOfMcGzgxKPL2X6uqPEh7C-NSQGuK_IHt6EYbMPXg2o0WbjAzGF9mRZeL-hAMzUHLYRmxeuHlH3yXiPf0ET7RUMN4HS_-xvZkoYsrgP8Eus3e9OaFTV-SkKu-c6g1mwZwMYHHTd9mfp1u9bAzqQlJgk_3xSb3_GFCqnDOUkPW_a9KTXtobdEbTXFI3b_tTWATSfBgIfeO-uzbhyI8xUT4xTDLU6GaIsXzHenpljgw3LoYqmIs86nLfx1zrtXvANu-YhYC1GowX2WPMJXVI."
@@ -40,6 +48,7 @@ class ScanFragment : Fragment(), BarkoderResultCallback{
 
         setActiveBarcodeTypes()
         setBarkoderSettings()
+        onBackButton()
 
         return binding.root
     }
@@ -75,7 +84,7 @@ class ScanFragment : Fragment(), BarkoderResultCallback{
         findNavController().navigate(
             R.id.addProductFragment,
             bundle,
-            NavOptions.Builder().setPopUpTo(R.id.scanFragment, true).build()
+
         )
     }
 
@@ -85,6 +94,23 @@ class ScanFragment : Fragment(), BarkoderResultCallback{
         else
             updateUI()
     }
+
+    private fun onBackButton(){
+        callback = object : OnBackPressedCallback(true ) {
+            override fun handleOnBackPressed() {
+
+                findNavController().navigate(
+                    R.id.homeScreenFragment,
+                    null,
+                    NavOptions.Builder().setPopUpTo(R.id.scanFragment, true).build()
+                )
+
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
+
+
 
 
 

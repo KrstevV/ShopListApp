@@ -90,7 +90,7 @@ class CurrentListFragment : Fragment(){
 
     private fun onClickScan(){
         binding.btnScan2.setOnClickListener {
-//            findNavController().navigate(R.id.action_currentListFragment_to_scanTwoFragment)
+            findNavController().navigate(R.id.action_currentListFragment2_to_scanTwoFragment)
         }
     }
 

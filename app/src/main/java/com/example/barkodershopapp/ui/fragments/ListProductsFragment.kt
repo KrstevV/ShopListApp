@@ -187,6 +187,7 @@ class ListProductsFragment : Fragment() {
         listViewModel.allNotes.observe(viewLifecycleOwner, { products ->
                 productAdapter.setNotesList(products as ArrayList<ListDataEntity>)
                 binding.textTotalCostList.text = sumTotalCostList(products).toString() + " $"
+                binding.textSizeProducstsList.text = products.size.toString()
                 binding.progressBar2.visibility = View.GONE
 
 
