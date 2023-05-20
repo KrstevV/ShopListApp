@@ -13,18 +13,25 @@
         android:backgroundTint="@color/backroundDesignColor">
 
         <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline29"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.9" />
+
+        <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline21"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.10"/>
+            app:layout_constraintGuide_percent="0.10" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline22"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.90"/>
+            app:layout_constraintGuide_percent="0.90" />
 
         <include
             android:id="@+id/include"
@@ -46,27 +53,77 @@
             app:layout_constraintStart_toStartOf="@+id/include"
             app:layout_constraintTop_toTopOf="@+id/include" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/startList"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:clickable="true"
+            android:src="@drawable/start_list2"
+            app:backgroundTint="@color/checkBox"
+            app:fabCustomSize="35dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btnRestoreCheckout"
+            app:layout_constraintTop_toTopOf="@+id/guideline29"
+            app:maxImageSize="20sp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnRestoreCheckout"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:clickable="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/restore_img"
+            app:backgroundTint="#FDD835"
+            app:fabCustomSize="35dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/startList"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btnEditList"
+            app:layout_constraintTop_toTopOf="@+id/guideline29"
+            app:maxImageSize="20dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnEditList"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:clickable="true"
+            android:src="@drawable/edit_list"
+            app:backgroundTint="#FB8C00"
+            app:fabCustomSize="35dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnRestoreCheckout"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline29"
+            app:maxImageSize="20dp" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/currentRecView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/scanLayout"
+            app:layout_constraintBottom_toTopOf="@+id/guideline29"
             app:layout_constraintEnd_toStartOf="@+id/guideline22"
             app:layout_constraintStart_toStartOf="@+id/guideline21"
             app:layout_constraintTop_toBottomOf="@+id/include"
-            app:layout_constraintVertical_bias="0.0"
             tools:listitem="@layout/currentlist_list">
 
         </androidx.recyclerview.widget.RecyclerView>
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/scanLayout"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:background="@drawable/top_rounded"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline29"
+            app:layout_constraintVertical_bias="0.0">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnScan2"
@@ -75,10 +132,10 @@
                 android:layout_marginBottom="10dp"
                 android:clickable="true"
                 android:src="@drawable/ic_white_scanner"
-                app:backgroundTint="#070707"
+                app:backgroundTint="@color/designColor"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintHorizontal_bias="0.500"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
@@ -93,6 +150,7 @@
                 android:textColorHint="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btnScan2"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -110,6 +168,7 @@
                 android:textColorHint="#000000"
                 android:textSize="24sp"
                 android:textStyle="bold"
+                android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/textTotalCostP"
                 app:layout_constraintEnd_toStartOf="@+id/textView26"
                 app:layout_constraintStart_toStartOf="parent"
@@ -126,6 +185,7 @@
                 android:textColorHint="#000000"
                 android:textSize="24sp"
                 android:textStyle="bold"
+                android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/textTotalCostP"
                 app:layout_constraintStart_toEndOf="@+id/textView26" />
 
@@ -139,14 +199,15 @@
                 android:text="/"
                 android:textColor="#040303"
                 android:textSize="24sp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/textTotalCostP"
                 app:layout_constraintEnd_toStartOf="@+id/textView25"
                 app:layout_constraintStart_toEndOf="@+id/scannedProductsP" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/stopList"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_marginEnd="40dp"
                 android:layout_marginBottom="15dp"
                 android:clickable="true"
@@ -155,27 +216,13 @@
                 android:src="@drawable/stop_circle_fill0_wght400_grad0_opsz48"
                 android:visibility="gone"
                 app:backgroundTint="@color/designColor"
-                app:fabCustomSize="40dp"
+                app:fabCustomSize="35dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:maxImageSize="25sp" />
+                app:maxImageSize="20sp" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/startList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="70dp"
-            android:layout_marginBottom="50dp"
-            android:clickable="true"
-            android:src="@drawable/start_list2"
-            app:backgroundTint="@color/checkBox"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:maxImageSize="38sp" />
-
 
         <androidx.cardview.widget.CardView
             android:id="@+id/sucessfullCard"
@@ -208,31 +255,6 @@
 
 
         </androidx.cardview.widget.CardView>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnEditList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
-            android:layout_marginBottom="50dp"
-            android:clickable="true"
-            android:src="@drawable/edit_list"
-            app:backgroundTint="#FB8C00"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:maxImageSize="30dp" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnRestoreCheckout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
-            android:layout_marginBottom="150dp"
-            android:clickable="true"
-            android:src="@drawable/restore_img"
-            app:backgroundTint="#FDD835"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -280,8 +280,7 @@ class ListProductsFragment : Fragment() {
                     NavOptions.Builder().setPopUpTo(R.id.listProductsFragment, true).build()
                 )
                 listViewModel.delete()
-                isEnabled = false
-                requireActivity().onBackPressed()
+
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)

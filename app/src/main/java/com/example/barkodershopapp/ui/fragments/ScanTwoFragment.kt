@@ -11,7 +11,10 @@ import androidx.navigation.fragment.findNavController
 import com.barkoder.Barkoder
 import com.barkoder.BarkoderConfig
 import com.barkoder.interfaces.BarkoderResultCallback
+import com.barkoder.shoppingApp.net.R
 import com.barkoder.shoppingApp.net.databinding.FragmentScanTwoBinding
+import com.google.android.material.bottomappbar.BottomAppBar
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,9 +39,17 @@ class ScanTwoFragment : Fragment(), BarkoderResultCallback {
 
         setActiveBarcodeTypes()
         setBarkoderSettings()
+        navInvisible()
         return binding.root
     }
 
+
+    private fun navInvisible(){
+        var bottomNav = requireActivity().findViewById<BottomAppBar>(R.id.bottomNavigationApp)
+        bottomNav.visibility = View.GONE
+        var bottomFab = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
+        bottomFab.visibility = View.GONE
+    }
     private fun setActiveBarcodeTypes() {
         // There is option to set multiple active barcodes at once as array
         binding.bkdView2.config.decoderConfig.SetEnabledDecoders(

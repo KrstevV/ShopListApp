@@ -318,37 +318,6 @@ class AddProductFragment : Fragment() {
     }
 
 
-//    override fun onActivityCreated(savedInstanceState: Bundle?) {
-//        super.onActivityCreated(savedInstanceState)
-//
-//
-//        val callback = object : OnBackPressedCallback(true) {
-//            override fun handleOnBackPressed() {
-//                var editMode = requireActivity().intent.getBooleanExtra("editMode", false)
-//                if (editMode) {
-//                    var intent = Intent(requireActivity(), HomeScreenActivity::class.java)
-//                    startActivity(intent)
-//                    requireActivity().finish()
-//                } else {
-//                    val builder = AlertDialog.Builder(context)
-//                        .setTitle(R.string.alert_title_list_save)
-//                    builder.setMessage(R.string.alert_dialog_back)
-//                        .setCancelable(false)
-//                        .setNegativeButton(R.string.alert_title_list_save_negative) { dialog, id ->
-//                            dialog.dismiss()
-//                        }
-//                        .setPositiveButton(R.string.alert_title_list_save_positive) { dialog, id ->
-//                            requireActivity().finish()
-//                            dialog.dismiss()
-//                        }
-//
-//                    val alert = builder.create()
-//                    alert.show()
-//                }
-//            }
-//        }
-//        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
-//    }
 
 
 
