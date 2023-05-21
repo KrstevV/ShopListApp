@@ -241,7 +241,7 @@ class SelectProductFragment : Fragment() {
             override fun handleOnBackPressed() {
 
                 findNavController().navigate(
-                    R.id.homeScreenFragment,
+                    R.id.listProductsFragment,
                     null,
                     NavOptions.Builder().setPopUpTo(R.id.selectProductFragment, true).build()
                 )
@@ -249,6 +249,15 @@ class SelectProductFragment : Fragment() {
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        var bottomNav = requireActivity().findViewById<BottomAppBar>(R.id.bottomNavigationApp)
+        bottomNav.visibility = View.VISIBLE
+        var bottomFab = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
+        bottomFab.visibility = View.VISIBLE
     }
 
 

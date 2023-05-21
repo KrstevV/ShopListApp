@@ -96,7 +96,11 @@ class ListProductsFragment : Fragment() {
         binding.buttonImage.setOnClickListener {
                 val bundle = Bundle()
                 bundle.putBoolean("editMode", true)
-                findNavController().navigate(R.id.selectProductFragment, bundle)
+            findNavController().navigate(
+                R.id.selectProductFragment,
+                bundle,
+                NavOptions.Builder().setPopUpTo(R.id.listProductsFragment, true).build()
+            )
 
             }
 

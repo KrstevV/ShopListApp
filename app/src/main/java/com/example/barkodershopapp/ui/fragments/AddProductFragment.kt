@@ -320,7 +320,4 @@ class AddProductFragment : Fragment() {
 
 
 
-
-
-
 }

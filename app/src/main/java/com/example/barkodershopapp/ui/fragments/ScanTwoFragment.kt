@@ -75,7 +75,6 @@ class ScanTwoFragment : Fragment(), BarkoderResultCallback {
 
     private fun updateUI(result: Barkoder.Result? = null, resultImage: Bitmap? = null) {
         var barcodeNum2 = result?.textualData
-        binding.textView23.text = barcodeNum2
 
         findNavController().previousBackStackEntry?.savedStateHandle?.set(
             "barcodeNum2",
