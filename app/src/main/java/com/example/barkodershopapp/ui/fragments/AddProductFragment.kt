@@ -1,9 +1,13 @@
 package com.example.barkodershopapp.ui.fragments
 
+import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
+import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -42,6 +46,10 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.OutputStream
 import java.util.*
 
 
@@ -53,6 +61,8 @@ class AddProductFragment : Fragment() {
     private lateinit var callback: OnBackPressedCallback
 
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -62,6 +72,14 @@ class AddProductFragment : Fragment() {
         binding = FragmentAddProductBinding.inflate(inflater, container, false)
 
         getBarcodeString()
+        savedInstanceState?.let { savedState ->
+            binding.editTextNameAddProduct.setText(savedState.getString("textName"))
+            binding.editUnitAddProduct.setText(savedState.getString("textUnit"))
+            binding.editQuantityAddProduct.setText(savedState.getString("textQuantity"))
+            binding.editPriceAddProduct.setText(savedState.getString("textPrice"))
+
+            // Restore other text field values
+        }
 
         return binding.root
     }
@@ -74,6 +92,7 @@ class AddProductFragment : Fragment() {
         onClickScan()
         onCLickScanFab()
         onBackButton()
+
     }
 
     private fun onCLickScanFab() {
@@ -88,59 +107,26 @@ class AddProductFragment : Fragment() {
     }
 
     private fun getBarcodeString() {
-        val barcodeNumber = this@AddProductFragment.arguments?.getString("barcodeNum").toString()
+
         binding.cameraImage.setImageResource(R.drawable.photo_camera)
-
-
-//        if (barcodeNumber == "null") {
-//            binding.editTextBarcodeAddProduct.setText("")
-//        } else {
-//            binding.editTextBarcodeAddProduct.setText(barcodeNumber)
-//        }
-
-        productViewModel.allNotes.observe(viewLifecycleOwner, { products ->
-            for(i in products){
-                if(barcodeNumber == i.barcodeProduct.toString()) {
-                    val bundle = Bundle()
-                    bundle.putBoolean("scanned", true)
-                    bundle.putLong("productId", i.id)
-                    bundle.putString("productName",i.nameProduct)
-                    bundle.putString("productBarcode",i.barcodeProduct.toString())
-                    bundle.putString("productQuantity",i.quantityProduct.toString())
-                    bundle.putString("productUnit",i.unitProduct.toString())
-                    bundle.putString("productPrice",i.priceProduct.toString())
-                    bundle.putByteArray("productImage", i.imageProduct)
-                    bundle.putSerializable("priceHistory", i.priceHistory)
-
-//                    findNavController().navigate(R.id.productHistoryFragment, bundle)
-
-                    findNavController().navigate(
-                        R.id.productHistoryFragment,
-                        bundle,
-                        NavOptions.Builder().setPopUpTo(R.id.addProductFragment, true).build()
-                    )
-
-                } else  {
-
-                    if (barcodeNumber == "null") {
-                 binding.editTextBarcodeAddProduct.setText("")
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("barcodeNum3")
+            ?.observe(viewLifecycleOwner) { result ->
+                if (result == "null") {
+                    binding.editTextBarcodeAddProduct.setText("")
                 } else {
-                binding.editTextBarcodeAddProduct.setText(barcodeNumber)
-
-           }
-                 }
+                    binding.editTextBarcodeAddProduct.setText(result)
+                }
             }
 
-        })
 
 }
+
     private fun onClickScan() {
         binding.btnScanAddProduct.setOnClickListener {
 //            findNavController().navigate(R.id.scanFragment)
             findNavController().navigate(
-                R.id.scanFragment,
-                null,
-                NavOptions.Builder().setPopUpTo(R.id.addProductFragment, true).build()
+                R.id.scanThreeFragment,
+                null
             )
         }
     }
@@ -232,37 +218,14 @@ class AddProductFragment : Fragment() {
 
     private fun onClickAddImage() {
         binding.addImage.setOnClickListener {
-            cameraCheckPremission()
+            if (checkCameraPermission()) {
+                camera()
+            } else {
+                requestCameraPermission()
+            }
         }
     }
 
-    private fun cameraCheckPremission() {
-
-        Dexter.withContext(requireActivity().applicationContext)
-            .withPermissions(
-                android.Manifest.permission.READ_EXTERNAL_STORAGE,
-                android.Manifest.permission.CAMERA
-            ).withListener(
-                object : MultiplePermissionsListener {
-                    override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
-                        report?.let {
-
-                            if (report.areAllPermissionsGranted()) {
-                                camera()
-                            }
-                        }
-                    }
-
-                    override fun onPermissionRationaleShouldBeShown(
-                        p0: MutableList<PermissionRequest>?,
-                        p1: PermissionToken?
-                    ) {
-                        showRorationalDialogForPermission()
-                    }
-
-                }
-            ).onSameThread().check()
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -274,6 +237,7 @@ class AddProductFragment : Fragment() {
                     val bitmapScaled = Bitmap.createScaledBitmap(bitmap, 150, 180, true)
                     binding.cameraImage.load(bitmap)
 
+
                 }
             }
         }
@@ -284,24 +248,40 @@ class AddProductFragment : Fragment() {
         startActivityForResult(intent, cameraRequest)
     }
 
-    private fun showRorationalDialogForPermission() {
-        AlertDialog.Builder(requireActivity().applicationContext)
-            .setMessage("asdas")
-            .setPositiveButton("add") { _, _ ->
-                try {
-                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                    val uri = Uri.fromParts("package", activity?.packageName, null)
-                    intent.data = uri
-                    startActivity(intent)
-                } catch (e: ActivityNotFoundException) {
-                    e.printStackTrace()
+    private fun checkCameraPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.CAMERA,
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestCameraPermission() {
+        requestPermissions(
+            arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE),
+            cameraRequest
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            cameraRequest -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    camera()
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Camera permission denied",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
-            .setNegativeButton("canccel") { dialog, _ ->
-                dialog.dismiss()
-            }
-
+        }
     }
+
     private fun onBackButton(){
         callback = object : OnBackPressedCallback(true ) {
             override fun handleOnBackPressed() {
@@ -316,6 +296,19 @@ class AddProductFragment : Fragment() {
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        // Save the text field values to the bundle
+        outState.putString("textName", binding.editTextNameAddProduct.text.toString())
+        outState.putString("textUnit", binding.editUnitAddProduct.text.toString())
+        outState.putString("textQuantity", binding.editQuantityAddProduct.text.toString())
+        outState.putString("textPrice", binding.editPriceAddProduct.text.toString())
+
+
+        // Save other text field values
+    }
+
 
 
 

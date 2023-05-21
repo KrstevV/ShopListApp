@@ -62,9 +62,21 @@ class ProductHistoryFragment : Fragment() {
     }
 
     private fun onClickCancel(){
-        binding.btnCancel.setOnClickListener {
-            findNavController().popBackStack()
+        var scanned = this@ProductHistoryFragment.arguments?.getBoolean("scanned")
+        if(scanned == true) {
+            binding.btnCancel.setOnClickListener {
+                findNavController().navigate(
+                    R.id.homeScreenFragment,
+                    null,
+                    NavOptions.Builder().setPopUpTo(R.id.scanFragment, true).build()
+                )
+            }
+        } else {
+            binding.btnCancel.setOnClickListener {
+                findNavController().popBackStack()
+            }
         }
+
     }
 
     private fun navInvisible(){
@@ -151,7 +163,20 @@ class ProductHistoryFragment : Fragment() {
         callback = object : OnBackPressedCallback(true ) {
             override fun handleOnBackPressed() {
 
-                findNavController().popBackStack()
+                var scanned = this@ProductHistoryFragment.arguments?.getBoolean("scanned")
+                if(scanned == true) {
+
+                        findNavController().navigate(
+                            R.id.homeScreenFragment,
+                            null,
+                            NavOptions.Builder().setPopUpTo(R.id.scanFragment, true).build()
+                        )
+
+                } else {
+
+                        findNavController().popBackStack()
+
+                }
 
             }
         }

@@ -24,6 +24,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import coil.load
@@ -34,6 +35,8 @@ import com.barkoder.BarkoderConfig
 import com.barkoder.interfaces.BarkoderResultCallback
 import com.barkoder.shoppingApp.net.R
 import com.barkoder.shoppingApp.net.databinding.FragmentScanBinding
+import com.example.barkodershopapp.ui.viewmodels.ProductViewModel
+import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -47,6 +50,7 @@ class ScanFragment : Fragment(), BarkoderResultCallback {
     lateinit var binding: FragmentScanBinding
     private lateinit var callback: OnBackPressedCallback
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
+    private val productViewModel: ProductViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -59,26 +63,34 @@ class ScanFragment : Fragment(), BarkoderResultCallback {
         binding = FragmentScanBinding.inflate(inflater, container, false)
         var btnScan = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
         btnScan.isClickable = false
-//        binding.bkdView.config = BarkoderConfig(
-//            context,
-//            "PEmBIohr9EZXgCkySoetbwP4gvOfMcGzgxKPL2X6uqPEh7C-NSQGuK_IHt6EYbMPXg2o0WbjAzGF9mRZeL-hAMzUHLYRmxeuHlH3yXiPf0ET7RUMN4HS_-xvZkoYsrgP8Eus3e9OaFTV-SkKu-c6g1mwZwMYHHTd9mfp1u9bAzqQlJgk_3xSb3_GFCqnDOUkPW_a9KTXtobdEbTXFI3b_tTWATSfBgIfeO-uzbhyI8xUT4xTDLU6GaIsXzHenpljgw3LoYqmIs86nLfx1zrtXvANu-YhYC1GowX2WPMJXVI."
-//        )
-//        {
-//            Log.i("LicenseInfo", it.message)
-//        }
+        binding.bkdView.config = BarkoderConfig(
+            context,
+            "PEmBIohr9EZXgCkySoetbwP4gvOfMcGzgxKPL2X6uqPEh7C-NSQGuK_IHt6EYbMPXg2o0WbjAzGF9mRZeL-hAMzUHLYRmxeuHlH3yXiPf0ET7RUMN4HS_-xvZkoYsrgP8Eus3e9OaFTV-SkKu-c6g1mwZwMYHHTd9mfp1u9bAzqQlJgk_3xSb3_GFCqnDOUkPW_a9KTXtobdEbTXFI3b_tTWATSfBgIfeO-uzbhyI8xUT4xTDLU6GaIsXzHenpljgw3LoYqmIs86nLfx1zrtXvANu-YhYC1GowX2WPMJXVI."
+        )
+        {
+            Log.i("LicenseInfo", it.message)
+        }
 
 
         if (checkCameraPermission()) {
             startScanning()
+            navInvisible()
         } else {
             requestCameraPermission()
         }
 
-//        setActiveBarcodeTypes()
-//        setBarkoderSettings()
-//        onBackButton()
+        setActiveBarcodeTypes()
+        setBarkoderSettings()
+        onBackButton()
 
         return binding.root
+    }
+
+    private fun navInvisible(){
+        var bottomNav = requireActivity().findViewById<BottomAppBar>(R.id.bottomNavigationApp)
+        bottomNav.visibility = View.GONE
+        var bottomFab = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
+        bottomFab.visibility = View.GONE
     }
 
     private fun setActiveBarcodeTypes() {
@@ -106,15 +118,43 @@ class ScanFragment : Fragment(), BarkoderResultCallback {
 
     private fun updateUI(result: Barkoder.Result? = null, resultImage: Bitmap? = null) {
         var barcodeNum = result?.textualData
-        val bundle = Bundle()
-        bundle.putString("barcodeNum", barcodeNum)
-        findNavController().navigate(
-            R.id.addProductFragment,
-            bundle,
 
-            )
+        productViewModel.allNotes.observe(viewLifecycleOwner, { products ->
 
+            for(i in products){
+                if(barcodeNum == i.barcodeProduct.toString()) {
+                    val bundle = Bundle()
+                    bundle.putBoolean("scanned", true)
+                    bundle.putLong("productId", i.id)
+                    bundle.putString("productName",i.nameProduct)
+                    bundle.putString("productBarcode",i.barcodeProduct.toString())
+                    bundle.putString("productQuantity",i.quantityProduct.toString())
+                    bundle.putString("productUnit",i.unitProduct.toString())
+                    bundle.putString("productPrice",i.priceProduct.toString())
+                    bundle.putByteArray("productImage", i.imageProduct)
+                    bundle.putSerializable("priceHistory", i.priceHistory)
 
+//                    findNavController().navigate(R.id.productHistoryFragment, bundle)
+
+                    findNavController().navigate(
+                        R.id.productHistoryFragment,
+                        bundle,
+                        NavOptions.Builder().setPopUpTo(R.id.scanFragment, true).build()
+                    )
+
+                } else  {
+                    val bundle = Bundle()
+                    bundle.putString("barcodeNum", barcodeNum)
+                    findNavController().navigate(
+                        R.id.addProductFragment,
+                        bundle,
+                        NavOptions.Builder().setPopUpTo(R.id.scanFragment, true).build()
+                    )
+
+                }
+            }
+
+        })
     }
 
 
@@ -141,29 +181,21 @@ class ScanFragment : Fragment(), BarkoderResultCallback {
     }
 
     private fun startScanning() {
-        binding.bkdView.config = BarkoderConfig(
-            requireContext(),
-            "PEmBIohr9EZXgCkySoetbwP4gvOfMcGzgxKPL2X6uqPEh7C-NSQGuK_IHt6EYbMPXg2o0WbjAzGF9mRZeL-hAMzUHLYRmxeuHlH3yXiPf0ET7RUMN4HS_-xvZkoYsrgP8Eus3e9OaFTV-SkKu-c6g1mwZwMYHHTd9mfp1u9bAzqQlJgk_3xSb3_GFCqnDOUkPW_a9KTXtobdEbTXFI3b_tTWATSfBgIfeO-uzbhyI8xUT4xTDLU6GaIsXzHenpljgw3LoYqmIs86nLfx1zrtXvANu-YhYC1GowX2WPMJXVI."
-        ) { info ->
-            Log.i("LicenseInfo", info.message)
-        }
+
         binding.bkdView.startScanning(this)
 
-        setActiveBarcodeTypes()
-        setBarkoderSettings()
-        onBackButton()
     }
 
     private fun checkCameraPermission(): Boolean {
         return ContextCompat.checkSelfPermission(
             requireContext(),
-            Manifest.permission.CAMERA
+            Manifest.permission.CAMERA,
         ) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun requestCameraPermission() {
         requestPermissions(
-            arrayOf(Manifest.permission.CAMERA),
+            arrayOf(Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE),
             CAMERA_PERMISSION_REQUEST_CODE
         )
     }
@@ -188,21 +220,15 @@ class ScanFragment : Fragment(), BarkoderResultCallback {
         }
     }
 
-    private fun requestCameraPermissionPermanently() {
-        if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
-            AlertDialog.Builder(requireContext())
-                .setTitle("Camera Permission")
-                .setMessage("Grant camera permission to use the camera always?")
-                .setPositiveButton("Grant") { _, _ ->
-                    requestPermissions(
-                        arrayOf(Manifest.permission.CAMERA),
-                        CAMERA_PERMISSION_REQUEST_CODE
-                    )
-                }
-        }
+    override fun onPause() {
+        super.onPause()
 
-
+        var bottomNav = requireActivity().findViewById<BottomAppBar>(R.id.bottomNavigationApp)
+        bottomNav.visibility = View.VISIBLE
+        var bottomFab = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
+        bottomFab.visibility = View.VISIBLE
     }
+
 }
 
 

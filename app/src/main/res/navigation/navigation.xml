@@ -23,6 +23,12 @@
         <action
             android:id="@+id/action_addProductFragment_to_homeScreenFragment"
             app:destination="@id/homeScreenFragment" />
+        <action
+            android:id="@+id/action_addProductFragment_to_productHistoryFragment"
+            app:destination="@id/productHistoryFragment" />
+        <action
+            android:id="@+id/action_addProductFragment_to_scanThreeFragment"
+            app:destination="@id/scanThreeFragment" />
     </fragment>
     <fragment
         android:id="@+id/selectProductFragment"
@@ -87,6 +93,9 @@
         <argument
             android:name="currentProduct"
             app:argType="com.example.barkodershopapp.data.db.productdatabase.ProductDataEntity" />
+        <action
+            android:id="@+id/action_productHistoryFragment_to_addProductFragment"
+            app:destination="@id/addProductFragment" />
     </fragment>
     <fragment
         android:id="@+id/productInfoFragment"
@@ -165,5 +174,14 @@
         <action
             android:id="@+id/action_scanTwoFragment_to_currentListFragment2"
             app:destination="@id/currentListFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/scanThreeFragment"
+        android:name="com.example.barkodershopapp.ui.fragments.ScanThreeFragment"
+        android:label="fragment_scan_three"
+        tools:layout="@layout/fragment_scan_three" >
+        <action
+            android:id="@+id/action_scanThreeFragment_to_addProductFragment"
+            app:destination="@id/addProductFragment" />
     </fragment>
 </navigation>
