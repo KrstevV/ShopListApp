@@ -39,9 +39,6 @@ class AddProductFragment : Fragment() {
     private val cameraRequest = 1
     private lateinit var callback: OnBackPressedCallback
 
-
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -57,7 +54,6 @@ class AddProductFragment : Fragment() {
             binding.editQuantityAddProduct.setText(savedState.getString("textQuantity"))
             binding.editPriceAddProduct.setText(savedState.getString("textPrice"))
 
-            // Restore other text field values
         }
 
         return binding.root

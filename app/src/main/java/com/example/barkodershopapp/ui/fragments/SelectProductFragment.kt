@@ -62,6 +62,8 @@ class SelectProductFragment : Fragment() {
         var editSelect = this@SelectProductFragment.arguments?.getBoolean("editSelect")
         var createSelect = this@SelectProductFragment.arguments?.getBoolean("createSelect")
 
+
+
         if(editSelect == true) {
             selectAdapter.isEditMode = true
         } else {

@@ -42,8 +42,6 @@ class CurrentListFragment : Fragment(){
     private val args by navArgs<CurrentListFragmentArgs>()
     private lateinit var callback: OnBackPressedCallback
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,14 +52,11 @@ class CurrentListFragment : Fragment(){
         setupTextViews()
         navInvisible()
 
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
 
         onClickEdit()
         onClickScan()
@@ -71,7 +66,6 @@ class CurrentListFragment : Fragment(){
         onClickRestore()
         onBackButton()
     }
-
 
     private fun navInvisible(){
         var bottomNav = requireActivity().findViewById<BottomAppBar>(R.id.bottomNavigationApp)
@@ -89,7 +83,6 @@ class CurrentListFragment : Fragment(){
         binding.textView25.text = args.currentList.listProducts.size.toString()
         binding.textTotalCostP.text = sumTotalCost(args.currentList.listProducts).toString() + " $"
     }
-
 
     private fun onClickScan(){
         binding.btnScan2.setOnClickListener {
@@ -146,7 +139,6 @@ class CurrentListFragment : Fragment(){
     private fun onClickEdit(){
         var scanLayout = binding.scanLayout
         binding.btnEditList.setOnClickListener {
-
 
             val bundle = Bundle()
             bundle.putBoolean("editMode", true)
@@ -210,7 +202,6 @@ class CurrentListFragment : Fragment(){
                 }, 2000)
             }
         }
-
     }
     private fun scannedPro() {
         var numScannedProduct = 0
@@ -267,7 +258,6 @@ class CurrentListFragment : Fragment(){
         }
         scannedPro()
         sucessfullCheckout()
-
     }
 
     val onCheckedListener = object  : OnCheckedListener {
@@ -289,7 +279,6 @@ class CurrentListFragment : Fragment(){
 
             sucessfullCheckout()
         }
-
     }
 
     override fun onPause() {

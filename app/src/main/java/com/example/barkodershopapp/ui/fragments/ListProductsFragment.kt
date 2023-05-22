@@ -46,12 +46,7 @@ class ListProductsFragment : Fragment() {
 
     private lateinit var callback: OnBackPressedCallback
 
-    private lateinit var myActivity: MainActivity
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        myActivity = requireActivity() as MainActivity
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -83,11 +78,15 @@ class ListProductsFragment : Fragment() {
 
     private fun onButtonSelect(){
         binding.buttonImage.setOnClickListener {
+            var listId = this@ListProductsFragment.arguments?.getLong("currentListId")
+            var checkedDate = this@ListProductsFragment.arguments?.getString("checkedDate").toString()
             var editMode = this@ListProductsFragment.arguments?.getBoolean("editMode")
             var edit = this@ListProductsFragment.arguments?.getBoolean("edit")
             if(editMode == true || edit == true) {
                 var bundle = Bundle()
                 bundle.putBoolean("editSelect", true)
+                bundle.putLong("listId",listId!!)
+                bundle.putString("checkedDate", checkedDate)
                 findNavController().navigate(
                     R.id.selectProductFragment,
                     bundle,
