@@ -34,6 +34,7 @@ class SelectProductAdapter(
     private var productListFull: List<ProductDataEntity> = ArrayList()
 
     var showAddButton = false
+    var isEditMode = false
     init {
         productListFull = list
     }
@@ -48,7 +49,7 @@ class SelectProductAdapter(
         private val binding: SelectproductItemBinding,
         private var viewModel: ListViewModel
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(list: ProductDataEntity, showAddButton : Boolean) {
+        fun bind(list: ProductDataEntity, showAddButton : Boolean, isEditMode : Boolean) {
             binding.textSelectProductName.text = list.nameProduct
             binding.textSelectProductBarcode.text = list.barcodeProduct
             binding.textSelectProductPrice.text = list.priceProduct.toString() + " $"
@@ -72,10 +73,17 @@ class SelectProductAdapter(
             }
 
             binding.btnAddProduct.setOnClickListener {
+                var bundle = Bundle()
+                    if(isEditMode == true){
+                        bundle.putBoolean("edit", true)
+                    } else {
+                        bundle.putBoolean("edit", false)
+                    }
+
                 viewModel.insert(ListDataEntity(list))
                 findNavController(binding.root).navigate(
                     R.id.listProductsFragment,
-                    null,
+                    bundle,
                     NavOptions.Builder().setPopUpTo(R.id.selectProductFragment, true).build()
                 )
             }
@@ -96,7 +104,7 @@ class SelectProductAdapter(
     override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(list[position], showAddButton)
+        holder.bind(list[position], showAddButton, isEditMode)
     }
 
     fun getSelectInt(position: Int): ProductDataEntity {

@@ -1,8 +1,6 @@
 package com.example.barkodershopapp.ui.fragments
 
-import android.app.AlertDialog
 import android.content.Context
-import android.content.Intent
 import android.graphics.Canvas
 import android.os.Bundle
 import android.os.Handler
@@ -13,26 +11,21 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.barkoder.shoppingApp.net.R
 import com.barkoder.shoppingApp.net.databinding.FragmentListProductsBinding
-import com.barkoder.shoppingApp.net.databinding.ToolBarBinding
 import com.example.barkodershopapp.ui.listeners.OnClickListenerButtons
 import com.example.barkodershopapp.ui.listeners.swipecallback.SwipeToDelete
 import com.example.barkodershopapp.data.db.historydatabase.HistoryDataEntity
 import com.example.barkodershopapp.data.db.listdatabase.ListDataEntity
-import com.example.barkodershopapp.ui.adapters.HistoryAdapter
+import com.example.barkodershopapp.ui.activities.MainActivity
 import com.example.barkodershopapp.ui.adapters.ProductAdapter
 import com.example.barkodershopapp.ui.viewmodels.HistoryViewModel
 import com.example.barkodershopapp.ui.viewmodels.ListViewModel
-import com.example.barkodershopapp.ui.viewmodels.ProductViewModel
-import com.example.barkodershopapp.ui.activities.HomeScreenActivity
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,11 +43,15 @@ class ListProductsFragment : Fragment() {
     private val productL = arrayListOf<ListDataEntity>()
     var editMode = this@ListProductsFragment.arguments?.getBoolean("editMode")
 
+
     private lateinit var callback: OnBackPressedCallback
 
+    private lateinit var myActivity: MainActivity
 
-
-
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        myActivity = requireActivity() as MainActivity
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,8 +62,6 @@ class ListProductsFragment : Fragment() {
         setupRecView()
         observeList()
         onBackButton()
-        editOrCreateMode()
-
 
 
         return binding.root
@@ -84,29 +79,34 @@ class ListProductsFragment : Fragment() {
 
     }
 
-    fun editOrCreateMode() : Boolean{
-        if(editMode == true){
-            return true
-        } else {
 
-        return false}
-    }
 
     private fun onButtonSelect(){
         binding.buttonImage.setOnClickListener {
-                val bundle = Bundle()
-                bundle.putBoolean("editMode", true)
-            findNavController().navigate(
-                R.id.selectProductFragment,
-                bundle,
-                NavOptions.Builder().setPopUpTo(R.id.listProductsFragment, true).build()
-            )
-
+            var editMode = this@ListProductsFragment.arguments?.getBoolean("editMode")
+            var edit = this@ListProductsFragment.arguments?.getBoolean("edit")
+            if(editMode == true || edit == true) {
+                var bundle = Bundle()
+                bundle.putBoolean("editSelect", true)
+                findNavController().navigate(
+                    R.id.selectProductFragment,
+                    bundle,
+                    NavOptions.Builder().setPopUpTo(R.id.listProductsFragment, true).build()
+                )
+            } else {
+                var bundle = Bundle()
+                bundle.putBoolean("createSelect", true)
+                findNavController().navigate(
+                    R.id.selectProductFragment,
+                    bundle,
+                    NavOptions.Builder().setPopUpTo(R.id.listProductsFragment, true).build()
+                )
             }
 
+
+
+            }
         }
-
-
 
     private fun navInvisible(){
         var bottomNav = requireActivity().findViewById<BottomAppBar>(R.id.bottomNavigationApp)
@@ -199,11 +199,12 @@ class ListProductsFragment : Fragment() {
     }
 
     private fun editMode() {
+        var edit = this@ListProductsFragment.arguments?.getBoolean("edit")
         var editMode = this@ListProductsFragment.arguments?.getBoolean("editMode")
         var listName = this@ListProductsFragment.arguments?.getString("listName")
-        var editMode2 = this@ListProductsFragment.arguments?.getBoolean("editMode2")
+        var backUpdate = this@ListProductsFragment.arguments?.getBoolean("backUpdate")
 
-        if (editMode == true || editMode2 == true) {
+        if (editMode == true || edit == true) {
             binding.textActivityName.text = "Update List"
             binding.btnAddNewList.visibility = View.INVISIBLE
             binding.btnUpdateList.visibility = View.VISIBLE

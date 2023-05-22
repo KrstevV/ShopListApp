@@ -1,17 +1,12 @@
 package com.example.barkodershopapp.ui.fragments
 
-import android.app.AlertDialog
-import android.content.Intent
-import android.graphics.Canvas
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
@@ -20,12 +15,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.barkoder.shoppingApp.net.R
 import com.barkoder.shoppingApp.net.databinding.FragmentSelectProductBinding
-import com.example.barkodershopapp.ui.listeners.swipecallback.SwipeToDelete
 import com.example.barkodershopapp.data.db.productdatabase.ProductDataEntity
-import com.example.barkodershopapp.ui.activities.HomeScreenActivity
 import com.example.barkodershopapp.ui.adapters.SelectProductAdapter
 import com.example.barkodershopapp.ui.listeners.swipeicons.SwipeHelper
 import com.example.barkodershopapp.ui.viewmodels.ListViewModel
@@ -33,8 +25,6 @@ import com.example.barkodershopapp.ui.viewmodels.ProductViewModel
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
-import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
-import java.util.*
 import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
@@ -66,17 +56,27 @@ class SelectProductFragment : Fragment() {
         setupRecView()
         onCLickScan()
         observeList()
-        onBackButton()
 
-        var editMode = this@SelectProductFragment.arguments?.getBoolean("editMode")
-        if(editMode == true) {
+
+
+        var editSelect = this@SelectProductFragment.arguments?.getBoolean("editSelect")
+        var createSelect = this@SelectProductFragment.arguments?.getBoolean("createSelect")
+
+        if(editSelect == true) {
+            selectAdapter.isEditMode = true
+        } else {
+            selectAdapter.isEditMode = false
+        }
+
+
+        if(editSelect == true || createSelect == true) {
             selectAdapter.showAddButton = true
-
                 var bottomNav = requireActivity().findViewById<BottomAppBar>(R.id.bottomNavigationApp)
                 bottomNav.visibility = View.GONE
                 var bottomFab = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
                 bottomFab.visibility = View.GONE
                 binding.guideline27.setGuidelinePercent(1F)
+                onBackButton()
 
         } else {
             selectAdapter.showAddButton = false
@@ -85,10 +85,7 @@ class SelectProductFragment : Fragment() {
             var bottomFab = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
             bottomFab.visibility = View.VISIBLE
         }
-
-
     }
-
 
     private fun observeList() {
         productViewModel.allNotes.observe(viewLifecycleOwner, Observer { products ->
@@ -97,7 +94,6 @@ class SelectProductFragment : Fragment() {
             searchView(products)
 
         })
-
     }
 
     private fun setupRecView() {
@@ -129,7 +125,6 @@ class SelectProductFragment : Fragment() {
         }
     }
 
-
     private fun deleteButton(position: Int): SwipeHelper.UnderlayButton {
         return SwipeHelper.UnderlayButton(
             requireContext(),
@@ -156,7 +151,6 @@ class SelectProductFragment : Fragment() {
         }
     }
 
-
     private fun archiveButton(position: Int): SwipeHelper.UnderlayButton {
         return SwipeHelper.UnderlayButton(
             requireContext(),
@@ -176,45 +170,7 @@ class SelectProductFragment : Fragment() {
     }
 
 
-    private val swipteToDelete = object : SwipeToDelete() {
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            val position = viewHolder.absoluteAdapterPosition
-            selectAdapter.notifyItemRemoved(position)
-            productViewModel.deleteItem(selectAdapter.getSelectInt(position))
-        }
 
-        override fun onChildDraw(
-            c: Canvas,
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            dX: Float,
-            dY: Float,
-            actionState: Int,
-            isCurrentlyActive: Boolean
-        ) {
-
-            RecyclerViewSwipeDecorator.Builder(
-                c,
-                recyclerView,
-                viewHolder,
-                dX,
-                dY,
-                actionState,
-                isCurrentlyActive
-
-            )
-                .addSwipeLeftBackgroundColor(
-                    ContextCompat.getColor(
-                        requireActivity(),
-                        R.color.designColor
-                    )
-                )
-                .addSwipeLeftActionIcon(R.drawable.delete_item)
-                .create()
-                .decorate()
-            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-        }
-    }
 
     private fun searchView(list: List<ProductDataEntity>) {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -239,13 +195,19 @@ class SelectProductFragment : Fragment() {
     private fun onBackButton(){
         callback = object : OnBackPressedCallback(true ) {
             override fun handleOnBackPressed() {
+                var editMode = this@SelectProductFragment.arguments?.getBoolean("editMode")
+                var bundle = Bundle()
+                if(editMode == true) {
+                    bundle.putBoolean("backUpdate", true)
+                } else {
+                    bundle.putBoolean("backUpdate", false)
+                }
 
-                findNavController().navigate(
-                    R.id.listProductsFragment,
-                    null,
-                    NavOptions.Builder().setPopUpTo(R.id.selectProductFragment, true).build()
-                )
-
+                        findNavController().navigate(
+                            R.id.listProductsFragment,
+                            bundle,
+                            NavOptions.Builder().setPopUpTo(R.id.selectProductFragment, true).build()
+                        )
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)

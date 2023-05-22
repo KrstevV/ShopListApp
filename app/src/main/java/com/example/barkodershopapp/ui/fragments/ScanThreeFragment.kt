@@ -1,5 +1,7 @@
 package com.example.barkodershopapp.ui.fragments
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +9,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.barkoder.Barkoder
 import com.barkoder.BarkoderConfig
@@ -21,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ScanThreeFragment : Fragment(), BarkoderResultCallback {
     lateinit var binding : FragmentScanThreeBinding
+    private val CAMERA_PERMISSION_REQUEST_CODE = 200
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +47,14 @@ class ScanThreeFragment : Fragment(), BarkoderResultCallback {
             Log.i("LicenseInfo", it.message)
         }
 
-        binding.bkdView3.startScanning(this)
+        if (checkCameraPermission()) {
+            startScanning()
+            navInvisible()
+        } else {
+            requestCameraPermission()
+            findNavController().popBackStack()
+        }
+
 
         setActiveBarcodeTypes()
         setBarkoderSettings()
@@ -95,6 +107,46 @@ class ScanThreeFragment : Fragment(), BarkoderResultCallback {
             updateUI(results[0], resultImage)
         else
             updateUI()
+    }
+
+    private fun startScanning() {
+
+        binding.bkdView3.startScanning(this)
+
+    }
+
+    private fun checkCameraPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.CAMERA,
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestCameraPermission() {
+        requestPermissions(
+            arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE),
+            CAMERA_PERMISSION_REQUEST_CODE
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            CAMERA_PERMISSION_REQUEST_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startScanning()
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Camera permission denied",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
     }
 
     override fun onPause() {

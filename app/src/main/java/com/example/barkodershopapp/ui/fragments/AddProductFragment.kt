@@ -2,22 +2,14 @@ package com.example.barkodershopapp.ui.fragments
 
 import android.Manifest
 import android.app.Activity
-import android.app.AlertDialog
-import android.content.ActivityNotFoundException
-import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.VectorDrawable
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.provider.Settings
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -33,24 +25,11 @@ import coil.load
 import com.barkoder.shoppingApp.net.R
 import com.barkoder.shoppingApp.net.databinding.FragmentAddProductBinding
 import com.example.barkodershopapp.data.db.productdatabase.ProductDataEntity
-import com.example.barkodershopapp.ui.activities.HomeScreenActivity
 import com.example.barkodershopapp.ui.viewmodels.ProductViewModel
 import com.example.barkodershopapp.ui.typeconverters.TypeConverterss
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.shape.MaterialShapeDrawable
-import com.google.android.material.shape.ShapeAppearanceModel
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.MultiplePermissionsReport
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.OutputStream
-import java.util.*
 
 
 @AndroidEntryPoint
@@ -107,6 +86,13 @@ class AddProductFragment : Fragment() {
     }
 
     private fun getBarcodeString() {
+        var barcodeNum = this@AddProductFragment.arguments?.getString("barcodeNum")
+        if (barcodeNum == "null") {
+            binding.editTextBarcodeAddProduct.setText("")
+        } else {
+            binding.editTextBarcodeAddProduct.setText(barcodeNum)
+        }
+
 
         binding.cameraImage.setImageResource(R.drawable.photo_camera)
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("barcodeNum3")
@@ -128,6 +114,8 @@ class AddProductFragment : Fragment() {
                 R.id.scanThreeFragment,
                 null
             )
+
+
         }
     }
     private fun onClickAdd() {

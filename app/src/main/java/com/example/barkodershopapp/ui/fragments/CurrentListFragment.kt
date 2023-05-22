@@ -1,5 +1,6 @@
 package com.example.barkodershopapp.ui.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -40,6 +41,8 @@ class CurrentListFragment : Fragment(){
     val productViewModel : ProductViewModel by viewModels()
     private val args by navArgs<CurrentListFragmentArgs>()
     private lateinit var callback: OnBackPressedCallback
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

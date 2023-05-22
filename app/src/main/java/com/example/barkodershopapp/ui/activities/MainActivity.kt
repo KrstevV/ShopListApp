@@ -24,7 +24,7 @@ import java.lang.reflect.Field
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    lateinit var auth: FirebaseAuth
+    private var isEditMode: Boolean = false
     val listViewModel: ListViewModel by viewModels()
     lateinit var binding: ActivityMainBinding
     lateinit var navController : NavController
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        auth = FirebaseAuth.getInstance()
+
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNavigationView.background = null
@@ -48,6 +48,15 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
+    }
+
+    fun setIsEditMode(value: Boolean) {
+        isEditMode = value
+    }
+
+    fun getIsEditMode(): Boolean {
+        return isEditMode
     }
 
 
