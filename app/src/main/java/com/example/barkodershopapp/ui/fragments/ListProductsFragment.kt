@@ -1,5 +1,6 @@
 package com.example.barkodershopapp.ui.fragments
 
+import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Canvas
 import android.os.Bundle
@@ -24,6 +25,7 @@ import com.example.barkodershopapp.data.db.historydatabase.HistoryDataEntity
 import com.example.barkodershopapp.data.db.listdatabase.ListDataEntity
 import com.example.barkodershopapp.ui.activities.MainActivity
 import com.example.barkodershopapp.ui.adapters.ProductAdapter
+import com.example.barkodershopapp.ui.listeners.swipeicons.SwipeHelper
 import com.example.barkodershopapp.ui.viewmodels.HistoryViewModel
 import com.example.barkodershopapp.ui.viewmodels.ListViewModel
 import com.google.android.material.bottomappbar.BottomAppBar
@@ -69,13 +71,10 @@ class ListProductsFragment : Fragment() {
         editMode()
         onClickButtonAdd()
         onClickButtonUpdate()
-        setupSwipteDelete()
         navInvisible()
         onButtonSelect()
 
     }
-
-
 
     private fun onButtonSelect(){
         binding.buttonImage.setOnClickListener {
@@ -105,9 +104,6 @@ class ListProductsFragment : Fragment() {
                     NavOptions.Builder().setPopUpTo(R.id.listProductsFragment, true).build()
                 )
             }
-
-
-
             }
         }
 
@@ -118,19 +114,48 @@ class ListProductsFragment : Fragment() {
         bottomFab.visibility = View.GONE
     }
 
-    private fun setupSwipteDelete() {
-        val itemTouchHelper = ItemTouchHelper(swipteToDelete)
-        itemTouchHelper.attachToRecyclerView(binding.recViewProductList)
-    }
-
     private fun setupRecView() {
         productAdapter = ProductAdapter(requireContext(),productL, clickListenerButtons)
         binding.recViewProductList.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = productAdapter
             binding.progressBar2.visibility = View.GONE
+
+            val itemTouchHelper = ItemTouchHelper(object : SwipeHelper(binding.recViewProductList) {
+                override fun instantiateUnderlayButton(position: Int): List<UnderlayButton> {
+                    var buttons = listOf<UnderlayButton>()
+                    val deleteButton = deleteButton(position)
+
+                    buttons = listOf(deleteButton)
+                    return buttons
+                }
+            })
+
+            itemTouchHelper.attachToRecyclerView(binding.recViewProductList)
         }
-    }
+
+        }
+
+private fun deleteButton(position: Int): SwipeHelper.UnderlayButton {
+    return SwipeHelper.UnderlayButton(
+        requireContext(),
+        "Delete",
+        14.0f,
+        android.R.color.holo_red_light,
+        object : SwipeHelper.UnderlayButtonClickListener {
+            override fun onClick() {
+                AlertDialog.Builder(context)
+                    .setTitle("Delete Product")
+                    .setMessage("Are you sure you want to delete this product?")
+                    .setPositiveButton("Delete") { _, _ ->
+                        productAdapter.notifyItemRemoved(position)
+                        listViewModel.deleteItem(productAdapter.getProductInt(position))
+                    }
+                    .setNegativeButton("Cancel", null)
+                    .show()
+            }
+        })
+}
 
     private fun onClickButtonUpdate() {
         var listId = this@ListProductsFragment.arguments?.getLong("currentListId")
@@ -234,49 +259,8 @@ class ListProductsFragment : Fragment() {
         return sum
     }
 
-    private val swipteToDelete = object : SwipeToDelete() {
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            val position = viewHolder.absoluteAdapterPosition
-            val item = productAdapter.getProductInt(position)
-            productAdapter.notifyItemRemoved(position)
-            listViewModel.deleteItem(item)
 
 
-        }
-
-        override fun onChildDraw(
-            c: Canvas,
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            dX: Float,
-            dY: Float,
-            actionState: Int,
-            isCurrentlyActive: Boolean
-        ) {
-
-            RecyclerViewSwipeDecorator.Builder(
-                c,
-                recyclerView,
-                viewHolder,
-                dX,
-                dY,
-                actionState,
-                isCurrentlyActive
-
-            )
-                .addSwipeLeftBackgroundColor(
-                    ContextCompat.getColor(
-                        requireActivity(),
-                        R.color.designColor
-                    )
-                )
-                .addSwipeLeftActionIcon(R.drawable.delete_item)
-                .create()
-                .decorate()
-
-            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-        }
-    }
 
     private fun onBackButton(){
         callback = object : OnBackPressedCallback(true ) {

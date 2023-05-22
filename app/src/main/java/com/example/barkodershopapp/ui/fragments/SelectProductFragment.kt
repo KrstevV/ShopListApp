@@ -1,5 +1,6 @@
 package com.example.barkodershopapp.ui.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -148,9 +149,15 @@ class SelectProductFragment : Fragment() {
             android.R.color.holo_red_light,
             object : SwipeHelper.UnderlayButtonClickListener {
                 override fun onClick() {
-                    selectAdapter.notifyItemRemoved(position)
-                    productViewModel.deleteItem(selectAdapter.getSelectInt(position))
-
+                        AlertDialog.Builder(context)
+                            .setTitle("Delete Product")
+                            .setMessage("Are you sure you want to delete this product?")
+                            .setPositiveButton("Delete") { _, _ ->
+                                selectAdapter.notifyItemRemoved(position)
+                                productViewModel.deleteItem(selectAdapter.getSelectInt(position))
+                            }
+                            .setNegativeButton("Cancel", null)
+                            .show()
                 }
             })
     }

@@ -19,6 +19,7 @@ class HistoryAdapter(private var list: List<HistoryDataEntity>) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(list: HistoryDataEntity) {
+            binding.totalCostList.text = list.totalCost + " $"
             binding.listNameHome2.text = list.listName
             binding.listSizeHome2.text = list.listProducts.size.toString()
             binding.listCircleText2.text = list.listName.first().toUpperCase().toString()

@@ -24,12 +24,15 @@ import androidx.navigation.fragment.findNavController
 import coil.load
 import com.barkoder.shoppingApp.net.R
 import com.barkoder.shoppingApp.net.databinding.FragmentAddProductBinding
+import com.example.barkodershopapp.data.db.pricedb.PriceHistory
 import com.example.barkodershopapp.data.db.productdatabase.ProductDataEntity
 import com.example.barkodershopapp.ui.viewmodels.ProductViewModel
 import com.example.barkodershopapp.ui.typeconverters.TypeConverterss
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 @AndroidEntryPoint
@@ -151,6 +154,8 @@ class AddProductFragment : Fragment() {
                     currentAddProduct.quantityProduct = productQuantity.toInt()
                     currentAddProduct.defultCount = 0
                     currentAddProduct.count = 1
+                    currentAddProduct.priceHistory = arrayListOf(PriceHistory(currentAddProduct.priceProduct.toString() + " $", getCurrentDate(), R.drawable.edit_fill0_wght400_grad0_opsz48))
+
 
 
                     val drawable = productImage.drawable
@@ -293,7 +298,11 @@ class AddProductFragment : Fragment() {
         // Save other text field values
     }
 
-
+    private fun getCurrentDate(): String {
+        val currentDate = Calendar.getInstance().time
+        val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm")
+        return formatter.format(currentDate)
+    }
 
 
 

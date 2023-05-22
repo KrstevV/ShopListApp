@@ -1,5 +1,6 @@
 package com.example.barkodershopapp.ui.fragments
 
+import android.app.AlertDialog
 import android.database.CursorWindow
 import android.graphics.Canvas
 import android.os.Bundle
@@ -119,8 +120,16 @@ class HistoryListFragment : Fragment() {
             android.R.color.holo_red_light,
             object : SwipeHelper.UnderlayButtonClickListener {
                 override fun onClick() {
-                    historyAdapter.notifyItemRemoved(position)
-                    historyViewmodel.deleteItem(historyAdapter.getHistoryInt(position))
+                    AlertDialog.Builder(context)
+                        .setTitle("Delete Product")
+                        .setMessage("Are you sure you want to delete this list?")
+                        .setPositiveButton("Delete") { _, _ ->
+                            historyAdapter.notifyItemRemoved(position)
+                            historyViewmodel.deleteItem(historyAdapter.getHistoryInt(position))
+                        }
+                        .setNegativeButton("Cancel", null)
+                        .show()
+
 
                 }
             })
@@ -132,51 +141,7 @@ class HistoryListFragment : Fragment() {
             binding.progressBar4.visibility = View.GONE
         })
     }
-    private fun swipeDelete() {
-        val itemTouchHelper = ItemTouchHelper(swipteToDelete)
-        itemTouchHelper.attachToRecyclerView(binding.recViewHistory2)
-    }
 
-    private val swipteToDelete = object : SwipeToDelete() {
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            val position = viewHolder.absoluteAdapterPosition
-            historyAdapter.notifyItemRemoved(position)
-            historyViewmodel.deleteItem(historyAdapter.getHistoryInt(position))
-
-        }
-
-        override fun onChildDraw(
-            c: Canvas,
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            dX: Float,
-            dY: Float,
-            actionState: Int,
-            isCurrentlyActive: Boolean
-        ) {
-            RecyclerViewSwipeDecorator.Builder(
-                c,
-                recyclerView,
-                viewHolder,
-                dX,
-                dY,
-                actionState,
-                isCurrentlyActive
-            )
-                .addSwipeLeftBackgroundColor(
-                    ContextCompat.getColor(
-                        requireActivity(),
-                        R.color.designColor
-                    )
-                )
-                .addSwipeLeftActionIcon(R.drawable.delete_item)
-                .create()
-                .decorate()
-
-            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-
-        }
-    }
 
     private fun onBackButton(){
         callback = object : OnBackPressedCallback(true ) {

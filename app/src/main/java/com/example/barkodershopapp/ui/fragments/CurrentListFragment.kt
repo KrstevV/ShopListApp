@@ -1,7 +1,12 @@
 package com.example.barkodershopapp.ui.fragments
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.app.StatusBarManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -9,7 +14,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -51,6 +58,7 @@ class CurrentListFragment : Fragment(){
         setupRecView()
         setupTextViews()
         navInvisible()
+        toolBarName()
 
         return binding.root
     }
@@ -67,6 +75,9 @@ class CurrentListFragment : Fragment(){
         onBackButton()
     }
 
+    private fun toolBarName() {
+        binding.textActivityName.text = args.currentList.listName
+    }
     private fun navInvisible(){
         var bottomNav = requireActivity().findViewById<BottomAppBar>(R.id.bottomNavigationApp)
         bottomNav.visibility = View.GONE
@@ -102,6 +113,9 @@ class CurrentListFragment : Fragment(){
                 currentAdapter.notifyDataSetChanged()
                 scanLayout.visibility = View.VISIBLE
             }
+            changeStatusBarColor(ContextCompat.getColor(requireContext(), R.color.designColor))
+            binding.include.toolBarr.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.designColor))
+            binding.textActivityName.text = args.currentList.listName
             binding.stopList.visibility = View.GONE
             binding.startList.visibility = View.VISIBLE
             binding.btnEditList.visibility = View.VISIBLE
@@ -121,19 +135,28 @@ class CurrentListFragment : Fragment(){
                 currentAdapter.notifyDataSetChanged()
                 scanLayout.visibility = View.GONE
             }
+            changeStatusBarColor(ContextCompat.getColor(requireContext(), R.color.checkoutModeToolBar))
+            binding.include.toolBarr.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.checkoutModeToolBar))
+            binding.textActivityName.text = "Checkout Mode"
             binding.startList.visibility = View.GONE
             binding.btnEditList.visibility = View.GONE
             binding.stopList.visibility = View.VISIBLE
             binding.btnRestoreCheckout.visibility = View.GONE
         }
     }
-
     private fun onClickRestore(){
         binding.btnRestoreCheckout.setOnClickListener {
-            for (i in args.currentList.listProducts) {
-                i.listProducts.defultCount = 0
-                i.listProducts.checkout = false
-            }
+            AlertDialog.Builder(context)
+                .setTitle("Restore List")
+                .setMessage("Are you sure you want to restore checkouts of this list?")
+                .setPositiveButton("Yes") { _, _ ->
+                    for (i in args.currentList.listProducts) {
+                        i.listProducts.defultCount = 0
+                        i.listProducts.checkout = false
+                    }
+                }
+                .setNegativeButton("Cancel", null)
+                .show()
         }
     }
     private fun onClickEdit(){
@@ -198,6 +221,7 @@ class CurrentListFragment : Fragment(){
                     override fun run() {
                         findNavController().previousBackStackEntry
                         findNavController().popBackStack()
+                        changeStatusBarColor(ContextCompat.getColor(requireContext(), R.color.designColor))
                     }
                 }, 2000)
             }
@@ -235,7 +259,6 @@ class CurrentListFragment : Fragment(){
                     currentAdapter.notifyItemChanged(i)
                     break
                 }
-
             }
         }
     }
@@ -244,6 +267,9 @@ class CurrentListFragment : Fragment(){
         super.onResume()
 
         if (listViewModel.isListStarted) {
+            changeStatusBarColor(ContextCompat.getColor(requireContext(), R.color.checkoutModeToolBar))
+            binding.include.toolBarr.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.checkoutModeToolBar))
+            binding.textActivityName.text = "Checkout Mode"
             currentAdapter.showCheckboxes = true
             binding.startList.visibility = View.GONE
             binding.scanLayout.visibility = View.VISIBLE
@@ -251,6 +277,9 @@ class CurrentListFragment : Fragment(){
             binding.btnEditList.visibility = View.GONE
             binding.btnRestoreCheckout.visibility = View.GONE
         } else {
+            changeStatusBarColor(ContextCompat.getColor(requireContext(), R.color.designColor))
+            binding.include.toolBarr.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.designColor))
+            binding.textActivityName.text = args.currentList.listName
             currentAdapter.showCheckboxes = false
             binding.scanLayout.visibility = View.GONE
             binding.btnEditList.visibility = View.VISIBLE
@@ -295,9 +324,20 @@ class CurrentListFragment : Fragment(){
             override fun handleOnBackPressed() {
 
                 findNavController().popBackStack()
+                changeStatusBarColor(ContextCompat.getColor(requireContext(), R.color.designColor))
 
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
+
+    private fun changeStatusBarColor(color: Int) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window = requireActivity().window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.statusBarColor = color
+        }
+    }
+
+
 }
