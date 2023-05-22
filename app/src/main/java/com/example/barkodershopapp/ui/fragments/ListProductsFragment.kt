@@ -59,6 +59,7 @@ class ListProductsFragment : Fragment() {
         onBackButton()
 
 
+
         return binding.root
     }
 
@@ -80,13 +81,15 @@ class ListProductsFragment : Fragment() {
         binding.buttonImage.setOnClickListener {
             var listId = this@ListProductsFragment.arguments?.getLong("currentListId")
             var checkedDate = this@ListProductsFragment.arguments?.getString("checkedDate").toString()
-            var editMode = this@ListProductsFragment.arguments?.getBoolean("editMode")
+            var listName = this@ListProductsFragment.arguments?.getString("listName").toString()
             var edit = this@ListProductsFragment.arguments?.getBoolean("edit")
-            if(editMode == true || edit == true) {
+            var editMode = this@ListProductsFragment.arguments?.getBoolean("editMode")
+            if(editMode == true) {
                 var bundle = Bundle()
                 bundle.putBoolean("editSelect", true)
                 bundle.putLong("listId",listId!!)
                 bundle.putString("checkedDate", checkedDate)
+                bundle.putString("listName", listName)
                 findNavController().navigate(
                     R.id.selectProductFragment,
                     bundle,
@@ -95,6 +98,7 @@ class ListProductsFragment : Fragment() {
             } else {
                 var bundle = Bundle()
                 bundle.putBoolean("createSelect", true)
+                bundle.putString("listNameCreate", binding.editTextListName.text.toString())
                 findNavController().navigate(
                     R.id.selectProductFragment,
                     bundle,
@@ -173,6 +177,7 @@ class ListProductsFragment : Fragment() {
                         )
                     )
                 })
+                listViewModel.delete()
 
                 findNavController().navigate(
                     R.id.historyListFragment2,
@@ -198,12 +203,11 @@ class ListProductsFragment : Fragment() {
     }
 
     private fun editMode() {
-        var edit = this@ListProductsFragment.arguments?.getBoolean("edit")
         var editMode = this@ListProductsFragment.arguments?.getBoolean("editMode")
         var listName = this@ListProductsFragment.arguments?.getString("listName")
         var backUpdate = this@ListProductsFragment.arguments?.getBoolean("backUpdate")
 
-        if (editMode == true || edit == true) {
+        if (editMode == true) {
             binding.textActivityName.text = "Update List"
             binding.btnAddNewList.visibility = View.INVISIBLE
             binding.btnUpdateList.visibility = View.VISIBLE
@@ -325,6 +329,8 @@ class ListProductsFragment : Fragment() {
         var bottomFab = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
         bottomFab.visibility = View.VISIBLE
     }
+
+
 
 
 

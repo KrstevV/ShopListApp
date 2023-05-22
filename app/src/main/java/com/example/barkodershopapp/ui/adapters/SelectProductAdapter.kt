@@ -17,9 +17,6 @@ import com.example.barkodershopapp.data.db.productdatabase.ProductDataEntity
 import com.barkoder.shoppingApp.net.R
 import com.barkoder.shoppingApp.net.databinding.SelectproductItemBinding
 import com.example.barkodershopapp.data.db.listdatabase.ListDataEntity
-import com.example.barkodershopapp.ui.fragments.ListProductsFragment
-import com.example.barkodershopapp.ui.fragments.ProductInfoFragment
-import com.example.barkodershopapp.ui.fragments.SelectProductFragment
 import com.example.barkodershopapp.ui.fragments.SelectProductFragmentDirections
 import com.example.barkodershopapp.ui.viewmodels.ListViewModel
 import com.example.barkodershopapp.ui.typeconverters.TypeConverterss
@@ -28,7 +25,10 @@ import kotlin.collections.ArrayList
 
 class SelectProductAdapter(
     private var list: ArrayList<ProductDataEntity>,
-    private var viewModel: ListViewModel
+    private var viewModel: ListViewModel,
+    private var listId : Long,
+    private var checkedDate : String,
+    private var listName : String
 ) : RecyclerView.Adapter<SelectProductAdapter.ViewHolder>(), Filterable {
 
     private var productListFull: List<ProductDataEntity> = ArrayList()
@@ -49,14 +49,17 @@ class SelectProductAdapter(
         private val binding: SelectproductItemBinding,
         private var viewModel: ListViewModel
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(list: ProductDataEntity, showAddButton : Boolean, isEditMode : Boolean) {
+        fun bind(list: ProductDataEntity, showAddButton : Boolean, isEditMode : Boolean, listId : Long, checkedDate : String,
+                 listName : String) {
             binding.textSelectProductName.text = list.nameProduct
             binding.textSelectProductBarcode.text = list.barcodeProduct
             binding.textSelectProductPrice.text = list.priceProduct.toString() + " $"
             binding.selectLayout.setOnClickListener {
                 try {
-                    val actions = SelectProductFragmentDirections.actionSelectProductFragmentToProductHistoryFragment(list)
-                    Navigation.findNavController(binding.root).navigate(actions)
+
+
+                    val actions2 = SelectProductFragmentDirections.actionSelectProductFragmentToProductHistoryFragment(list)
+                    Navigation.findNavController(binding.root).navigate(actions2)
 
 
                 } catch (e: Exception) {
@@ -72,12 +75,17 @@ class SelectProductAdapter(
                 binding.btnAddProduct.visibility = View.GONE
             }
 
+
+
             binding.btnAddProduct.setOnClickListener {
                 var bundle = Bundle()
                     if(isEditMode == true){
-                        bundle.putBoolean("edit", true)
+                        bundle.putBoolean("editMode", true)
+                        bundle.putLong("currentListId", listId)
+                        bundle.putString("checkedDate", checkedDate)
+                        bundle.putString("listName", listName)
                     } else {
-                        bundle.putBoolean("edit", false)
+                        bundle.putBoolean("editMode", false)
                     }
 
                 viewModel.insert(ListDataEntity(list))
@@ -104,7 +112,7 @@ class SelectProductAdapter(
     override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(list[position], showAddButton, isEditMode)
+        holder.bind(list[position], showAddButton, isEditMode, listId, checkedDate, listName)
     }
 
     fun getSelectInt(position: Int): ProductDataEntity {

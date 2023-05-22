@@ -37,6 +37,7 @@ class SelectProductFragment : Fragment() {
 
     private lateinit var callback: OnBackPressedCallback
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -99,7 +100,19 @@ class SelectProductFragment : Fragment() {
     }
 
     private fun setupRecView() {
-        selectAdapter = SelectProductAdapter(productS, listViewMOdel)
+        var listId = this@SelectProductFragment.arguments?.getLong("listId")
+        var checkedDate = this@SelectProductFragment.arguments?.getString("checkedDate")
+        var listName = this@SelectProductFragment.arguments?.getString("listName")
+        var editSelect = this@SelectProductFragment.arguments?.getBoolean("editSelect")
+        var listNameCreate = this@SelectProductFragment.arguments?.getString("listNameCreate")
+        if(editSelect == true){
+            selectAdapter = SelectProductAdapter(productS, listViewMOdel, listId!!, checkedDate!!,listName!!)
+        } else {
+            selectAdapter = SelectProductAdapter(productS, listViewMOdel, 0L, "","")
+        }
+
+
+
         selectAdapter.setProductsList2(productS)
 
         binding.recViewSelect.apply {
@@ -172,8 +185,6 @@ class SelectProductFragment : Fragment() {
     }
 
 
-
-
     private fun searchView(list: List<ProductDataEntity>) {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
@@ -223,6 +234,8 @@ class SelectProductFragment : Fragment() {
         var bottomFab = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
         bottomFab.visibility = View.VISIBLE
     }
+
+
 
 
 }

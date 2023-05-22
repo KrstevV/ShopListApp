@@ -14,7 +14,6 @@ import com.example.barkodershopapp.data.db.listdatabase.ListDataEntity
 import com.example.barkodershopapp.data.db.productdatabase.ProductDataEntity
 import com.example.barkodershopapp.ui.fragments.HistoryListFragmentDirections
 import com.example.barkodershopapp.ui.fragments.HomeScreenFragmentDirections
-import com.example.barkodershopapp.ui.fragments.SelectProductFragmentDirections
 import com.example.barkodershopapp.ui.typeconverters.TypeConverterss
 import com.example.barkodershopapp.ui.viewmodels.ListViewModel
 
