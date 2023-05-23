@@ -86,8 +86,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Coca Cola"
+                android:textColor="@color/productName"
                 android:textSize="24sp"
-                android:textStyle="bold|italic"
                 app:layout_constraintBottom_toTopOf="@+id/textBarcodeInfo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -105,8 +105,8 @@
 
                 android:gravity="center"
                 android:text="2131231412312"
+                android:textColor="@color/productInfo"
                 android:textSize="20sp"
-                android:textStyle="bold|italic"
                 app:layout_constraintBottom_toTopOf="@+id/textUnitInfo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -125,8 +125,8 @@
                 android:layout_marginBottom="18dp"
                 android:gravity="center"
                 android:text="gr"
+                android:textColor="@color/productName"
                 android:textSize="24sp"
-                android:textStyle="bold|italic"
                 app:layout_constraintBottom_toTopOf="@+id/textPriceInfo"
                 app:layout_constraintEnd_toStartOf="@+id/textView10"
                 app:layout_constraintStart_toEndOf="@+id/textView9"
@@ -145,8 +145,8 @@
                 android:layout_marginBottom="17dp"
                 android:gravity="center"
                 android:text="321"
+                android:textColor="@color/productName"
                 android:textSize="20sp"
-                android:textStyle="bold|italic"
                 app:layout_constraintBottom_toTopOf="@+id/btnCancel"
                 app:layout_constraintStart_toEndOf="@+id/textView10">
 
@@ -161,8 +161,8 @@
                 android:layout_marginBottom="16dp"
                 android:gravity="center"
                 android:text="1231"
+                android:textColor="@color/productName"
                 android:textSize="20sp"
-                android:textStyle="bold|italic"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView11" />
 
@@ -202,6 +202,7 @@
                 android:layout_marginTop="17dp"
                 android:layout_marginBottom="29dp"
                 android:text="Unit:"
+                android:textColor="@color/productInfo"
                 app:layout_constraintBottom_toTopOf="@+id/textView11"
                 app:layout_constraintEnd_toStartOf="@+id/textUnitInfo"
                 app:layout_constraintStart_toStartOf="parent"
@@ -212,6 +213,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Quantity:"
+                android:textColor="@color/productInfo"
                 app:layout_constraintBottom_toTopOf="@+id/btnCancel"
                 app:layout_constraintEnd_toStartOf="@+id/textQuantityInfo"
                 app:layout_constraintStart_toEndOf="@+id/textUnitInfo"
@@ -226,6 +228,7 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="20dp"
                 android:text="Price:"
+                android:textColor="@color/productInfo"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/textPriceInfo"
                 app:layout_constraintStart_toStartOf="parent" />

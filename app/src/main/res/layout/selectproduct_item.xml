@@ -17,8 +17,8 @@
         android:layout_marginStart="12dp"
         android:layout_marginBottom="30dp"
         android:text="325324123"
+        android:textColor="@color/productInfo"
         android:textSize="12sp"
-        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageSelectProduct" />
 
@@ -29,8 +29,8 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="4dp"
         android:text="Coca Cola"
+        android:textColor="@color/productName"
         android:textSize="14sp"
-        android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@+id/textSelectProductBarcode"
         app:layout_constraintStart_toEndOf="@+id/imageSelectProduct"
         app:layout_constraintTop_toTopOf="parent" />
@@ -76,8 +76,8 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="3dp"
         android:text="2.5 $"
+        android:textColor="@color/productInfo"
         android:textSize="15sp"
-        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -104,8 +104,8 @@
         android:layout_marginStart="12dp"
         android:layout_marginBottom="8dp"
         android:text="TextView"
+        android:textColor="@color/productInfo"
         android:textSize="12sp"
-        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageSelectProduct" />
 
@@ -116,8 +116,8 @@
         android:layout_marginStart="5dp"
         android:layout_marginBottom="8dp"
         android:text="TextView"
+        android:textColor="@color/productInfo"
         android:textSize="12sp"
-        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView21" />
 
@@ -128,8 +128,7 @@
         android:layout_marginStart="1dp"
         android:layout_marginBottom="8dp"
         android:text=":"
-        android:textColor="#0B0A0A"
-        android:textStyle="bold|italic"
+        android:textColor="@color/productInfo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textProductUnit" />
 

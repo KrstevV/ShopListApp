@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="55dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#C10E0E"
+    android:background="#CC0018"
     android:id="@+id/toolBarr"
     app:titleTextColor="@color/white"
     android:textAlignment="center"
