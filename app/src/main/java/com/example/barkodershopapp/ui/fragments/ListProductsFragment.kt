@@ -155,13 +155,13 @@ class ListProductsFragment : Fragment() {
             object : SwipeHelper.UnderlayButtonClickListener {
                 override fun onClick() {
                     AlertDialog.Builder(requireContext())
-                        .setTitle("Delete Product")
-                        .setMessage("Are you sure you want to delete this product?")
-                        .setPositiveButton("Delete") { _, _ ->
+                        .setTitle(getString(R.string.deleteProduct))
+                        .setMessage(getString(R.string.deleteProductDialog))
+                        .setPositiveButton(getString(R.string.delete)) { _, _ ->
                             productAdapter.notifyItemRemoved(position)
                         listViewModel.deleteItem(productAdapter.getProductInt(position))
                         }
-                        .setNegativeButton("Cancel", null)
+                        .setNegativeButton(getString(R.string.cancel), null)
                         .show()
                 }
             }
@@ -244,12 +244,12 @@ class ListProductsFragment : Fragment() {
         var backUpdate = this@ListProductsFragment.arguments?.getBoolean("backUpdate")
 
         if (editMode == true) {
-            binding.textActivityName.text = "Update List"
+            requireActivity().title = requireContext().getString(R.string.updateList)
             binding.btnAddNewList.visibility = View.INVISIBLE
             binding.btnUpdateList.visibility = View.VISIBLE
             binding.editTextListName.setText(listName)
         } else {
-            binding.textActivityName.text = "Create List"
+            requireActivity().title = requireContext().getString(R.string.createList)
             binding.btnAddNewList.visibility = View.VISIBLE
             binding.btnUpdateList.visibility = View.INVISIBLE
             binding.editTextListName.setText("")

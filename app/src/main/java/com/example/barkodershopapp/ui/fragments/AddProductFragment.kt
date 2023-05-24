@@ -2,6 +2,7 @@ package com.example.barkodershopapp.ui.fragments
 
 import android.Manifest
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -10,6 +11,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.VectorDrawable
 import android.os.Bundle
 import android.provider.MediaStore
+import android.speech.RecognizerIntent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -41,6 +43,7 @@ class AddProductFragment : Fragment() {
     private val productViewModel: ProductViewModel by viewModels()
     private val cameraRequest = 1
     private lateinit var callback: OnBackPressedCallback
+    private val REQ_CODE_SPEECH_INPUT = 100
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,6 +52,7 @@ class AddProductFragment : Fragment() {
 
 //        binding.editTextBarcodeAddProduct.setText("xxxxxx")
         binding = FragmentAddProductBinding.inflate(inflater, container, false)
+        requireActivity().title = requireContext().getString(R.string.createProduct)
 
         getBarcodeString()
         savedInstanceState?.let { savedState ->
@@ -58,6 +62,7 @@ class AddProductFragment : Fragment() {
             binding.editPriceAddProduct.setText(savedState.getString("textPrice"))
 
         }
+
 
         return binding.root
     }
@@ -71,7 +76,25 @@ class AddProductFragment : Fragment() {
         onCLickScanFab()
         onBackButton()
 
+
+        binding.btnVoice.setOnClickListener {
+            promptSpeechInput()
+        }
+
     }
+
+    private fun promptSpeechInput() {
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.speech_prompt))
+        try {
+            startActivityForResult(intent, REQ_CODE_SPEECH_INPUT)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(context, getString(R.string.speech_not_supported), Toast.LENGTH_SHORT).show()
+        }
+    }
+
 
     private fun onCLickScanFab() {
         var btnScan = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
@@ -197,10 +220,10 @@ class AddProductFragment : Fragment() {
                     null,
                     NavOptions.Builder().setPopUpTo(R.id.addProductFragment, true).build()
                 )
-                Toast.makeText(context, "Product is successful created", Toast.LENGTH_SHORT)
+                Toast.makeText(context, getString(R.string.productCreated), Toast.LENGTH_SHORT)
                     .show()
             } else {
-                Toast.makeText(context, "Fields cannot be empty", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.fieldsEmpty), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -218,6 +241,14 @@ class AddProductFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQ_CODE_SPEECH_INPUT && resultCode == Activity.RESULT_OK && data != null) {
+            val result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+            val spokenText = result?.getOrNull(0)
+            if (spokenText != null) {
+                binding.editTextNameAddProduct.setText(spokenText)
+            }
+        }
 
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {

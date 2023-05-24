@@ -51,6 +51,8 @@ class ProductHistoryFragment : Fragment() {
 
 
 
+
+
         return  binding.root
     }
 
@@ -97,6 +99,7 @@ class ProductHistoryFragment : Fragment() {
         var productPrice = this@ProductHistoryFragment.arguments?.getString("productPrice")
         var productImage = this@ProductHistoryFragment.arguments?.getByteArray("productImage")
         if(scanned == true) {
+            requireActivity().title = productName
             binding.textActivityName.setText(productName)
             binding.textNameInfo.setText(productName)
             binding.textBarcodeInfo.setText(productBarcode)

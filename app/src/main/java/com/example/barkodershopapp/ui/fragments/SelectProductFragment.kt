@@ -62,6 +62,7 @@ class SelectProductFragment : Fragment() {
         setupRecView()
         onCLickScan()
         observeList()
+        requireActivity().title = requireContext().getString(R.string.myProducts)
 
 
 
@@ -181,13 +182,13 @@ class SelectProductFragment : Fragment() {
             object : SwipeHelper.UnderlayButtonClickListener {
                 override fun onClick() {
                     AlertDialog.Builder(requireContext())
-                        .setTitle("Delete Product")
-                        .setMessage("Are you sure you want to delete this product?")
-                        .setPositiveButton("Delete") { _, _ ->
+                        .setTitle(getString(R.string.deleteProduct))
+                        .setMessage(getString(R.string.deleteProductDialog))
+                        .setPositiveButton(getString(R.string.delete)) { _, _ ->
                             selectAdapter.notifyItemRemoved(position)
                             productViewModel.deleteItem(selectAdapter.getSelectInt(position))
                         }
-                        .setNegativeButton("Cancel", null)
+                        .setNegativeButton(getString(R.string.cancel), null)
                         .show()
                 }
             }

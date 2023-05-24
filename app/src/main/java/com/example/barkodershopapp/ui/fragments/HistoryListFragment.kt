@@ -51,7 +51,7 @@ class HistoryListFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentHistoryListBinding.inflate(inflater, container, false)
-
+        requireActivity().title = requireContext().getString(R.string.myLists)
         try {
             val field: Field = CursorWindow::class.java.getDeclaredField("sCursorWindowSize")
             field.setAccessible(true)
@@ -96,7 +96,7 @@ class HistoryListFragment : Fragment() {
     }
 
     private fun setupRecView() {
-        historyAdapter = HistoryAdapter(listH)
+        historyAdapter = HistoryAdapter(listH, requireContext())
 
         binding.recViewHistory2.apply {
             layoutManager = LinearLayoutManager(context)
@@ -134,13 +134,13 @@ class HistoryListFragment : Fragment() {
             object : SwipeHelper.UnderlayButtonClickListener {
                 override fun onClick() {
                     AlertDialog.Builder(requireContext())
-                        .setTitle("Delete Product")
-                        .setMessage("Are you sure you want to delete this list?")
-                        .setPositiveButton("Delete") { _, _ ->
+                        .setTitle(getString(R.string.deleteList))
+                        .setMessage(getString(R.string.deleteListDialog))
+                        .setPositiveButton(getString(R.string.delete)) { _, _ ->
                             historyAdapter.notifyItemRemoved(position)
                             historyViewmodel.deleteItem(historyAdapter.getHistoryInt(position))
                         }
-                        .setNegativeButton("Cancel", null)
+                        .setNegativeButton(getString(R.string.cancel), null)
                         .show()
                 }
             }

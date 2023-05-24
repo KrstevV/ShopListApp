@@ -150,6 +150,9 @@
         <action
             android:id="@+id/action_homeScreenFragment_to_productHistoryFragment"
             app:destination="@id/productHistoryFragment" />
+        <action
+            android:id="@+id/action_homeScreenFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/currentListFragment2"
@@ -183,5 +186,14 @@
         <action
             android:id="@+id/action_scanThreeFragment_to_addProductFragment"
             app:destination="@id/addProductFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.barkodershopapp.ui.fragments.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_homeScreenFragment"
+            app:destination="@id/homeScreenFragment" />
     </fragment>
 </navigation>

@@ -355,7 +355,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="50dp"
                     android:clickable="true"
-                    android:text="Update"
+                    android:text="@string/update"
                     app:cornerRadius="50dp"
                     app:layout_constraintBottom_toTopOf="@+id/guideline18"
                     app:layout_constraintEnd_toStartOf="@+id/guideline5"

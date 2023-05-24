@@ -20,6 +20,8 @@ import com.example.barkodershopapp.data.db.productdatabase.ProductDataEntity
 import com.example.barkodershopapp.ui.adapters.PriceHistoryAdapter
 import com.example.barkodershopapp.ui.typeconverters.TypeConverterss
 import com.example.barkodershopapp.ui.viewmodels.ProductViewModel
+import com.google.android.material.bottomappbar.BottomAppBar
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
@@ -47,6 +49,9 @@ class ProductInfoFragment : Fragment() {
 //        setupRecView()
         setupTextViews()
         onBackButton()
+        navInvisible()
+
+        requireActivity().title = requireContext().getString(R.string.updateProduct)
         return binding.root
     }
 
@@ -58,6 +63,13 @@ class ProductInfoFragment : Fragment() {
         }
 
 
+    }
+
+    private fun navInvisible(){
+        var bottomNav = requireActivity().findViewById<BottomAppBar>(R.id.bottomNavigationApp)
+        bottomNav.visibility = View.GONE
+        var bottomFab = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
+        bottomFab.visibility = View.GONE
     }
 
 
@@ -135,5 +147,13 @@ class ProductInfoFragment : Fragment() {
         val currentDate = Calendar.getInstance().time
         val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm")
         return formatter.format(currentDate)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        var bottomNav = requireActivity().findViewById<BottomAppBar>(R.id.bottomNavigationApp)
+        bottomNav.visibility = View.VISIBLE
+        var bottomFab = requireActivity().findViewById<FloatingActionButton>(R.id.fabNav)
+        bottomFab.visibility = View.VISIBLE
     }
 }

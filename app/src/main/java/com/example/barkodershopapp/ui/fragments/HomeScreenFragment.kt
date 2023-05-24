@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
@@ -22,10 +24,11 @@ import com.example.barkodershopapp.ui.viewmodels.HistoryViewModel
 import com.example.barkodershopapp.ui.viewmodels.ListViewModel
 import com.example.barkodershopapp.ui.viewmodels.ProductViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeScreenFragment : Fragment() {
+class HomeScreenFragment : Fragment(){
     val productViewModel: ProductViewModel by viewModels()
     lateinit var binding: FragmentHomeScreenBinding
     lateinit var productAdapter : HomeProductAdapter
@@ -35,6 +38,7 @@ class HomeScreenFragment : Fragment() {
     val listViewMOdel: ListViewModel by viewModels()
     val historyViewModel : HistoryViewModel by viewModels()
     private lateinit var callback: OnBackPressedCallback
+    private lateinit var drawerLayout : DrawerLayout
 
 
     override fun onCreateView(
@@ -55,6 +59,7 @@ class HomeScreenFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         onCLickScan()
+        requireActivity().title = requireContext().getString(R.string.homeScreen)
 
     }
 

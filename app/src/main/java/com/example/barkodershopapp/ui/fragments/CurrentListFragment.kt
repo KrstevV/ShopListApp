@@ -76,7 +76,7 @@ class CurrentListFragment : Fragment(){
     }
 
     private fun toolBarName() {
-        binding.textActivityName.text = args.currentList.listName
+        requireActivity().title = args.currentList.listName
     }
     private fun navInvisible(){
         var bottomNav = requireActivity().findViewById<BottomAppBar>(R.id.bottomNavigationApp)
@@ -134,6 +134,7 @@ class CurrentListFragment : Fragment(){
                 currentAdapter.notifyDataSetChanged()
                 scanLayout.visibility = View.GONE
             }
+
             changeStatusBarColor(ContextCompat.getColor(requireContext(), R.color.checkoutModeToolBar))
             binding.include.toolBarr.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.checkoutModeToolBar))
             binding.textActivityName.text = "Checkout Mode"
@@ -145,15 +146,15 @@ class CurrentListFragment : Fragment(){
     private fun onClickRestore(){
         binding.btnRestoreCheckout.setOnClickListener {
             AlertDialog.Builder(context)
-                .setTitle("Restore List")
-                .setMessage("Are you sure you want to restore checkouts of this list?")
-                .setPositiveButton("Yes") { _, _ ->
+                .setTitle(getString(R.string.restoreList))
+                .setMessage(getString(R.string.restoreListDialog))
+                .setPositiveButton(getString(R.string.yes)) { _, _ ->
                     for (i in args.currentList.listProducts) {
                         i.listProducts.defultCount = 0
                         i.listProducts.checkout = false
                     }
                 }
-                .setNegativeButton("Cancel", null)
+                .setNegativeButton(getString(R.string.cancel), null)
                 .show()
         }
     }
