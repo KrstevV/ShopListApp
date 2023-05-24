@@ -1,6 +1,8 @@
 package com.example.barkodershopapp.ui.fragments
 
 import android.app.AlertDialog
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
@@ -141,25 +145,53 @@ class SelectProductFragment : Fragment() {
         }
     }
 
+//    private fun deleteButton(position: Int): SwipeHelper.UnderlayButton {
+//        return SwipeHelper.UnderlayButton(
+//            requireContext(),
+//            "Delete",
+//            14.0f,
+//            android.R.color.holo_red_light,
+//            object : SwipeHelper.UnderlayButtonClickListener {
+//                override fun onClick() {
+//                        AlertDialog.Builder(context)
+//                            .setTitle("Delete Product")
+//                            .setMessage("Are you sure you want to delete this product?")
+//                            .setPositiveButton("Delete") { _, _ ->
+//                                selectAdapter.notifyItemRemoved(position)
+//                                productViewModel.deleteItem(selectAdapter.getSelectInt(position))
+//                            }
+//                            .setNegativeButton("Cancel", null)
+//                            .show()
+//                }
+//            })
+//    }
+
     private fun deleteButton(position: Int): SwipeHelper.UnderlayButton {
+        val originalIcon = ContextCompat.getDrawable(requireContext(), R.drawable.delete_item)
+        val icon = originalIcon?.let { drawable ->
+            val desiredSize = 100
+            val scaledDrawable = BitmapDrawable(resources, Bitmap.createScaledBitmap(drawable.toBitmap(), desiredSize, desiredSize, true))
+            scaledDrawable.setBounds(0, 0, scaledDrawable.intrinsicWidth, scaledDrawable.intrinsicHeight)
+            scaledDrawable
+        }
         return SwipeHelper.UnderlayButton(
             requireContext(),
-            "Delete",
-            14.0f,
+            icon!!,
             android.R.color.holo_red_light,
             object : SwipeHelper.UnderlayButtonClickListener {
                 override fun onClick() {
-                        AlertDialog.Builder(context)
-                            .setTitle("Delete Product")
-                            .setMessage("Are you sure you want to delete this product?")
-                            .setPositiveButton("Delete") { _, _ ->
-                                selectAdapter.notifyItemRemoved(position)
-                                productViewModel.deleteItem(selectAdapter.getSelectInt(position))
-                            }
-                            .setNegativeButton("Cancel", null)
-                            .show()
+                    AlertDialog.Builder(requireContext())
+                        .setTitle("Delete Product")
+                        .setMessage("Are you sure you want to delete this product?")
+                        .setPositiveButton("Delete") { _, _ ->
+                            selectAdapter.notifyItemRemoved(position)
+                            productViewModel.deleteItem(selectAdapter.getSelectInt(position))
+                        }
+                        .setNegativeButton("Cancel", null)
+                        .show()
                 }
-            })
+            }
+        )
     }
 
     private fun onCLickScan() {
@@ -173,23 +205,31 @@ class SelectProductFragment : Fragment() {
         }
     }
 
+
     private fun archiveButton(position: Int): SwipeHelper.UnderlayButton {
+        val originalIcon = ContextCompat.getDrawable(requireContext(), R.drawable.edit_list)
+        val icon = originalIcon?.let { drawable ->
+            val desiredSize = 100
+            val scaledDrawable = BitmapDrawable(resources, Bitmap.createScaledBitmap(drawable.toBitmap(), desiredSize, desiredSize, true))
+            scaledDrawable.setBounds(0, 0, scaledDrawable.intrinsicWidth, scaledDrawable.intrinsicHeight)
+            scaledDrawable
+        }
         return SwipeHelper.UnderlayButton(
             requireContext(),
-            "Edit Product",
-            14.0f,
+            icon!!,
             R.color.editButton,
             object : SwipeHelper.UnderlayButtonClickListener {
                 override fun onClick() {
                     val currentProduct = selectAdapter.getSelectInt(position)
-                    val action =
-                        SelectProductFragmentDirections.actionSelectProductFragmentToProductInfoFragment(
-                            currentProduct
-                        )
+                    val action = SelectProductFragmentDirections.actionSelectProductFragmentToProductInfoFragment(
+                        currentProduct
+                    )
                     Navigation.findNavController(binding.root).navigate(action)
                 }
-            })
+            }
+        )
     }
+
 
 
     private fun searchView(list: List<ProductDataEntity>) {

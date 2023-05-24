@@ -27,10 +27,12 @@ class HistoryAdapter(private var list: List<HistoryDataEntity>) :
                 val action = HistoryListFragmentDirections.actionHistoryListFragment2ToCurrentListFragment2(list)
                 Navigation.findNavController(binding.root).navigate(action)
             }
-            binding.checkedDate.text = list.checkedDate
+
             if(list.checkedList){
+                binding.checkedDate.text = list.checkedDate
                 binding.imageChecked.visibility = View.VISIBLE
             } else {
+                binding.checkedDate.text = "Unchecked!"
                     binding.imageChecked.visibility = View.GONE
                 }
         }

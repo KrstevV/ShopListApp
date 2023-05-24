@@ -79,22 +79,6 @@
             app:fabCustomSize="35dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/startList"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/btnEditList"
-            app:layout_constraintTop_toTopOf="@+id/guideline29"
-            app:maxImageSize="20dp" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnEditList"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:clickable="true"
-            android:src="@drawable/edit_list"
-            app:backgroundTint="#FB8C00"
-            app:fabCustomSize="35dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnRestoreCheckout"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline29"
             app:maxImageSize="20dp" />

@@ -2,7 +2,9 @@ package com.example.barkodershopapp.ui.fragments
 
 import android.app.AlertDialog
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,6 +13,7 @@ import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
@@ -136,26 +139,34 @@ class ListProductsFragment : Fragment() {
 
         }
 
-private fun deleteButton(position: Int): SwipeHelper.UnderlayButton {
-    return SwipeHelper.UnderlayButton(
-        requireContext(),
-        "Delete",
-        14.0f,
-        android.R.color.holo_red_light,
-        object : SwipeHelper.UnderlayButtonClickListener {
-            override fun onClick() {
-                AlertDialog.Builder(context)
-                    .setTitle("Delete Product")
-                    .setMessage("Are you sure you want to delete this product?")
-                    .setPositiveButton("Delete") { _, _ ->
-                        productAdapter.notifyItemRemoved(position)
+
+    private fun deleteButton(position: Int): SwipeHelper.UnderlayButton {
+        val originalIcon = ContextCompat.getDrawable(requireContext(), R.drawable.delete_item)
+        val icon = originalIcon?.let { drawable ->
+            val desiredSize = 100
+            val scaledDrawable = BitmapDrawable(resources, Bitmap.createScaledBitmap(drawable.toBitmap(), desiredSize, desiredSize, true))
+            scaledDrawable.setBounds(0, 0, scaledDrawable.intrinsicWidth, scaledDrawable.intrinsicHeight)
+            scaledDrawable
+        }
+        return SwipeHelper.UnderlayButton(
+            requireContext(),
+            icon!!,
+            android.R.color.holo_red_light,
+            object : SwipeHelper.UnderlayButtonClickListener {
+                override fun onClick() {
+                    AlertDialog.Builder(requireContext())
+                        .setTitle("Delete Product")
+                        .setMessage("Are you sure you want to delete this product?")
+                        .setPositiveButton("Delete") { _, _ ->
+                            productAdapter.notifyItemRemoved(position)
                         listViewModel.deleteItem(productAdapter.getProductInt(position))
-                    }
-                    .setNegativeButton("Cancel", null)
-                    .show()
+                        }
+                        .setNegativeButton("Cancel", null)
+                        .show()
+                }
             }
-        })
-}
+        )
+    }
 
     private fun onClickButtonUpdate() {
         var listId = this@ListProductsFragment.arguments?.getLong("currentListId")

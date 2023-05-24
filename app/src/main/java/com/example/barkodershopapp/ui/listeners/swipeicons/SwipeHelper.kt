@@ -3,6 +3,7 @@ package com.example.barkodershopapp.ui.listeners.swipeicons
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
+import android.graphics.drawable.Drawable
 import android.support.annotation.ColorRes
 import android.view.MotionEvent
 import android.view.View
@@ -131,26 +132,78 @@ ItemTouchHelper.LEFT
         fun onClick()
     }
 
+//    class UnderlayButton(
+//        private val context: Context,
+//        private val title: String,
+//        textSize: Float,
+//        @ColorRes private val colorRes: Int,
+//        private val clickListener: UnderlayButtonClickListener
+//    ) {
+//        private var clickableRegion: RectF? = null
+//        private val textSizeInPixel: Float = textSize * context.resources.displayMetrics.density // dp to px
+//        private val horizontalPadding = 50.0f
+//        val intrinsicWidth: Float
+//
+//        init {
+//            val paint = Paint()
+//            paint.textSize = textSizeInPixel
+//            paint.typeface = Typeface.DEFAULT_BOLD
+//            paint.textAlign = Paint.Align.LEFT
+//            val titleBounds = Rect()
+//            paint.getTextBounds(title, 0, title.length, titleBounds)
+//            intrinsicWidth = titleBounds.width() + 2 * horizontalPadding
+//        }
+//
+//        fun draw(canvas: Canvas, rect: RectF) {
+//            val paint = Paint()
+//
+//            // Draw background
+//            paint.color = ContextCompat.getColor(context, colorRes)
+//            canvas.drawRect(rect, paint)
+//
+//            // Draw title
+//            paint.color = ContextCompat.getColor(context, android.R.color.white)
+//            paint.textSize = textSizeInPixel
+//            paint.typeface = Typeface.DEFAULT_BOLD
+//            paint.textAlign = Paint.Align.LEFT
+//
+//            val titleBounds = Rect()
+//            paint.getTextBounds(title, 0, title.length, titleBounds)
+//
+//            val y = rect.height() / 2 + titleBounds.height() / 2 - titleBounds.bottom
+//            canvas.drawText(title, rect.left + horizontalPadding, rect.top + y, paint)
+//
+//            clickableRegion = rect
+//        }
+//
+//        fun handle(event: MotionEvent) {
+//            clickableRegion?.let {
+//                if (it.contains(event.x, event.y)) {
+//                    clickListener.onClick()
+//                }
+//            }
+//        }
+//    }
+
     class UnderlayButton(
         private val context: Context,
-        private val title: String,
-        textSize: Float,
-        @ColorRes private val colorRes: Int,
+        private val icon: Drawable, // or Bitmap
+        private val colorRes: Int,
         private val clickListener: UnderlayButtonClickListener
     ) {
         private var clickableRegion: RectF? = null
-        private val textSizeInPixel: Float = textSize * context.resources.displayMetrics.density // dp to px
         private val horizontalPadding = 50.0f
+        private val verticalPaddint = 50.0f
         val intrinsicWidth: Float
+        val intrinsicHeight : Float
 
         init {
             val paint = Paint()
-            paint.textSize = textSizeInPixel
-            paint.typeface = Typeface.DEFAULT_BOLD
-            paint.textAlign = Paint.Align.LEFT
-            val titleBounds = Rect()
-            paint.getTextBounds(title, 0, title.length, titleBounds)
-            intrinsicWidth = titleBounds.width() + 2 * horizontalPadding
+            intrinsicHeight = icon.intrinsicHeight + 2 * verticalPaddint
+        }
+        init {
+            val paint = Paint()
+            intrinsicWidth = icon.intrinsicWidth + 2 * horizontalPadding
         }
 
         fun draw(canvas: Canvas, rect: RectF) {
@@ -160,17 +213,14 @@ ItemTouchHelper.LEFT
             paint.color = ContextCompat.getColor(context, colorRes)
             canvas.drawRect(rect, paint)
 
-            // Draw title
-            paint.color = ContextCompat.getColor(context, android.R.color.white)
-            paint.textSize = textSizeInPixel
-            paint.typeface = Typeface.DEFAULT_BOLD
-            paint.textAlign = Paint.Align.LEFT
-
-            val titleBounds = Rect()
-            paint.getTextBounds(title, 0, title.length, titleBounds)
-
-            val y = rect.height() / 2 + titleBounds.height() / 2 - titleBounds.bottom
-            canvas.drawText(title, rect.left + horizontalPadding, rect.top + y, paint)
+            // Draw icon
+            icon.setBounds(
+                (rect.left + horizontalPadding).toInt(),
+                (rect.top + verticalPaddint).toInt(),
+                (rect.left + horizontalPadding + icon.intrinsicWidth).toInt(),
+                (rect.bottom - verticalPaddint).toInt()
+            )
+            icon.draw(canvas)
 
             clickableRegion = rect
         }
@@ -183,7 +233,7 @@ ItemTouchHelper.LEFT
             }
         }
     }
-    //endregion
+
 }
 
 private fun List<SwipeHelper.UnderlayButton>.intrinsicWidth(): Float {

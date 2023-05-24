@@ -39,21 +39,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.53" />
+            app:layout_constraintGuide_percent="0.59" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.25" />
+            app:layout_constraintGuide_percent="0.31" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.47" />
+            app:layout_constraintGuide_percent="0.53" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline8"
@@ -74,12 +74,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.76" />
+            app:layout_constraintGuide_percent="0.82" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recViewCurentyProducts"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="160dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline7"
             app:layout_constraintEnd_toStartOf="@+id/guideline4"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -89,7 +89,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recViewCurrentlyLists"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="160dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline9"
             app:layout_constraintEnd_toStartOf="@+id/guideline4"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -101,24 +101,23 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="10dp"
             android:text="Recent Products"
             android:textColor="@color/productName"
-            app:layout_constraintBottom_toTopOf="@+id/recViewCurentyProducts"
-            app:layout_constraintEnd_toStartOf="@+id/guideline10"
+            app:layout_constraintBottom_toTopOf="@+id/guideline6"
             app:layout_constraintStart_toStartOf="@+id/guideline2" />
 
         <TextView
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="10dp"
             android:text="Recent Lists"
             android:textColor="@color/productName"
             app:layout_constraintBottom_toTopOf="@+id/guideline5"
-            app:layout_constraintEnd_toStartOf="@+id/guideline10"
-            app:layout_constraintHorizontal_bias="0.296"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toTopOf="@+id/guideline7" />
+            app:layout_constraintStart_toStartOf="@+id/guideline2" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline51"

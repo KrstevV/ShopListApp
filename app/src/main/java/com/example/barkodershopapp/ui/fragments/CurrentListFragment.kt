@@ -66,7 +66,7 @@ class CurrentListFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        onClickEdit()
+
         onClickScan()
         onClickStart()
         onClickStop()
@@ -113,12 +113,11 @@ class CurrentListFragment : Fragment(){
                 currentAdapter.notifyDataSetChanged()
                 scanLayout.visibility = View.VISIBLE
             }
-            changeStatusBarColor(ContextCompat.getColor(requireContext(), R.color.designColor))
-            binding.include.toolBarr.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.designColor))
+            changeStatusBarColor(ContextCompat.getColor(requireContext(), R.color.toolBarColor))
+            binding.include.toolBarr.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.toolBarColor))
             binding.textActivityName.text = args.currentList.listName
             binding.stopList.visibility = View.GONE
             binding.startList.visibility = View.VISIBLE
-            binding.btnEditList.visibility = View.VISIBLE
             binding.btnRestoreCheckout.visibility = View.VISIBLE
         }
     }
@@ -139,7 +138,6 @@ class CurrentListFragment : Fragment(){
             binding.include.toolBarr.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.checkoutModeToolBar))
             binding.textActivityName.text = "Checkout Mode"
             binding.startList.visibility = View.GONE
-            binding.btnEditList.visibility = View.GONE
             binding.stopList.visibility = View.VISIBLE
             binding.btnRestoreCheckout.visibility = View.GONE
         }
@@ -159,28 +157,7 @@ class CurrentListFragment : Fragment(){
                 .show()
         }
     }
-    private fun onClickEdit(){
-        var scanLayout = binding.scanLayout
-        binding.btnEditList.setOnClickListener {
 
-            val bundle = Bundle()
-            bundle.putBoolean("editMode", true)
-            bundle.putLong("currentListId", args.currentList.id)
-            bundle.putString("checkedDate", args.currentList.checkedDate)
-            bundle.putString("listName", args.currentList.listName)
-
-            findNavController().navigate(R.id.listProductsFragment, bundle)
-
-            for (i in args.currentList.listProducts) {
-                listViewModel.insert(i)
-            }
-            if (listViewModel.isListStarted) {
-                scanLayout.visibility = View.VISIBLE
-            } else {
-                scanLayout.visibility = View.GONE
-            }
-        }
-    }
     private fun setupRecView() {
         currentAdapter = CurrentListAdapter(args.currentList.listProducts, productViewModel, onCheckedListener)
         currentAdapter.setNotesList(args.currentList.listProducts)
@@ -221,7 +198,7 @@ class CurrentListFragment : Fragment(){
                     override fun run() {
                         findNavController().previousBackStackEntry
                         findNavController().popBackStack()
-                        changeStatusBarColor(ContextCompat.getColor(requireContext(), R.color.designColor))
+                        changeStatusBarColor(ContextCompat.getColor(requireContext(), R.color.toolBarColor))
                     }
                 }, 2000)
             }
@@ -274,15 +251,13 @@ class CurrentListFragment : Fragment(){
             binding.startList.visibility = View.GONE
             binding.scanLayout.visibility = View.VISIBLE
             binding.stopList.visibility = View.VISIBLE
-            binding.btnEditList.visibility = View.GONE
             binding.btnRestoreCheckout.visibility = View.GONE
         } else {
-            changeStatusBarColor(ContextCompat.getColor(requireContext(), R.color.designColor))
-            binding.include.toolBarr.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.designColor))
+            changeStatusBarColor(ContextCompat.getColor(requireContext(), R.color.toolBarColor))
+            binding.include.toolBarr.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.toolBarColor))
             binding.textActivityName.text = args.currentList.listName
             currentAdapter.showCheckboxes = false
             binding.scanLayout.visibility = View.GONE
-            binding.btnEditList.visibility = View.VISIBLE
             binding.btnRestoreCheckout.visibility = View.VISIBLE
         }
         scannedPro()
@@ -324,7 +299,7 @@ class CurrentListFragment : Fragment(){
             override fun handleOnBackPressed() {
 
                 findNavController().popBackStack()
-                changeStatusBarColor(ContextCompat.getColor(requireContext(), R.color.designColor))
+                changeStatusBarColor(ContextCompat.getColor(requireContext(), R.color.toolBarColor))
 
             }
         }

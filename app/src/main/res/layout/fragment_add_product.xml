@@ -24,19 +24,6 @@
             app:layout_constraintGuide_percent="0.45" />
 
 
-        <Button
-            android:id="@+id/addImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="35dp"
-            android:backgroundTint="#D3CFCF"
-            android:text="Take a Photo"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toTopOf="@+id/guideline14"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout3"
             android:layout_width="match_parent"
@@ -61,8 +48,9 @@
                     android:id="@+id/cameraImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    tools:src="@drawable/photo_camera" />
+                    android:scaleType="fitXY"
+                    android:layout_gravity="center"
+                    tools:srcCompat="@drawable/ic_addphoto8" />
 
             </com.google.android.material.card.MaterialCardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -382,6 +370,22 @@
                 app:layout_constraintEnd_toStartOf="@+id/guideline5"
                 app:layout_constraintStart_toStartOf="@+id/guideline4"
                 app:layout_constraintTop_toTopOf="@+id/guideline11" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/addImage"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:text="Take a Photo"
+                app:cornerRadius="50dp"
+                android:textColor="@color/productInfo"
+                app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/productInfo"
+                app:strokeWidth="1dp" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

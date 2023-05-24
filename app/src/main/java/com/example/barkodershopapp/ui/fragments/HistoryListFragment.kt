@@ -2,7 +2,9 @@ package com.example.barkodershopapp.ui.fragments
 
 import android.app.AlertDialog
 import android.database.CursorWindow
+import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -12,9 +14,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -102,8 +106,9 @@ class HistoryListFragment : Fragment() {
                 override fun instantiateUnderlayButton(position: Int): List<UnderlayButton> {
                     var buttons = listOf<UnderlayButton>()
                     val deleteButton = deleteButton(position)
+                    val archiveButton = archiveButton(position)
 
-                    buttons = listOf(deleteButton)
+                    buttons = listOf(deleteButton,archiveButton)
                     return buttons
                 }
             })
@@ -112,15 +117,23 @@ class HistoryListFragment : Fragment() {
         }
     }
 
+
+
     private fun deleteButton(position: Int): SwipeHelper.UnderlayButton {
+        val originalIcon = ContextCompat.getDrawable(requireContext(), R.drawable.delete_item)
+        val icon = originalIcon?.let { drawable ->
+            val desiredSize = 100
+            val scaledDrawable = BitmapDrawable(resources, Bitmap.createScaledBitmap(drawable.toBitmap(), desiredSize, desiredSize, true))
+            scaledDrawable.setBounds(0, 0, scaledDrawable.intrinsicWidth, scaledDrawable.intrinsicHeight)
+            scaledDrawable
+        }
         return SwipeHelper.UnderlayButton(
             requireContext(),
-            "Delete",
-            14.0f,
+            icon!!,
             android.R.color.holo_red_light,
             object : SwipeHelper.UnderlayButtonClickListener {
                 override fun onClick() {
-                    AlertDialog.Builder(context)
+                    AlertDialog.Builder(requireContext())
                         .setTitle("Delete Product")
                         .setMessage("Are you sure you want to delete this list?")
                         .setPositiveButton("Delete") { _, _ ->
@@ -129,10 +142,43 @@ class HistoryListFragment : Fragment() {
                         }
                         .setNegativeButton("Cancel", null)
                         .show()
-
-
                 }
-            })
+            }
+        )
+    }
+
+    private fun archiveButton(position: Int): SwipeHelper.UnderlayButton {
+        val originalIcon = ContextCompat.getDrawable(requireContext(), R.drawable.edit_list)
+        val icon = originalIcon?.let { drawable ->
+            val desiredSize = 100
+            val scaledDrawable = BitmapDrawable(resources, Bitmap.createScaledBitmap(drawable.toBitmap(), desiredSize, desiredSize, true))
+            scaledDrawable.setBounds(0, 0, scaledDrawable.intrinsicWidth, scaledDrawable.intrinsicHeight)
+            scaledDrawable
+        }
+        return SwipeHelper.UnderlayButton(
+            requireContext(),
+            icon!!,
+            R.color.editButton,
+            object : SwipeHelper.UnderlayButtonClickListener {
+                override fun onClick() {
+                    val currentList = historyAdapter.getHistoryInt(position)
+                    val bundle = Bundle()
+                    bundle.putBoolean("editMode", true)
+                    bundle.putLong("currentListId", currentList.id)
+                    bundle.putString("checkedDate", currentList.checkedDate)
+                    bundle.putString("listName", currentList.listName)
+                    for (i in currentList.listProducts) {
+                        listViewModel.insert(i)
+                    }
+
+                    findNavController().navigate(
+                        R.id.listProductsFragment,
+                        bundle,
+                        NavOptions.Builder().setPopUpTo(R.id.currentListFragment2, true).build()
+                    )
+                }
+            }
+        )
     }
 
     private fun observeList() {

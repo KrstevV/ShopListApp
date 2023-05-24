@@ -9,42 +9,93 @@
     android:background="@drawable/rounded_background"
     android:backgroundTint="@color/white">
 
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline34"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.25"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline33"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.70"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.85"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline31"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline41"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.40" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline42"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.68"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline43"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+
     <TextView
         android:id="@+id/textProductBarcode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginBottom="25dp"
         android:text="325324123"
+        android:textColor="@color/productInfo"
         android:textSize="13sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageView5"
-        app:layout_constraintStart_toEndOf="@+id/imageProduct" />
+        app:layout_constraintBottom_toTopOf="@+id/guideline42"
+        app:layout_constraintStart_toStartOf="@+id/guideline34"
+        app:layout_constraintTop_toTopOf="@+id/guideline41" />
 
     <TextView
         android:id="@+id/textProductName"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="14dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:text="Coca Cola"
+        android:textColor="@color/productName"
         android:textSize="15sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/textProductBarcode"
-        app:layout_constraintStart_toEndOf="@+id/imageProduct"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.083" />
+        app:layout_constraintBottom_toTopOf="@+id/guideline41"
+        app:layout_constraintEnd_toStartOf="@+id/guideline33"
+        app:layout_constraintStart_toStartOf="@+id/guideline34"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/imageProduct"
         android:layout_width="45dp"
         android:layout_height="60dp"
         android:layout_marginStart="6dp"
+        android:layout_marginEnd="8dp"
         app:cardCornerRadius="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline34"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -67,85 +118,81 @@
         android:id="@+id/textProductTotalPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="6dp"
+        android:layout_marginStart="5dp"
         android:text="5 $"
+        android:textColor="@color/productInfo"
         android:textSize="16sp"
-        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="@+id/guideline42" />
 
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="15sp"
         android:layout_height="15sp"
         android:layout_marginStart="3dp"
-        android:layout_marginBottom="27dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline42"
         app:layout_constraintStart_toEndOf="@+id/textProductBarcode"
+        app:layout_constraintTop_toTopOf="@+id/guideline41"
         app:srcCompat="@drawable/barcode_scanner" />
 
     <TextView
         android:id="@+id/textProductPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="5dp"
         android:text="1231412"
-        android:textStyle="bold|italic"
+        android:textColor="@color/productInfo"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageProduct"
-        app:layout_constraintTop_toBottomOf="@+id/textProductBarcode" />
+        app:layout_constraintEnd_toStartOf="@+id/textView4"
+        app:layout_constraintStart_toStartOf="@+id/guideline34"
+        app:layout_constraintTop_toTopOf="@+id/guideline42" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:text="Total :"
-        android:textStyle="bold|italic"
+        android:textColor="@color/productInfo"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textProductTotalPrice" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline32"
+        app:layout_constraintStart_toStartOf="@+id/guideline33"
+        app:layout_constraintTop_toTopOf="@+id/guideline42" />
 
     <CheckBox
         android:id="@+id/checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="50dp"
         android:buttonTint="@color/checkBox"
         android:textColor="#F1ECEC"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline42"
+        app:layout_constraintEnd_toStartOf="@+id/guideline32"
+        app:layout_constraintStart_toStartOf="@+id/guideline33"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textScannedCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginBottom="7dp"
+        android:layout_marginEnd="3dp"
         android:text="0"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/textProductTotalPrice"
+        app:layout_constraintBottom_toTopOf="@+id/guideline42"
         app:layout_constraintEnd_toStartOf="@+id/textView6"
-        app:layout_constraintStart_toEndOf="@+id/checkBox"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.517" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="7dp"
+        android:layout_marginEnd="8dp"
         android:text="/"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/textProductTotalPrice"
-        app:layout_constraintEnd_toStartOf="@+id/textCountPr"
-        app:layout_constraintStart_toEndOf="@+id/textScannedCount"
+        app:layout_constraintBottom_toTopOf="@+id/guideline42"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline32"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -153,59 +200,46 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="35dp"
         android:text="1"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline42"
         app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.482" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="18dp"
         android:text="x"
         android:textSize="16sp"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintBottom_toTopOf="@+id/guideline42"
         app:layout_constraintEnd_toStartOf="@+id/textView12"
-        app:layout_constraintStart_toEndOf="@+id/textProductName"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="46dp"
-        android:layout_marginBottom="20dp"
         android:text="10"
         android:textSize="16sp"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
-        app:layout_constraintEnd_toStartOf="@+id/checkBox"
-        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintBottom_toTopOf="@+id/guideline42"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline32"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginStart="5dp"
         android:text="$"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textProductPrice"
-        app:layout_constraintTop_toBottomOf="@+id/textProductBarcode" />
+        app:layout_constraintTop_toTopOf="@+id/guideline42" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
