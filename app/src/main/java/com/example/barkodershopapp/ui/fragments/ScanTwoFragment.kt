@@ -33,6 +33,7 @@ class ScanTwoFragment : Fragment(), BarkoderResultCallback {
         )
         {
             Log.i("LicenseInfo", it.message)
+            Log.i("viktor", Barkoder.GetVersion())
         }
 
         binding.bkdView2.startScanning(this)

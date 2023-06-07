@@ -52,6 +52,7 @@ class HistoryListFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentHistoryListBinding.inflate(inflater, container, false)
         requireActivity().title = requireContext().getString(R.string.myLists)
+
         try {
             val field: Field = CursorWindow::class.java.getDeclaredField("sCursorWindowSize")
             field.setAccessible(true)
@@ -64,7 +65,6 @@ class HistoryListFragment : Fragment() {
         observeList()
         onClickNewList()
         onBackButton()
-
 
         return binding.root
     }

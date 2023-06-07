@@ -57,7 +57,7 @@ class ScanFragment : Fragment(), BarkoderResultCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+       Log.i("viktor", Barkoder.GetVersion())
 
         // Inflate the layout for this fragment
         binding = FragmentScanBinding.inflate(inflater, container, false)
